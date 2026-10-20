@@ -49,7 +49,7 @@ export const UnsavedChangesGuard = ({ isDirty }: UnsavedChangesGuardProps) => {
       title="Leave without saving?"
     >
       <div className="flex flex-col gap-6">
-        <p className="paragraph">You have unsaved changes. They will be lost if you leave.</p>
+        <p className="paragraph-sm">You have unsaved changes. They will be lost if you leave.</p>
         <div className="flex justify-end gap-2">
           <Button onClick={() => setPendingHref(undefined)} theme="dark">
             Keep editing
