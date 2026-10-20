@@ -19,19 +19,25 @@ export const UnsavedChangesGuard = ({ isDirty }: UnsavedChangesGuardProps) => {
   useEffect(() => {
     if (!isDirty) return
     const warn = (event: BeforeUnloadEvent) => event.preventDefault()
-    // Captured on the window, so it runs before `Link` starts a client navigation
+    // Captured on the window, so it runs before `Link`, which runs its `onClick` but skips the
+    // navigation of a prevented click
     const interceptLink = (event: MouseEvent) => {
       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
         return
       }
       const link = event.target instanceof Element ? event.target.closest("a[href]") : null
-      if (!(link instanceof HTMLAnchorElement) || link.target === "_blank" || link.download) return
+      if (
+        !(link instanceof HTMLAnchorElement) ||
+        link.target === "_blank" ||
+        link.hasAttribute("download")
+      ) {
+        return
+      }
       const url = new URL(link.href)
       // Other sites leave through `beforeunload`, and in-page anchors keep the changes
       if (url.origin !== location.origin) return
       if (url.pathname === location.pathname && url.search === location.search) return
       event.preventDefault()
-      event.stopPropagation()
       setPendingHref(url.pathname + url.search + url.hash)
     }
     window.addEventListener("beforeunload", warn)
