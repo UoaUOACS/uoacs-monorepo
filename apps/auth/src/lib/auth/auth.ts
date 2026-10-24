@@ -1,3 +1,4 @@
+import { userAdditionalFields } from "@uoacs/shared"
 import { betterAuth } from "better-auth"
 import { mongodbAdapter } from "better-auth/adapters/mongodb"
 import { APIError, createAuthMiddleware } from "better-auth/api"
@@ -18,6 +19,7 @@ export const auth = betterAuth({
   baseURL: process.env.NEXT_PUBLIC_AUTH_URL,
   database: mongodbAdapter(mongoClient.db()),
   trustedOrigins,
+  user: { additionalFields: userAdditionalFields },
   advanced: {
     // The session cookie is set by this service but has to be readable by the
     // website and playground. Unset locally, where they are ports on localhost

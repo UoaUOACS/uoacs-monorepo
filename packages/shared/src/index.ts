@@ -1,6 +1,7 @@
 export * from "./auth/routes"
 export * from "./auth/schemas"
 export * from "./auth/session"
+export * from "./auth/user-fields"
 export * from "./discord"
 export * from "./payload/slugs"
 export * from "./utils/downscaleImage"

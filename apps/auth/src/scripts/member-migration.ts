@@ -136,7 +136,14 @@ try {
   const existingAccountIds = new Set(existingAccounts.map((doc) => idOf(doc._id)))
 
   const membersToInsert = normalisedMembers.filter((doc) => !existingMemberIds.has(idOf(doc._id)))
-  const usersToInsert = usersToCopy.filter((doc) => !existingUserIds.has(idOf(doc._id)))
+  // Raw inserts skip the Member collection's hook, so the names it would have
+  // synced onto the user are copied from the member row here.
+  const usersToInsert = usersToCopy
+    .filter((doc) => !existingUserIds.has(idOf(doc._id)))
+    .map((user) => {
+      const [member] = membersByUserId.get(idOf(user._id)) ?? []
+      return { ...user, firstName: member.firstName, lastName: member.lastName }
+    })
   const accountsToInsert = accountsToCopy.filter((doc) => !existingAccountIds.has(idOf(doc._id)))
 
   console.log("Plan:")
