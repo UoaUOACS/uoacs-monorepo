@@ -23,6 +23,7 @@ import { blockElementID } from "./Blocks/BlockFrame"
 import { BlockList } from "./Blocks/BlockList"
 import { ProjectEditorToolbar } from "./ProjectEditorToolbar"
 import { ProjectHeaderEditor } from "./ProjectHeaderEditor/ProjectHeaderEditor"
+import { UnsavedChangesGuard } from "./UnsavedChangesGuard"
 
 const SAVE_ERROR_MESSAGES: Record<Extract<SaveProjectResult, { ok: false }>["error"], string> = {
   invalid: "Fix the highlighted fields",
@@ -143,12 +144,6 @@ export const ProjectEditor = ({
   }, [])
 
   const isDirty = useSelector(form.store, (state) => state.isDirty)
-  useEffect(() => {
-    if (!isDirty) return
-    const warn = (event: BeforeUnloadEvent) => event.preventDefault()
-    window.addEventListener("beforeunload", warn)
-    return () => window.removeEventListener("beforeunload", warn)
-  }, [isDirty])
 
   return (
     <form
@@ -173,6 +168,7 @@ export const ProjectEditor = ({
             onUpload={(image) => setMedia((current) => ({ ...current, [image.id]: image }))}
           />
         </div>
+        <UnsavedChangesGuard isDirty={isDirty} />
       </form.AppForm>
     </form>
   )
