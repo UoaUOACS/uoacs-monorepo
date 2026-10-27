@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { type LinkName, links } from "@/features/member/constants/links.constants"
 import { skills } from "@/features/member/constants/skills.constants"
+import { objectIDSchema } from "@/features/project/schemas/objectID.schema"
 
 const linkNames = Object.keys(links) as [LinkName, ...LinkName[]]
 
@@ -24,6 +25,13 @@ const linkSchema = z
  * rejected rather than silently clearing it.
  */
 export const editMemberSchema = z.object({
+  // Part of the profile URL, so kept to the characters `buildUsername` produces.
+  username: z
+    .string()
+    .min(1, "Username is required.")
+    .regex(/^[a-z0-9-]+$/, "Use lowercase letters, numbers and hyphens."),
+  // The `Media` ID from `uploadProfilePicture`, or `null` to remove the picture.
+  profilePicture: objectIDSchema.nullable(),
   // Payload's `defaultMaxTextLength`, which the collection's `bio` inherits.
   bio: z.string().max(40000).nullish(),
   skills: z
