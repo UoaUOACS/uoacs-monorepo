@@ -3,6 +3,7 @@ export const Slugs = {
     MEDIA: "media",
     ADMIN: "admin",
     PROJECT: "project",
+    PROJECT_MEDIA: "projectMedia",
     MEMBER: "member",
     SPONSOR: "sponsor",
     LIKE: "like",

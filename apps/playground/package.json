@@ -30,8 +30,8 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-smart-ticker": "^1.6.7",
-    "tailwind-variants": "catalog:",
     "sharp": "^0.34.4",
+    "tailwind-variants": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

@@ -1,7 +1,5 @@
 import { SponsorTier } from "@/types/enums"
 
-export const PRODUCTION_HOSTNAME = "uoacs.co.nz"
-
 export const TIER_SIZES: Record<SponsorTier, { height: number; width: number }> = {
   [SponsorTier.DIAMOND]: {
     height: 120,

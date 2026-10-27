@@ -1,4 +1,5 @@
 import { AuthCollectionSlugs } from "@uoacs/shared"
+import { genderSchema } from "@uoacs/shared/payload"
 import type { CollectionConfig } from "payload"
 
 export const Member: CollectionConfig = {
@@ -63,7 +64,8 @@ export const Member: CollectionConfig = {
     },
     {
       name: "gender",
-      type: "text",
+      type: "select",
+      options: genderSchema.options,
       required: true,
       admin: {
         description: "Gender of the member",

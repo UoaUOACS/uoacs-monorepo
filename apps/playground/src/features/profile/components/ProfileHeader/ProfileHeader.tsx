@@ -1,93 +1,26 @@
-import { PencilIcon, UserIcon } from "@heroicons/react/24/outline"
-import type { Member as AuthMember } from "@uoacs/shared/payload"
-import { Button, Heading, LazyImage, Skeleton } from "@uoacs/ui"
-import type { Member } from "@/payload/payload-types"
-
-const LAYOUT_CLASS_NAME = "flex flex-col gap-6 md:flex-row md:items-center md:gap-12"
-const AVATAR_CLASS_NAME =
-  "relative size-28 shrink-0 overflow-hidden rounded-full bg-gray-200 md:size-52"
-
-export interface ProfileHeaderProps {
-  /**
-   * The member's playground profile, for their profile picture.
-   */
-  member: Member
-  /**
-   * The member's record from the auth service, for their name, UPI and ID.
-   */
-  account: Pick<AuthMember, "firstName" | "lastName" | "upi" | "uoaID">
-}
-
-const AccountLabel = () => (
-  <p className="font-mono">
-    {/** biome-ignore lint/suspicious/noCommentText: the // is not for a comment */}
-    <span className="text-primary">// </span>YOUR ACCOUNT
-  </p>
-)
+import { unstable_rethrow } from "next/navigation"
+import { getCurrentMember } from "@/features/member/member.queries"
+import { type ProfileHeaderProps, ProfileHeaderView } from "./ProfileHeaderView"
 
 /**
- * The top of a member's profile: their profile picture, name, UPI and ID, and an edit button.
+ * The top of a member's profile, with an edit button only the profile's owner sees. Checking the
+ * owner reads the session, so render this behind a `Suspense` boundary with
+ * `ProfileHeaderSkeleton` as the fallback.
  */
-export const ProfileHeader = ({ member, account }: ProfileHeaderProps) => {
-  const { profilePicture } = member
-  const name = `${account.firstName} ${account.lastName}`
-  const profilePictureURL = typeof profilePicture === "object" ? profilePicture?.url : undefined
+export const ProfileHeader = async (props: ProfileHeaderProps) => {
+  // Show the visitor's view whenever ownership can't be confirmed, e.g. the auth service is down
+  let isOwner = false
 
-  return (
-    <header className={LAYOUT_CLASS_NAME}>
-      <div className={AVATAR_CLASS_NAME}>
-        {profilePictureURL ? (
-          <LazyImage
-            alt={name}
-            className="object-cover!"
-            containerClassName="h-full w-full"
-            fill
-            sizes="208px"
-            src={profilePictureURL}
-          />
-        ) : (
-          <UserIcon aria-hidden="true" className="size-full p-[20%] text-gray-400" />
-        )}
-      </div>
+  try {
+    const current = await getCurrentMember()
+    isOwner = current.status === "authenticated" && current.member.id === props.member.id
+  } catch (error) {
+    unstable_rethrow(error)
+    console.error("[ProfileHeader] Failed to check the profile owner", {
+      memberId: props.member.id,
+      error,
+    })
+  }
 
-      <div className="flex flex-col items-start gap-4">
-        <div className="flex flex-col items-start gap-2">
-          <AccountLabel />
-          <Heading className="justify-start text-left" h={2} period>
-            {name}
-          </Heading>
-          <p className="flex flex-row justify-start gap-2 font-mono">
-            <span>
-              UPI <span className="font-bold text-black">{account.upi}</span>
-            </span>
-            <span> / </span>
-            <span>
-              ID <span className="font-bold text-black">{account.uoaID}</span>
-            </span>
-          </p>
-        </div>
-        <Button left={<PencilIcon className="size-4" />} shape="rounded" theme="dark">
-          Edit Profile
-        </Button>
-      </div>
-    </header>
-  )
+  return <ProfileHeaderView {...props} isOwner={isOwner} />
 }
-
-/**
- * A loading placeholder with the same layout as {@link ProfileHeader}.
- */
-export const ProfileHeaderSkeleton = () => (
-  <div aria-hidden="true" className={LAYOUT_CLASS_NAME}>
-    <Skeleton className={AVATAR_CLASS_NAME} shape="circle" />
-
-    <div className="flex flex-col items-start gap-4">
-      <div className="flex flex-col items-start gap-2">
-        <AccountLabel />
-        <Skeleton className="heading-2 w-72" shape="text" />
-        <Skeleton className="h-6 w-64" shape="text" />
-      </div>
-      <Skeleton className="h-6.5 w-32 rounded-[10px] md:h-8.5" />
-    </div>
-  </div>
-)

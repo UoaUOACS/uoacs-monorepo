@@ -8,11 +8,11 @@ export const HeroSection = () => {
   return (
     <div className="flex w-full max-w-full flex-col items-center justify-center gap-10 px-2 pt-16 text-center md:w-fit md:gap-20 md:px-0 md:pt-32">
       <div className="flex w-min max-w-full flex-col items-center gap-3 md:gap-6">
-        <div className="flex w-max max-w-full flex-col items-center justify-center whitespace-nowrap font-black font-neulis sm:flex-row sm:gap-2">
-          <Heading className="font-neulis" h={2}>
+        <div className="flex w-max max-w-full flex-col items-center justify-center whitespace-nowrap font-neulis sm:flex-row sm:gap-2">
+          <Heading className="font-bold font-neulis" h={2}>
             Project
           </Heading>
-          <Heading className="font-neulis text-primary" h={2}>
+          <Heading className="font-bold font-neulis text-primary" h={2}>
             Playground
           </Heading>
         </div>

@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url"
 import { mongooseAdapter } from "@payloadcms/db-mongodb"
 import { lexicalEditor } from "@payloadcms/richtext-lexical"
 import { s3Storage } from "@payloadcms/storage-s3"
+import { richTextFeatures } from "@uoacs/shared/payload"
 import { buildConfig } from "payload"
 import sharp from "sharp"
 import { Admin } from "./payload/collections/Admin"
@@ -10,6 +11,7 @@ import { Like } from "./payload/collections/Like"
 import { Media } from "./payload/collections/Media"
 import { Member } from "./payload/collections/Member"
 import { Project } from "./payload/collections/Project"
+import { ProjectMedia } from "./payload/collections/ProjectMedia"
 import { Sponsor } from "./payload/collections/Sponsor"
 
 const filename = fileURLToPath(import.meta.url)
@@ -23,8 +25,8 @@ export default buildConfig({
       importMapFile: `${path.resolve(dirname)}/app/payload/admin/importMap.js`,
     },
   },
-  collections: [Admin, Media, Project, Sponsor, Member, Like],
-  editor: lexicalEditor(),
+  collections: [Admin, Media, Project, ProjectMedia, Sponsor, Member, Like],
+  editor: lexicalEditor({ features: richTextFeatures }),
   graphQL: {
     disable: true,
   },
@@ -48,6 +50,7 @@ export default buildConfig({
     s3Storage({
       collections: {
         media: { prefix: "playground/media" },
+        projectMedia: { prefix: "playground/project-media" },
       },
       bucket: process.env.S3_BUCKET ?? "",
       config: {

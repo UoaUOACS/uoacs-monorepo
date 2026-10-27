@@ -383,7 +383,7 @@ const ToolbarButton = ({
   <Button
     aria-label={label}
     aria-pressed={pressed}
-    className="h-9 px-1.5 disabled:opacity-50 aria-pressed:text-primary md:h-9"
+    className="h-9 px-1.5 disabled:opacity-50 aria-pressed:bg-pink-100 aria-pressed:text-pink-700 aria-pressed:hover:bg-pink-200 md:h-9"
     disabled={disabled}
     onClick={onClick}
     // Keep the editor's selection when a button is clicked.

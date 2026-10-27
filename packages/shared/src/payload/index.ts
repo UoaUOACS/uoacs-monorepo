@@ -1,3 +1,4 @@
+export * from "./media"
 export * from "./payload-types"
 export * from "./richText"
 export * from "./schemas/member"

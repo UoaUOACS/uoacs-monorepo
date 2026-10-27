@@ -1,15 +1,24 @@
 import type { CollectionConfig } from "payload"
+import {
+  PROJECT_MAX_BLOCKS,
+  PROJECT_SUMMARY_MAX_LENGTH,
+  PROJECT_TITLE_MAX_LENGTH,
+} from "@/features/project/project.constants"
 import { CacheTags } from "@/lib/cache"
+import { getRelationID } from "@/lib/payload/getRelationID"
 import { Slugs } from "@/lib/payload/slugs"
 import { ImageGrid } from "../blocks/ImageGrid"
 import { Text } from "../blocks/Text"
 import { makeDeleteLikesHook } from "../hooks/deleteLikes"
+import { deleteProjectMedia, deleteRemovedProjectMedia } from "../hooks/deleteProjectMedia"
 import { makeRevalidateHooks } from "../hooks/revalidate"
 import type { Project as ProjectDoc } from "../payload-types"
+import { authorsProjectMedia } from "./ProjectMedia"
 
 const { afterChange, afterDelete } = makeRevalidateHooks((doc: ProjectDoc) => [
   CacheTags.PROJECTS.ROOT,
   CacheTags.PROJECTS.ID(doc.id),
+  CacheTags.PROJECTS.AUTHOR(getRelationID(doc.author)),
 ])
 
 export const Project: CollectionConfig = {
@@ -25,11 +34,13 @@ export const Project: CollectionConfig = {
       name: "name",
       type: "text",
       required: true,
+      maxLength: PROJECT_TITLE_MAX_LENGTH,
     },
     {
       name: "summary",
       type: "textarea",
       required: true,
+      maxLength: PROJECT_SUMMARY_MAX_LENGTH,
     },
     {
       name: "author",
@@ -46,8 +57,9 @@ export const Project: CollectionConfig = {
     {
       name: "coverImage",
       type: "upload",
-      relationTo: Slugs.Collections.MEDIA,
+      relationTo: Slugs.Collections.PROJECT_MEDIA,
       required: true,
+      filterOptions: authorsProjectMedia,
     },
     {
       name: "likeCount",
@@ -71,12 +83,12 @@ export const Project: CollectionConfig = {
       blocks: [Text, ImageGrid],
       required: true,
       minRows: 1,
-      maxRows: 50,
+      maxRows: PROJECT_MAX_BLOCKS,
     },
   ],
   hooks: {
-    afterChange: [afterChange],
+    afterChange: [afterChange, deleteRemovedProjectMedia],
     beforeDelete: [makeDeleteLikesHook("project")],
-    afterDelete: [afterDelete],
+    afterDelete: [afterDelete, deleteProjectMedia],
   },
 }

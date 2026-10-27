@@ -12,6 +12,7 @@ import {
   QUOTE,
   UNORDERED_LIST,
 } from "@lexical/markdown"
+import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin"
 import { LexicalComposer } from "@lexical/react/LexicalComposer"
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
 import { ContentEditable } from "@lexical/react/LexicalContentEditable"
@@ -21,12 +22,12 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin"
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin"
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin"
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin"
+import type { RichTextValue } from "@uoacs/shared/payload"
 import {
   $getRoot,
   createEditor,
   type EditorState,
   type EditorThemeClasses,
-  type SerializedEditorState,
   type SerializedLexicalNode,
 } from "lexical"
 import { Component, type ReactNode, useEffect, useState } from "react"
@@ -114,12 +115,14 @@ const theme: EditorThemeClasses = {
   text: { bold: "font-bold", italic: "italic", underline: "underline" },
 }
 
-export type RichTextValue = SerializedEditorState & { [key: string]: unknown }
-
 export interface RichTextEditorProps {
   "aria-describedby"?: string
   "aria-invalid"?: boolean
   "aria-labelledby"?: string
+  /**
+   * Focuses the editor when it mounts, e.g. when the user opens it to type
+   */
+  autoFocus?: boolean
   className?: string
   /**
    * Read once on mount, and later changes are ignored. The editor is uncontrolled, so to
@@ -134,6 +137,7 @@ export interface RichTextEditorProps {
 }
 
 export const RichTextEditor = ({
+  autoFocus = false,
   className,
   defaultValue,
   disabled = false,
@@ -194,7 +198,7 @@ export const RichTextEditor = ({
                   id={id}
                   onBlur={onBlur}
                   placeholder={
-                    <div className="pointer-events-none absolute top-2 left-3 text-gray-400 text-sm">
+                    <div className="pointer-events-none absolute top-2.25 left-3.25 text-gray-400 leading-relaxed">
                       {placeholder}
                     </div>
                   }
@@ -209,6 +213,7 @@ export const RichTextEditor = ({
         <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
         <OnChangePlugin ignoreSelectionChange onChange={(state) => onChange?.(toValue(state))} />
         <EditablePlugin editable={!disabled} />
+        {autoFocus && <AutoFocusPlugin />}
       </LexicalComposer>
     </EditorErrorBoundary>
   )

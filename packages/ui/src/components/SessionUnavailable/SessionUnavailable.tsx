@@ -1,6 +1,7 @@
 "use client"
 
-import { Button, Heading } from "@uoacs/ui"
+import { Button } from "../Button/Button"
+import { Heading } from "../Heading/Heading"
 
 /**
  * Shown when the auth service cannot say whether the person is signed in.

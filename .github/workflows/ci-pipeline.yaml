@@ -171,9 +171,20 @@ jobs:
       actions: write
     services:
       mongo:
-        image: mongo:8
+        # Matches production. Pinned so CI does not move to a new release on its own.
+        image: mongo:8.0.34
         ports:
           - 27017:27017
+        env:
+          # MongoDB 8 can crash on runner kernels 6.19 to 7.0.13, which change rseq behaviour that
+          # its tcmalloc relies on. Remove once runners have kernel 7.0.14+. See SERVER-125742.
+          GLIBC_TUNABLES: glibc.pthread.rseq=1
+        # The image has no health check, so without this the job starts while Mongo is still down
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.runCommand({ ping: 1 }).ok'"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
     env:
       DATABASE_URI: mongodb://localhost:27017/ci
       PAYLOAD_SECRET: ci-placeholder

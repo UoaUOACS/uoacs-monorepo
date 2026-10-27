@@ -2,7 +2,7 @@
 
 import Image, { type ImageProps } from "next/image"
 import { useState } from "react"
-import { cn } from "../../utils"
+import { cn, type FocalPoint, toObjectPosition } from "../../utils"
 import { Skeleton } from "../Skeleton/Skeleton"
 
 /**
@@ -17,6 +17,10 @@ interface LazyImageProps extends ImageProps {
    * The class name for the skeleton placeholder
    */
   skeletonClassName?: string
+  /**
+   * Keeps this point in view when the image is cropped, e.g. with `object-cover`
+   */
+  focalPoint?: FocalPoint
 }
 
 /**
@@ -27,6 +31,7 @@ interface LazyImageProps extends ImageProps {
  * @param className The class name for the image
  * @param containerClassName The class name for the container div
  * @param skeletonClassName The class name for the skeleton placeholder
+ * @param focalPoint The point to keep in view when the image is cropped
  * @param props Other {@link ImageProps}
  */
 export function LazyImage({
@@ -35,6 +40,8 @@ export function LazyImage({
   className,
   containerClassName,
   skeletonClassName,
+  focalPoint,
+  style,
   ...props
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -55,6 +62,7 @@ export function LazyImage({
         onLoad={() => {
           setIsLoaded(true)
         }}
+        style={focalPoint ? { objectPosition: toObjectPosition(focalPoint), ...style } : style}
         width={width}
         {...props}
       />

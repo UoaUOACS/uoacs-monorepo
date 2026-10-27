@@ -7,7 +7,8 @@
     ".": "./src/index.ts",
     "./auth": "./src/auth/index.ts",
     "./auth/server": "./src/auth/server/index.ts",
-    "./payload": "./src/payload/index.ts"
+    "./payload": "./src/payload/index.ts",
+    "./robots": "./src/utils/robots.ts"
   },
   "dependencies": {
     "server-only": "^0.0.1",

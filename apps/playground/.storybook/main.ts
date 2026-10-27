@@ -31,6 +31,13 @@ const config: StorybookConfig = {
       ]),
     )
     viteConfig.define = { ...placeholders, ...viteConfig.define }
+
+    // `sb.mock` in preview.ts replaces the server actions that import Payload,
+    // but only once a module is transformed. Vite's dependency optimizer walks
+    // the real imports before that and fails to pre-bundle Payload, which takes
+    // the whole preview with it, so it must not try.
+    viteConfig.optimizeDeps ??= {}
+    viteConfig.optimizeDeps.exclude = [...(viteConfig.optimizeDeps.exclude ?? []), "payload"]
     return viteConfig
   },
 }

@@ -7,7 +7,7 @@ export const mockMember: Member = {
   upi: "sgeo999",
   email: "N/A",
   uoaID: "9999999",
-  gender: "male",
+  gender: "Male",
   compsciStudent: false,
   studyYear: "fifth-year-or-above",
   heardAboutUs: "haven't",

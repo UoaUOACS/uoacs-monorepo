@@ -1,6 +1,10 @@
 import { z } from "zod"
 import type { Member } from "../payload-types"
 
+export const genderSchema = z.enum(["Male", "Female", "Non-binary", "Other", "Prefer not to say"], {
+  error: "Please select a gender",
+})
+
 /**
  * Shared because the website validates these as form input and the auth
  * service validates the same fields again as API input. One definition keeps
@@ -13,9 +17,7 @@ export const memberSchema = z.object({
   upi: z.string().min(1, "UPI is required"),
   email: z.email({ error: "Please enter a valid email" }),
   uoaID: z.string().min(1, "UOA ID is required"),
-  gender: z.enum(["Male", "Female", "Other", "Prefer not to say"], {
-    error: "Please select a gender",
-  }),
+  gender: genderSchema,
   phoneNumber: z.string().nullable().optional(),
   compsciStudent: z.boolean({
     error: "Please indicate whether you are a computer science student",

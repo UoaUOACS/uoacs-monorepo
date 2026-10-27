@@ -107,7 +107,8 @@ export const Dropdown = ({
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: delegates keydown from the trigger/menu items below to the shared popover nav handler, and mousedown to keep focus
     <div
-      className="relative inline-flex"
+      // Raised while open, so the menu covers other dropdown triggers below it
+      className={cn("relative inline-flex", isOpen && "z-30")}
       onKeyDown={onKeyDown}
       onMouseDown={keepFocus ? (event) => event.preventDefault() : undefined}
       ref={ref}

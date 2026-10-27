@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AuthPages } from "@uoacs/shared"
-import { memberSchema } from "@uoacs/shared/payload"
+import { genderSchema, memberSchema } from "@uoacs/shared/payload"
 import { Button, Input, MultiSelect, Radio, Select } from "@uoacs/ui"
 import { toast } from "@uoacs/ui/toast"
 import { useRouter } from "next/navigation"
@@ -160,7 +160,7 @@ export const MemberStep = ({ redirect, returnTo }: SignUpStepProps) => {
               error={errors.gender?.message}
               label="Gender"
               onChange={field.onChange}
-              options={["Male", "Female", "Other", "Prefer not to say"]}
+              options={genderSchema.options}
               ref={field.ref}
               required
               value={field.value ?? ""}

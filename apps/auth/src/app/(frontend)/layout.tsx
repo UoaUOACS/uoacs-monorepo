@@ -34,7 +34,9 @@ const mono = localFont({
     },
   ],
   variable: "--font-mono",
-  display: "optional",
+  display: "swap",
+  adjustFontFallback: false,
+  fallback: ["ui-monospace", "Menlo", "Consolas", "monospace"],
 })
 
 export const metadata: Metadata = {

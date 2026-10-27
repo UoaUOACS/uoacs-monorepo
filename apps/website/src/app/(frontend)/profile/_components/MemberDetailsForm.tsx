@@ -1,6 +1,6 @@
 "use client"
 
-import type { Member } from "@uoacs/shared/payload"
+import { genderSchema, type Member } from "@uoacs/shared/payload"
 import { Input, MultiSelect, Radio, Select } from "@uoacs/ui"
 import { toast } from "@uoacs/ui/toast"
 import { useState } from "react"
@@ -31,7 +31,7 @@ export const MemberDetailsForm = ({ member }: { member: Member }) => {
   const [upi, setUpi] = useState(member.upi ?? "")
   const [uoaID, setUoaID] = useState(member.uoaID ?? "")
   const [phoneNumber, setPhoneNumber] = useState(member.phoneNumber ?? "")
-  const [gender, setGender] = useState(member.gender ?? "")
+  const [gender, setGender] = useState<string>(member.gender ?? "")
   const [studyYear, setStudyYear] = useState<string>(member.studyYear ?? "")
   const [compsciStudent, setCompsciStudent] = useState(
     member.compsciStudent === true ? "Yes" : member.compsciStudent === false ? "No" : undefined,
@@ -142,11 +142,7 @@ export const MemberDetailsForm = ({ member }: { member: Member }) => {
         onCancel={() => cancelField("gender", () => setGender(member.gender ?? ""))}
         onSave={() => saveField("gender", gender as UpdateMemberInput["gender"])}
       >
-        <Select
-          onChange={setGender}
-          options={["Male", "Female", "Other", "Prefer not to say"]}
-          value={gender}
-        />
+        <Select onChange={setGender} options={genderSchema.options} value={gender} />
       </ToggleableInput>
 
       <ToggleableInput

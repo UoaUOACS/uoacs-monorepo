@@ -16,9 +16,9 @@ pnpm + Turborepo monorepo. See `README.md` for setup and each app/package README
 
 | App | Next.js | Cache Components | Caching approach |
 |---|---|---|---|
-| `apps/website` | 16.3 | No | Route segment config, Payload revalidate hooks, TanStack Query |
-| `apps/playground` | 16.3 | Yes (`cacheComponents: true`) | `"use cache"` + `cacheTag`/`cacheLife`, tags in `@/lib/cache` |
-| `apps/auth` | 16.3 | No | Dynamic; owns the Better Auth session |
+| `apps/website` | 16.4 | No | Route segment config, Payload revalidate hooks, TanStack Query |
+| `apps/playground` | 16.4 | Yes (`cacheComponents: true`) | `"use cache"` + `cacheTag`/`cacheLife`, tags in `@/lib/cache` |
+| `apps/auth` | 16.4 | No | Dynamic; owns the Better Auth session |
 
 - Check the app's row before using caching APIs: `"use cache"`, `cacheLife` and `cacheTag` only work in playground.
 - All apps run the React Compiler, so don't add `useMemo`, `useCallback` or `memo` for performance.

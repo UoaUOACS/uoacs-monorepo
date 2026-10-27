@@ -16,29 +16,21 @@ const meta: Meta<typeof PlaygroundNavbar> = {
     signedIn: { control: "boolean" },
     logoHref: { control: "text" },
   },
+  decorators: [
+    (Story) => (
+      <div>
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
 type Story = StoryObj<typeof PlaygroundNavbar>
 
-export const Home: Story = {
-  decorators: [
-    (Story) => (
-      <div>
-        <Story />
-      </div>
-    ),
-  ],
-}
+export const Home: Story = {}
 
 export const Regular: Story = {
-  decorators: [
-    (Story) => (
-      <div>
-        <Story />
-      </div>
-    ),
-  ],
   parameters: {
     nextjs: {
       navigation: {

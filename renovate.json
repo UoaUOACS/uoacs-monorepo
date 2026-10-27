@@ -8,41 +8,64 @@
   "commitMessagePrefix": "chore(deps):",
   "dependencyDashboard": true,
   "rebaseWhen": "conflicted",
+  "separateMajorMinor": false,
   "packageRules": [
+    {
+      "description": "Open major updates first",
+      "matchUpdateTypes": ["major"],
+      "prPriority": 10
+    },
+    {
+      "description": "Open minor updates after majors",
+      "matchUpdateTypes": ["minor"],
+      "prPriority": 5
+    },
+    {
+      "description": "Open patch, digest and pin updates last",
+      "matchUpdateTypes": ["patch", "digest", "pin"],
+      "prPriority": 0
+    },
     {
       "description": "Group Payload CMS related dependencies",
       "groupName": "Payload CMS",
-      "matchPackageNames": ["payload", "@payloadcms/**"]
+      "matchPackageNames": ["payload", "@payloadcms/**"],
+      "prPriority": 7
     },
     {
       "description": "Group React related dependencies",
       "groupName": "React",
-      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"]
+      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"],
+      "prPriority": 7
     },
     {
       "description": "Group Storybook related dependencies",
       "groupName": "Storybook",
-      "matchPackageNames": ["storybook", "@storybook/**", "@chromatic-com/storybook"]
+      "matchPackageNames": ["storybook", "@storybook/**", "@chromatic-com/storybook"],
+      "prPriority": 7
     },
     {
       "description": "Group Vitest related dependencies",
       "groupName": "Vitest",
-      "matchPackageNames": ["vitest", "@vitest/**"]
+      "matchPackageNames": ["vitest", "@vitest/**"],
+      "prPriority": 7
     },
     {
       "description": "TypeScript type definitions",
       "groupName": "TypeScript types",
-      "matchPackageNames": ["/^@types//", "!@types/react", "!@types/react-dom"]
+      "matchPackageNames": ["/^@types//", "!@types/react", "!@types/react-dom"],
+      "prPriority": 7
     },
     {
       "description": "Node.js version",
       "groupName": "Node.js",
-      "matchPackageNames": ["node"]
+      "matchPackageNames": ["node"],
+      "prPriority": 7
     },
     {
       "description": "pnpm version",
       "groupName": "pnpm",
-      "matchPackageNames": ["pnpm"]
+      "matchPackageNames": ["pnpm"],
+      "prPriority": 7
     }
   ],
   "vulnerabilityAlerts": {

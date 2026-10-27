@@ -1,8 +1,8 @@
 import { AuthPages, authPageUrl } from "@uoacs/shared"
 import { getSession } from "@uoacs/shared/auth/server"
+import { SessionUnavailable } from "@uoacs/ui"
 import { redirect } from "next/navigation"
 import { Routes, websiteUrl } from "@/lib/routes"
-import { SessionUnavailable } from "../_components/SessionUnavailable"
 import { UserOnly } from "../_components/UserOnly"
 import { ProfilePageClient } from "./_components/ProfilePageClient"
 

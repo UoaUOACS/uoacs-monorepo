@@ -6,7 +6,8 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.biome": "explicit"
   },
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "js/ts.experimental.useTsgo": true,
+  "js/ts.tsdk.path": "node_modules/typescript",
   "search.exclude": {
     "**/node_modules": true,
     "**/bower_components": true,

@@ -93,3 +93,81 @@ export const LongTitle: Story = {
     },
   },
 }
+
+const mockProfileProject: Project = {
+  ...mockProjectWithImage,
+  summary: "A playground where UOACS members can showcase and discover projects.",
+  awardType: "Most Creative",
+  awardEvent: "UOACS x DEV Hackathon 2026",
+}
+
+// Overrides the 320px default so the wide card can fill the viewport, up to 1265px.
+const profileDecorators: Story["decorators"] = [
+  (Story) => (
+    <div style={{ width: "min(1265px, calc(100vw - 2rem))" }}>
+      <Story />
+    </div>
+  ),
+]
+
+export const Profile: Story = {
+  parameters: { layout: "padded" },
+  decorators: profileDecorators,
+  args: {
+    variant: "profile",
+    project: { ...mockProfileProject, awardType: undefined, awardEvent: undefined },
+  },
+}
+
+export const ProfileWithAward: Story = {
+  name: "Profile with award",
+  parameters: { layout: "padded" },
+  decorators: profileDecorators,
+  args: { variant: "profile", project: mockProfileProject },
+}
+
+export const ProfileNoImage: Story = {
+  name: "Profile no image",
+  parameters: { layout: "padded" },
+  decorators: profileDecorators,
+  args: { variant: "profile", project: { ...mockProfileProject, imageURL: undefined } },
+}
+
+export const ProfileLongSummary: Story = {
+  name: "Profile long summary",
+  parameters: { layout: "padded" },
+  decorators: profileDecorators,
+  args: {
+    variant: "profile",
+    project: { ...mockProfileProject, summary: "A very long description. ".repeat(30) },
+  },
+}
+
+export const ProfileLongTitle: Story = {
+  name: "Profile long title",
+  parameters: { layout: "padded" },
+  decorators: profileDecorators,
+  args: {
+    variant: "profile",
+    project: {
+      ...mockProfileProject,
+      title: "A Very Long Project Title That Might Wrap Onto Several Lines Beside The Image",
+    },
+  },
+}
+
+export const ProfileTablet: Story = {
+  name: "Profile tablet (834px)",
+  parameters: { layout: "padded" },
+  globals: { viewport: { value: "tablet", isRotated: false } },
+  decorators: profileDecorators,
+  args: { variant: "profile", project: mockProfileProject },
+}
+
+export const ProfileMobile: Story = {
+  name: "Profile mobile (414px)",
+  parameters: { layout: "padded" },
+  globals: { viewport: { value: "mobile2", isRotated: false } },
+  decorators: profileDecorators,
+  args: { variant: "profile", project: mockProfileProject },
+}

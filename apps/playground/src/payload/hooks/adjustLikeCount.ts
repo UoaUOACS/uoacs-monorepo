@@ -10,19 +10,24 @@ import { Slugs } from "@/lib/payload/slugs"
  * the count.
  *
  * Payload validation does not run here, so the decrement filter keeps the count at 0 or more.
+ *
+ * Returns the project's author ID, or `null` when the count did not change.
  */
 export const adjustLikeCount = async (
   req: PayloadRequest,
   projectID: string,
   delta: 1 | -1,
-): Promise<void> => {
+): Promise<string | null> => {
   const db = req.payload.db as MongooseAdapter
   const transactionID = await req.transactionID
   const session = transactionID ? db.sessions[transactionID] : undefined
 
-  await db.collections[Slugs.Collections.PROJECT].updateOne(
-    delta === -1 ? { _id: projectID, likeCount: { $gt: 0 } } : { _id: projectID },
-    { $inc: { likeCount: delta } },
-    { session },
-  )
+  const project = await db.collections[Slugs.Collections.PROJECT]
+    .findOneAndUpdate(
+      delta === -1 ? { _id: projectID, likeCount: { $gt: 0 } } : { _id: projectID },
+      { $inc: { likeCount: delta } },
+      { session, projection: { author: 1 } },
+    )
+    .lean<{ author: unknown }>()
+  return project ? String(project.author) : null
 }

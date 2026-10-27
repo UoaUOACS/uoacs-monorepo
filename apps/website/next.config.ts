@@ -1,6 +1,7 @@
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { withPayload } from "@payloadcms/next/withPayload"
+import { noIndexHeaders, ProductionHostnames } from "@uoacs/shared/robots"
 import type { NextConfig } from "next"
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -9,6 +10,9 @@ const redirectedAuthPaths = ["/login", "/sign-up", "/forgot-password", "/reset-p
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  async headers() {
+    return noIndexHeaders(process.env.NEXT_PUBLIC_WEBSITE_URL, ProductionHostnames.WEBSITE)
+  },
   async redirects() {
     // Checked here, not at module level, so only commands that build redirects
     // need them. `next typegen` is one of them, so CI sets both for it.

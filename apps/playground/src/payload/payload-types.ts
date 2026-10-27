@@ -70,6 +70,7 @@ export interface Config {
     admin: Admin;
     media: Media;
     project: Project;
+    projectMedia: ProjectMedia;
     sponsor: Sponsor;
     member: Member;
     like: Like;
@@ -83,6 +84,7 @@ export interface Config {
     admin: AdminSelect<false> | AdminSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     project: ProjectSelect<false> | ProjectSelect<true>;
+    projectMedia: ProjectMediaSelect<false> | ProjectMediaSelect<true>;
     sponsor: SponsorSelect<false> | SponsorSelect<true>;
     member: MemberSelect<false> | MemberSelect<true>;
     like: LikeSelect<false> | LikeSelect<true>;
@@ -180,7 +182,7 @@ export interface Project {
   summary: string;
   author: string | Member;
   collaborators?: string[] | null;
-  coverImage: string | Media;
+  coverImage: string | ProjectMedia;
   /**
    * Number of likes. Kept up to date by the Like collection.
    */
@@ -207,7 +209,7 @@ export interface Project {
         blockType: 'text';
       }
     | {
-        images: (string | Media)[];
+        images: (string | ProjectMedia)[];
         id?: string | null;
         blockName?: string | null;
         blockType: 'imageGrid';
@@ -352,6 +354,29 @@ export interface Member {
   createdAt: string;
 }
 /**
+ * Images that members upload for their projects
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projectMedia".
+ */
+export interface ProjectMedia {
+  id: string;
+  alt: string;
+  uploadedBy: string | Member;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "sponsor".
  */
@@ -422,6 +447,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'project';
         value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'projectMedia';
+        value: string | ProjectMedia;
       } | null)
     | ({
         relationTo: 'sponsor';
@@ -549,6 +578,26 @@ export interface ProjectSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projectMedia_select".
+ */
+export interface ProjectMediaSelect<T extends boolean = true> {
+  alt?: T;
+  uploadedBy?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

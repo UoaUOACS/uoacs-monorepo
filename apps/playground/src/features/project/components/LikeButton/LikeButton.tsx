@@ -8,9 +8,10 @@ import { Button } from "@uoacs/ui"
 import { toast } from "@uoacs/ui/toast"
 import { cn } from "@uoacs/ui/utils"
 import { usePathname } from "next/navigation"
-import { useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import { setLike } from "@/features/project/actions/setLike"
 import { formatLikes } from "@/features/project/helpers/format"
+import { projectsUrl } from "@/lib/routes"
 
 interface LikeState {
   isLiked: boolean
@@ -37,35 +38,33 @@ export const LikeButton = ({
   iconClassName,
   countClassName,
 }: LikeButtonProps) => {
-  // The cached count can lag behind a like, so keep the saved state here rather than in props
+  // Saved results update the button without waiting for new props
   const [saved, setSaved] = useState({ isLiked, likes })
+  // Set only while a click is not saved yet
   const [wantedState, setWantedState] = useState<boolean | null>(null)
+  // Next.js keeps a page's state when you navigate away and back, so start again from the server's
+  // state when the page shows again or the props change. A key would remount and lose focus
+  useLayoutEffect(() => {
+    setSaved((state) =>
+      state.isLiked === isLiked && state.likes === likes ? state : { isLiked, likes },
+    )
+  }, [isLiked, likes])
   const shown = wantedState === null ? saved : withLiked(saved, wantedState)
-  const lastSent = useRef<boolean | null>(isLiked)
   const heartRef = useRef<HTMLSpanElement>(null)
   const pathname = usePathname()
 
   const send = async (liked: boolean) => {
-    if (liked === lastSent.current) return
-    lastSent.current = liked
-
-    const revert = () => {
-      lastSent.current = null
-      setWantedState((current) => (current === liked ? null : current))
-    }
+    const settle = () => setWantedState((current) => (current === liked ? null : current))
 
     try {
       const result = await setLike(projectID, liked)
+      settle()
       if (result.ok) {
         setSaved((state) => withLiked(state, result.liked))
         return
       }
-      revert()
       if (result.reason === "unauthenticated") {
-        const loginHref = authPageUrl(
-          AuthPages.LOGIN,
-          `${process.env.NEXT_PUBLIC_PROJECTS_URL}${pathname}`,
-        )
+        const loginHref = authPageUrl(AuthPages.LOGIN, projectsUrl(pathname))
         toast.error({
           description: result.error,
           action: (
@@ -79,7 +78,7 @@ export const LikeButton = ({
       console.error("[LikeButton] like was not saved", { error: result.error })
       toast.error({ description: result.error })
     } catch (err) {
-      revert()
+      settle()
       console.error("[LikeButton] like request failed", { error: err })
       toast.error({ description: "Something went wrong. Try again." })
     }

@@ -211,7 +211,7 @@ export interface Member {
   /**
    * Gender of the member
    */
-  gender: string;
+  gender: 'Male' | 'Female' | 'Non-binary' | 'Other' | 'Prefer not to say';
   /**
    * Phone number of the member
    */

@@ -1,4 +1,3 @@
-import type { ProfileHeaderProps } from "@/features/profile/components/ProfileHeader/ProfileHeader"
 import type { Member } from "@/payload/payload-types"
 
 export const mockMember: Member = {
@@ -9,11 +8,4 @@ export const mockMember: Member = {
   lastName: "Doe",
   createdAt: "2026-01-04T02:22:09.601Z",
   updatedAt: "2026-01-04T02:22:09.601Z",
-}
-
-export const mockAccount: ProfileHeaderProps["account"] = {
-  firstName: "Jane",
-  lastName: "Doe",
-  upi: "jdoe123",
-  uoaID: "123456789",
 }

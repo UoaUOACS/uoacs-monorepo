@@ -6,6 +6,7 @@ export const CacheTags = {
   PROJECTS: {
     ROOT: "projects",
     ID: (id: string) => `project:${id}` as const,
+    AUTHOR: (memberID: string) => `project-author:${memberID}` as const,
   },
   MEMBERS: {
     ID: (id: string) => `member:${id}` as const,

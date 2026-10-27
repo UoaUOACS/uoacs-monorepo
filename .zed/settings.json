@@ -1,7 +1,11 @@
 {
   "languages": {
     "TypeScript": {
-      "format_on_save": "on"
+      "format_on_save": "on",
+      "language_servers": ["tsgo", "!vtsls", "!typescript-language-server", "..."]
+    },
+    "TSX": {
+      "language_servers": ["tsgo", "!vtsls", "!typescript-language-server", "..."]
     },
     "Markdown": {
       "format_on_save": "on"

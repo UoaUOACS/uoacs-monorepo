@@ -1,10 +1,10 @@
 "use client"
 
 import { AuthPages, authPageUrl } from "@uoacs/shared"
+import { SessionUnavailable } from "@uoacs/ui"
 import { type ReactNode, useEffect } from "react"
 import { useSessionResult } from "@/context/SessionContext"
 import { isLoggingOut, useGuardedPage } from "@/lib/auth/log-out"
-import { SessionUnavailable } from "./SessionUnavailable"
 
 export const UserOnly = ({
   children,

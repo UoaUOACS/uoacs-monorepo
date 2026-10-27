@@ -13,7 +13,7 @@ import type { CacheTag } from "@/lib/cache"
  * `revalidateTag` throws outside a Next.js request (e.g. seed scripts or the Payload CLI).
  * Pass `context: { disableRevalidate: true }` to the Local API call to skip revalidation there.
  */
-const revalidateTags = (tags: CacheTag[], req: PayloadRequest, source: string): void => {
+export const revalidateTags = (tags: CacheTag[], req: PayloadRequest, source: string): void => {
   if (req.context.disableRevalidate) return
 
   for (const tag of tags) {

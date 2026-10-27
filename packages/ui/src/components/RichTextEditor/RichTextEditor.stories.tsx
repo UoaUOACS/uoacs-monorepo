@@ -1,8 +1,9 @@
 import { RichText } from "@payloadcms/richtext-lexical/react"
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
+import type { RichTextValue } from "@uoacs/shared/payload"
 import { useState } from "react"
 import { richTextConverters } from "./converters"
-import { RichTextEditor, type RichTextValue } from "./RichTextEditor"
+import { RichTextEditor } from "./RichTextEditor"
 
 const text = (value: string, format = 0) => ({
   detail: 0,
