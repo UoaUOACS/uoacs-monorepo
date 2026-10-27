@@ -31,16 +31,21 @@ export const ChipSelect = <T extends string>({
       <legend className="mb-2 font-medium font-mono text-gray-700 text-sm">{label}</legend>
       <div className="flex flex-wrap items-center gap-2">
         {value.map((item) => (
-          <Button
-            aria-label={`Remove ${item}`}
-            className="border border-gray-300 bg-white font-normal text-sm"
+          <span
+            className="flex items-center gap-1 rounded-sm border border-gray-300 bg-white py-1 pr-1 pl-3 text-sm"
             key={item}
-            onClick={() => onChange(value.filter((other) => other !== item))}
-            right={<XMarkIcon className="size-4" />}
-            theme="ghost"
           >
             {item}
-          </Button>
+            <Button
+              aria-label={`Remove ${item}`}
+              className="size-6 p-1"
+              onClick={() => onChange(value.filter((other) => other !== item))}
+              size="icon"
+              theme="ghost"
+            >
+              <XMarkIcon className="size-4" />
+            </Button>
+          </span>
         ))}
         {unpicked.length > 0 && (
           <Dropdown

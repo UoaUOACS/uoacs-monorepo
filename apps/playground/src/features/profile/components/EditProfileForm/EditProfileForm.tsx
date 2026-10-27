@@ -1,101 +1,86 @@
 "use client"
 
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline"
-import { revalidateLogic, useForm } from "@tanstack/react-form"
-import { Button, Input, Select, TextArea } from "@uoacs/ui"
+import { revalidateLogic } from "@tanstack/react-form"
+import { Button, Select } from "@uoacs/ui"
 import { toast } from "@uoacs/ui/toast"
-import { cn } from "@uoacs/ui/utils"
 import { useRouter } from "next/navigation"
-import { z } from "zod"
+import { useRef, useState } from "react"
 import { type EditMemberResult, editMember } from "@/features/member/actions/editMember"
+import { uploadProfilePicture } from "@/features/member/actions/uploadProfilePicture"
 import { type LinkName, links } from "@/features/member/constants/links.constants"
 import { skills } from "@/features/member/constants/skills.constants"
-import { editMemberSchema } from "@/features/member/schemas/editMember.schema"
-import { LANGUAGES } from "@/features/profile/profile.constants"
+import { type EditMemberInput, editMemberSchema } from "@/features/member/schemas/editMember.schema"
+import {
+  MEDIA_MAX_BYTES,
+  MEDIA_TYPES,
+  MEDIA_UPLOAD_MAX_DIMENSION,
+} from "@/features/project/project.constants"
+import { submitForm } from "@/lib/form/flush"
+import { getFieldError } from "@/lib/form/formContext"
+import { useAppForm } from "@/lib/form/useAppForm"
+import { getRelationID } from "@/lib/payload/getRelationID"
+import { Routes } from "@/lib/routes"
 import type { Member } from "@/payload/payload-types"
 import { ChipSelect } from "./ChipSelect/ChipSelect"
-import { ProfilePictureField } from "./ProfilePictureField/ProfilePictureField"
 
 const LINK_NAMES = Object.keys(links) as LinkName[]
 const LINK_OPTIONS = LINK_NAMES.map((value) => ({ label: links[value].name, value }))
 
-// The pink focus border of the shared PinInput
-const FOCUS_CLASS_NAME = "focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-
-const ERROR_MESSAGES: Record<Extract<EditMemberResult, { ok: false }>["error"], string> = {
-  invalid: "Some of your details are invalid. Check them and try again.",
-  unauthenticated: "Log in to edit your profile.",
-  unavailable: "Something went wrong. Try again.",
+const SAVE_ERROR_MESSAGES: Record<Extract<EditMemberResult, { ok: false }>["error"], string> = {
+  invalid: "Fix the highlighted fields",
+  "username-taken": "That username is taken. Try another.",
+  unauthenticated: "Sign in again to save",
+  unavailable: "We could not check your session. Try again.",
   server: "Something went wrong. Try again.",
 }
 
-/**
- * `editMemberSchema` plus the fields `editMember` cannot save yet, which the form shows but does
- * not send.
- */
-const editProfileFormSchema = editMemberSchema.extend({
-  username: z.string().trim().min(1, "Username is required."),
-  languages: z.array(z.string()),
-})
-
-type EditProfileFormValues = z.input<typeof editProfileFormSchema>
-
-/**
- * The message to show under a field. Fields show one error at a time.
- */
-const firstError = (errors: readonly ({ message: string } | undefined)[]) => errors[0]?.message
-
 export interface EditProfileFormProps {
   /**
-   * The signed-in member's current profile, used as the starting values.
+   * The signed-in member, whose profile gives the starting values
    */
-  member: Pick<Member, "username" | "profilePicture" | "bio" | "skills" | "links">
-  /**
-   * The member's languages. No data source exists yet, so these are not saved.
-   */
-  languages?: string[]
+  member: Member
 }
 
 /**
- * The "Edit Profile" form for the member's playground profile.
- *
- * Saves the bio, skills and links. The profile picture, username and languages are shown but not
- * saved yet, as `editMember` does not take them.
+ * The "Edit Profile" form for the member's playground profile
  */
-export const EditProfileForm = ({ member, languages = [] }: EditProfileFormProps) => {
+export const EditProfileForm = ({ member }: EditProfileFormProps) => {
   const router = useRouter()
-  const defaultValues: EditProfileFormValues = {
+  const pictureInput = useRef<HTMLInputElement>(null)
+  // Remounts the upload field on Remove, as it keeps showing the picture it uploaded
+  const [pictureKey, setPictureKey] = useState(0)
+  const savedPictureURL =
+    (typeof member.profilePicture === "object" && member.profilePicture?.url) || undefined
+
+  const defaultValues: EditMemberInput = {
     username: member.username,
+    profilePicture: member.profilePicture ? getRelationID(member.profilePicture) : null,
     bio: member.bio ?? "",
-    languages,
     skills: member.skills ?? [],
+    // Only the editable fields, as each saved row also has a Payload `id`
     links: member.links?.map(({ name, url }) => ({ name, url })) ?? [],
   }
-  const form = useForm({
+
+  const form = useAppForm({
     defaultValues,
     // Checks on submit, then on every change once the member has tried to submit
     validationLogic: revalidateLogic(),
-    validators: { onDynamic: editProfileFormSchema },
+    validators: { onDynamic: editMemberSchema },
     onSubmit: async ({ value }) => {
       try {
-        const result = await editMember({
-          bio: value.bio,
-          skills: value.skills,
-          links: value.links,
-        })
+        const result = await editMember(value)
         if (!result.ok) {
-          toast.error({ description: ERROR_MESSAGES[result.error] })
+          toast.error({ description: SAVE_ERROR_MESSAGES[result.error] })
           return
         }
         toast.success({ description: "Profile updated" })
       } catch (error) {
         console.error("[EditProfileForm] Failed to save the profile", { error })
-        toast.error({ description: ERROR_MESSAGES.server })
+        toast.error({ description: SAVE_ERROR_MESSAGES.server })
       }
     },
   })
-  const profilePictureURL =
-    typeof member.profilePicture === "object" ? member.profilePicture?.url : undefined
 
   return (
     <form
@@ -103,7 +88,7 @@ export const EditProfileForm = ({ member, languages = [] }: EditProfileFormProps
       noValidate
       onSubmit={(event) => {
         event.preventDefault()
-        form.handleSubmit()
+        void submitForm(form)
       }}
     >
       <p className="font-mono">
@@ -111,53 +96,67 @@ export const EditProfileForm = ({ member, languages = [] }: EditProfileFormProps
         <span className="text-primary">// </span>EDIT PROFILE
       </p>
 
-      <ProfilePictureField currentURL={profilePictureURL} />
-
-      <form.Field name="username">
+      <form.AppField name="profilePicture">
         {(field) => (
-          <Input
-            className={cn("bg-white font-sans", FOCUS_CLASS_NAME)}
-            error={firstError(field.state.meta.errors)}
-            label="Username"
-            onBlur={field.handleBlur}
-            onChange={(event) => field.handleChange(event.target.value)}
-            value={field.state.value}
-          />
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            <field.ImageUploadField
+              className="aspect-square rounded-sm"
+              containerClassName="w-24 shrink-0"
+              key={pictureKey}
+              label="Profile picture"
+              maxBytes={MEDIA_MAX_BYTES}
+              maxDimension={MEDIA_UPLOAD_MAX_DIMENSION}
+              ref={pictureInput}
+              src={field.state.value ? savedPictureURL : undefined}
+              types={MEDIA_TYPES}
+              upload={uploadProfilePicture}
+            />
+            <div className="flex gap-3">
+              <Button
+                className="border border-gray-300 bg-white text-base"
+                onClick={() => pictureInput.current?.click()}
+                shape="pill"
+                size="md"
+                theme="ghost"
+              >
+                Upload new photo
+              </Button>
+              <Button
+                className="text-base"
+                disabled={!field.state.value}
+                onClick={() => {
+                  field.handleChange(null)
+                  setPictureKey((key) => key + 1)
+                }}
+                shape="pill"
+                size="md"
+              >
+                Remove
+              </Button>
+            </div>
+          </div>
         )}
-      </form.Field>
+      </form.AppField>
 
-      <form.Field name="bio">
+      <form.AppField name="username">
+        {(field) => <field.TextField className="bg-white font-sans" label="Username" />}
+      </form.AppField>
+
+      <form.AppField name="bio">
         {(field) => (
-          <TextArea
-            className={cn("min-h-32 bg-white p-4 font-sans", FOCUS_CLASS_NAME)}
-            error={firstError(field.state.meta.errors)}
+          <field.TextAreaField
+            className="min-h-32 bg-white p-4 font-sans"
             label="Bio"
-            onBlur={field.handleBlur}
-            onChange={(event) => field.handleChange(event.target.value)}
             placeholder="Tell people a bit about yourself"
-            value={field.state.value ?? ""}
           />
         )}
-      </form.Field>
-
-      <form.Field name="languages">
-        {(field) => (
-          <ChipSelect
-            addLabel="Add a language"
-            error={firstError(field.state.meta.errors)}
-            label="Language"
-            onChange={field.handleChange}
-            options={LANGUAGES}
-            value={field.state.value}
-          />
-        )}
-      </form.Field>
+      </form.AppField>
 
       <form.Field name="skills">
         {(field) => (
           <ChipSelect
             addLabel="Add a skill"
-            error={firstError(field.state.meta.errors)}
+            error={getFieldError(field.state.meta.errors)}
             label="Skills"
             onChange={field.handleChange}
             options={skills}
@@ -183,7 +182,7 @@ export const EditProfileForm = ({ member, languages = [] }: EditProfileFormProps
                       <form.Field name={`links[${index}].name`}>
                         {(field) => (
                           <Select
-                            error={firstError(field.state.meta.errors)}
+                            error={getFieldError(field.state.meta.errors)}
                             onChange={(value) => field.handleChange(value as LinkName)}
                             options={LINK_OPTIONS}
                             value={field.state.value}
@@ -192,20 +191,16 @@ export const EditProfileForm = ({ member, languages = [] }: EditProfileFormProps
                       </form.Field>
                     </div>
                     <div className="min-w-0 flex-1">
-                      <form.Field name={`links[${index}].url`}>
+                      <form.AppField name={`links[${index}].url`}>
                         {(field) => (
-                          <Input
+                          <field.TextField
                             aria-label={`${link.name} URL`}
-                            className={cn("min-h-11 bg-white font-sans text-sm", FOCUS_CLASS_NAME)}
-                            error={firstError(field.state.meta.errors)}
-                            onBlur={field.handleBlur}
-                            onChange={(event) => field.handleChange(event.target.value)}
+                            className="min-h-11 bg-white font-sans text-sm"
                             placeholder={link.url}
                             type="url"
-                            value={field.state.value}
                           />
                         )}
-                      </form.Field>
+                      </form.AppField>
                     </div>
                     <Button
                       aria-label={`Remove ${link.name} link`}
@@ -236,14 +231,11 @@ export const EditProfileForm = ({ member, languages = [] }: EditProfileFormProps
       </form.Field>
 
       <div className="flex gap-2">
-        <form.Subscribe selector={(state) => state.isSubmitting}>
-          {(isSubmitting) => (
-            <Button disabled={isSubmitting} theme="dark" type="submit">
-              {isSubmitting ? "Updating..." : "Update"}
-            </Button>
-          )}
-        </form.Subscribe>
-        <Button onClick={() => router.back()} theme="ghost">
+        <form.AppForm>
+          <form.SubmitButton theme="dark">Update</form.SubmitButton>
+        </form.AppForm>
+        {/* The profile route, as a saved username change moves the profile's URL */}
+        <Button onClick={() => router.push(Routes.PROFILE.ROOT)} theme="ghost">
           Back
         </Button>
       </div>
