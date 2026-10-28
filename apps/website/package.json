@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@heroicons/react": "catalog:",
-    "@hookform/resolvers": "^5.2.2",
+    "@hookform/resolvers": "^6.0.0",
     "@payloadcms/db-mongodb": "catalog:payload",
     "@payloadcms/email-resend": "catalog:payload",
     "@payloadcms/next": "catalog:payload",
