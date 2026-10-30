@@ -1,13 +1,13 @@
 name: Cache Cleanup
 
 # A PR's cache entries are scoped to its merge ref, so nothing else can restore
-# them once it closes. 
+# them once it closes.
 #
-# pull_request_target gives fork PRs a token that can delete caches. 
+# pull_request_target gives fork PRs a token that can delete caches.
 
 on:
   pull_request_target:
-    types: [closed]
+    types: [ closed ]
 
 permissions:
   actions: write
