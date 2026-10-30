@@ -2,7 +2,7 @@ name: Renovate Backport to Release Branch
 
 on:
   pull_request:
-    types: [closed]
+    types: [ closed ]
     branches:
       - main
 
@@ -48,5 +48,5 @@ jobs:
           target-branch: ${{ steps.detect-release.outputs.branch }}
           forward-branch-prefix: renovate-backport
           base-label: renovate-backport
-          pr-title-prefix: '[Renovate Backport]'
+          pr-title-prefix: "[Renovate Backport]"
           github-token: ${{ secrets.GITHUB_TOKEN }}

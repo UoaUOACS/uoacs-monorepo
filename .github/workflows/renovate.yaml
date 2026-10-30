@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       repoCache:
-        description: 'Reset or disable the cache?'
+        description: "Reset or disable the cache?"
         type: choice
         default: enabled
         options:
@@ -11,7 +11,7 @@ on:
           - disabled
           - reset
   schedule:
-    - cron: '0 3 * * *'
+    - cron: "0 3 * * *"
 
 env:
   cache_archive: renovate_cache.tar.gz
