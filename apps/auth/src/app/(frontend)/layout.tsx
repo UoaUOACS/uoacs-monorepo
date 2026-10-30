@@ -56,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="relative flex min-h-screen flex-col overflow-hidden">
         <Toaster />
-        <div className="mx-auto flex w-full max-w-[1480px] grow flex-col px-4 py-6 md:gap-9 md:px-12 lg:px-20">
+        <div className="mx-auto flex w-full max-w-370 grow flex-col px-4 py-6 md:gap-9 md:px-12 lg:px-20">
           <AuthNavbar />
           <main className="flex w-full grow flex-col items-center py-9">{children}</main>
         </div>

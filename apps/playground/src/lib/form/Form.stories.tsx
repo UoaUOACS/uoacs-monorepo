@@ -41,7 +41,7 @@ const ExampleForm = ({ onSubmit }: ExampleFormProps) => {
 
   return (
     <form
-      className="flex w-[480px] flex-col gap-4"
+      className="flex w-120 flex-col gap-4"
       noValidate
       onSubmit={(e) => {
         e.preventDefault()

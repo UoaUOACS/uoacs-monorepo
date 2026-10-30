@@ -73,7 +73,7 @@ export const MobileNavbar = ({ links, socialLinks }: NavbarProps) => {
                 variant={{ size: "sm", theme: "primary", border: true }}
               >
                 {/* TODO: make something less janky */}
-                <Bars3Icon className="h-6 w-6 origin-center scale-[1.1] stroke-[2.5]" />
+                <Bars3Icon className="h-6 w-6 origin-center scale-110 stroke-[2.5]" />
               </BorderButton>
             </motion.div>
           )}
@@ -100,7 +100,7 @@ export const MobileNavbar = ({ links, socialLinks }: NavbarProps) => {
                   variant={{ size: "sm", theme: "primary", border: true }}
                 >
                   {/* TODO: make something less janky */}
-                  <XMarkIcon className="h-6 w-6 origin-center scale-[1.1] stroke-[2.5]" />
+                  <XMarkIcon className="h-6 w-6 origin-center scale-110 stroke-[2.5]" />
                 </BorderButton>
               </motion.div>
             </div>
@@ -137,10 +137,10 @@ export const MobileNavbar = ({ links, socialLinks }: NavbarProps) => {
                   <Button className="col-span-4 rounded-b-none" theme="dark">
                     Log In <ArrowRightIcon className="h-3 w-3" />
                   </Button>
-                  <div className="h-0.5 w-full rounded-bl-[2px] bg-orange-400" />
+                  <div className="h-0.5 w-full rounded-bl-xs bg-orange-400" />
                   <div className="h-0.5 w-full bg-blue-400" />
                   <div className="h-0.5 w-full bg-purple-400" />
-                  <div className="h-0.5 w-full rounded-br-[2px] bg-pink-400" />
+                  <div className="h-0.5 w-full rounded-br-xs bg-pink-400" />
                 </a>
               )}
             </div>

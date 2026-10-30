@@ -157,7 +157,7 @@ export const ValuesCarousel = () => {
               onClick={handlePrevious}
               type="button"
             >
-              <div className="h-0 w-0 border-t-[6px] border-r-8 border-b-[6px] border-t-transparent border-r-black border-b-transparent" />
+              <div className="h-0 w-0 border-t-6 border-r-8 border-b-6 border-t-transparent border-r-black border-b-transparent" />
             </button>
             <button
               aria-label="Next value"
@@ -165,7 +165,7 @@ export const ValuesCarousel = () => {
               onClick={handleNext}
               type="button"
             >
-              <div className="h-0 w-0 border-t-[6px] border-b-[6px] border-l-8 border-t-transparent border-b-transparent border-l-black" />
+              <div className="h-0 w-0 border-t-6 border-b-6 border-l-8 border-t-transparent border-b-transparent border-l-black" />
             </button>
           </div>
         </div>

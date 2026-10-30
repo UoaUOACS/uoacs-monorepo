@@ -36,7 +36,7 @@ const ExecCard = ({ promise }: { promise: Promise<ToyExec> }) => {
 
   return (
     <div className="flex w-fit flex-col items-start gap-1 p-2 md:gap-2 md:p-3">
-      <p className="flex size-[6.75rem] items-center justify-center rounded-md bg-gray-200 text-xl text-gray-700 md:size-[12.5rem]">
+      <p className="flex size-27 items-center justify-center rounded-md bg-gray-200 text-xl text-gray-700 md:size-50">
         {initials}
       </p>
       <div className="flex flex-col items-start gap-1">
@@ -49,7 +49,7 @@ const ExecCard = ({ promise }: { promise: Promise<ToyExec> }) => {
 
 const ExecCardSkeleton = () => (
   <div aria-busy="true" className="flex w-fit flex-col items-start gap-1 p-2 md:gap-2 md:p-3">
-    <Skeleton className="size-[6.75rem] md:size-[12.5rem]" />
+    <Skeleton className="size-27 md:size-50" />
     <div className="flex w-full flex-col items-start gap-1">
       <Skeleton className="paragraph w-2/3" shape="text" />
       <Skeleton className="paragraph-xs w-1/2" shape="text" />

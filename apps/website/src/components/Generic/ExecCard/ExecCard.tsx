@@ -19,7 +19,7 @@ export const ExecCard = ({ exec }: ExecCardProps) => {
   }
 
   const photoSquare = (
-    <div className="relative h-[6.75rem] w-[6.75rem] overflow-hidden rounded-md md:h-[12.5rem] md:w-[12.5rem]">
+    <div className="relative size-27 overflow-hidden rounded-md md:size-50">
       {src ? (
         <Image
           alt={`${exec.name} photo`}

@@ -18,7 +18,7 @@ export const HeroSection = ({
         <br />
         COMPUTER SCIENCE SOCIETY
       </p>
-      <div className="flex flex-col justify-center gap-12 md:max-w-[38rem] md:justify-start">
+      <div className="flex flex-col justify-center gap-12 md:max-w-152 md:justify-start">
         <div className="flex flex-col justify-center gap-6 text-center md:gap-12 md:text-left">
           <div className="self-center md:self-start">
             <Heading className="md:justify-start md:text-left" h={2}>
@@ -28,13 +28,13 @@ export const HeroSection = ({
               Around Campus
             </Heading>
           </div>
-          <p className="paragraph md:max-w-[28rem]">
+          <p className="paragraph md:max-w-112">
             UOACS is the University of Auckland's Computer Science student community, connecting
             students through technical development, industry opportunities and a collaborative
             network.
           </p>
         </div>
-        <div className="hidden h-1.5 w-full bg-linear-to-r from-[#FF307C] to-[#2134FF] mask-[linear-gradient(to_right,white,transparent)] md:block" />
+        <div className="hidden h-1.5 w-full bg-linear-to-r from-pink-500 to-[#2134FF] mask-[linear-gradient(to_right,white,transparent)] md:block" />
         <SocialLinks
           activeDiscord
           discordPresenceCount={discordPresenceCount}

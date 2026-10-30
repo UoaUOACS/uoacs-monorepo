@@ -77,8 +77,8 @@ export default async function SponsorsPage() {
                   className={cn(
                     "flex flex-1 items-center justify-center rounded-lg p-6 transition-all duration-300 hover:bg-gray-500-opaque",
                     sponsor.tier === SponsorTier.DIAMOND || sponsor.tier === SponsorTier.GOLD
-                      ? "h-[200px]"
-                      : "h-[150px]",
+                      ? "h-50"
+                      : "h-37.5",
                   )}
                   href={sponsor.link || "#"}
                   key={sponsor.name}

@@ -24,7 +24,7 @@ export const buttonVariants = tv({
     },
     shape: {
       default: "rounded-sm",
-      rounded: "rounded-[10px]",
+      rounded: "rounded-2lg",
       pill: "rounded-full",
     },
     font: {
