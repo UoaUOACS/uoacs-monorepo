@@ -53,7 +53,7 @@ export const WhoWeAreSection = ({ polaroids }: WhoWeAreSectionProps) => {
     >
       <div className="flex w-full flex-wrap justify-center gap-12">
         <div className="flex w-full max-w-md flex-col gap-4 md:w-auto">
-          <div className="flex min-h-36 flex-col gap-2 bg-accent-purple-light p-4">
+          <div className="bg-accent-purple-light flex min-h-36 flex-col gap-2 p-4">
             <Heading className="justify-start text-left" h={3}>
               Technical Development
             </Heading>
@@ -62,7 +62,7 @@ export const WhoWeAreSection = ({ polaroids }: WhoWeAreSectionProps) => {
               practical skills beyond the classroom.
             </p>
           </div>
-          <div className="flex min-h-36 flex-col gap-2 bg-accent-red-light p-4">
+          <div className="bg-accent-red-light flex min-h-36 flex-col gap-2 p-4">
             <Heading className="justify-start text-left" h={3}>
               Industry &amp; Careers
             </Heading>
@@ -71,7 +71,7 @@ export const WhoWeAreSection = ({ polaroids }: WhoWeAreSectionProps) => {
               panels, networking and career opportunities.
             </p>
           </div>
-          <div className="flex min-h-36 flex-col gap-2 bg-accent-yellow-light p-4">
+          <div className="bg-accent-yellow-light flex min-h-36 flex-col gap-2 p-4">
             <Heading className="justify-start text-left" h={3}>
               Community
             </Heading>

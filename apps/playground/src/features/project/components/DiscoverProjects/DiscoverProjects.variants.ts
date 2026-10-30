@@ -5,7 +5,7 @@ export const discoverProjectsVariants = tv({
     root: "flex w-full flex-col gap-8",
     header: "relative flex flex-col items-center gap-4 md:flex-row md:justify-center",
     sort: "self-end md:absolute md:right-0",
-    heading: "border-gray-200 border-b pb-2 font-cartograph text-gray-400 text-sm",
+    heading: "border-b border-gray-200 pb-2 font-cartograph text-sm text-gray-400",
   },
 })
 

@@ -7,9 +7,9 @@ import { tv, type VariantProps } from "tailwind-variants"
 export const sponsorBadgeVariants = tv({
   slots: {
     inner:
-      "flex flex-row gap-4 items-center border-4 border-transparent p-4 paragraph font-mono text-left w-fit px-3 py-2",
+      "paragraph flex w-fit flex-row items-center gap-4 border-4 border-transparent p-4 px-3 py-2 text-left font-mono",
     border:
-      "border-4 border-transparent rounded-xs cursor-pointer w-fit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black disabled:cursor-not-allowed disabled:opacity-50",
+      "w-fit cursor-pointer rounded-xs border-4 border-transparent focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   },
   variants: {
     tier: {

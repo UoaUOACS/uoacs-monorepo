@@ -1,3 +1,4 @@
+import { cn } from "@uoacs/ui/utils"
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 import { Providers } from "@/features/layout/components/Providers/Providers"
@@ -69,7 +70,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      className={`${inter.variable} ${switzer.variable} ${mono.variable} ${neulis.variable} overflow-x-clip`}
+      className={cn(
+        inter.variable,
+        switzer.variable,
+        mono.variable,
+        neulis.variable,
+        "overflow-x-clip",
+      )}
       lang="en"
     >
       <body className="flex min-h-screen flex-col overflow-x-clip">

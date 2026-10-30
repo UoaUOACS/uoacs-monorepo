@@ -29,7 +29,7 @@ export const projectCardVariants = tv({
       profile: {
         base: "max-w-none gap-6 rounded-md bg-white p-4 md:flex-row md:gap-10 md:p-8",
         imageWrapper: "md:w-64 md:shrink-0 md:self-start lg:w-100",
-        title: "font-switzer text-3xl font-bold break-words text-gray-900",
+        title: "font-switzer text-3xl font-bold wrap-break-word text-gray-900",
         heartIcon: "size-5",
         likesCount: "text-sm font-normal text-gray-500",
         content: "flex min-w-0 flex-1 flex-col gap-4",

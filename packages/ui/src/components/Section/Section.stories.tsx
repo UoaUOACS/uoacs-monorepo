@@ -29,6 +29,6 @@ export const WithoutSubtitle: Story = {
 
 export const WithTitleOverlay: Story = {
   args: {
-    titleOverlay: <span className="absolute -top-2 -right-6 text-accent-yellow text-xs">New</span>,
+    titleOverlay: <span className="text-accent-yellow absolute -top-2 -right-6 text-xs">New</span>,
   },
 }

@@ -37,7 +37,7 @@ export const ProjectEditorToolbar = withForm({
             }
           >
             {(fieldCount) => (
-              <p className="mr-auto text-red-600 text-sm" role="alert">
+              <p className="mr-auto text-sm text-red-600" role="alert">
                 {error}
                 {fieldCount > 0 && ` (${fieldCount})`}
               </p>

@@ -101,7 +101,7 @@ export const LightboxDialog = ({
         </div>
       )}
       {image && hasNav && (
-        <p aria-live="polite" className="text-center text-gray-500 text-sm">
+        <p aria-live="polite" className="text-center text-sm text-gray-500">
           {index + 1} / {images.length}
         </p>
       )}

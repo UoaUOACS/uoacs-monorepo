@@ -59,7 +59,7 @@ export const Dialog = ({ open, onClose, title, children, className }: DialogProp
       className={cn(
         "m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg flex-col overflow-hidden rounded-2xl bg-white p-0 text-black shadow-lg open:flex",
         "opacity-0 transition-[opacity,scale,display,overlay] transition-discrete duration-200 ease-out",
-        "scale-95 open:scale-100 starting:open:scale-95 open:opacity-100 starting:open:opacity-0",
+        "scale-95 open:scale-100 open:opacity-100 starting:open:scale-95 starting:open:opacity-0",
         "backdrop:bg-black/0 backdrop:transition-[background-color,display,overlay] backdrop:transition-discrete backdrop:duration-200",
         "open:backdrop:bg-black/50 starting:open:backdrop:bg-black/0",
         className,
@@ -82,7 +82,7 @@ export const Dialog = ({ open, onClose, title, children, className }: DialogProp
     >
       <div className="flex shrink-0 items-start justify-between gap-4 px-6 pt-6 pb-4">
         {title && (
-          <h2 className="font-medium text-lg" id={titleId}>
+          <h2 className="text-lg font-medium" id={titleId}>
             {title}
           </h2>
         )}
