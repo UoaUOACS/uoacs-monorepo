@@ -19,6 +19,9 @@
     "ignoreUnknown": true,
     "maxSize": 2097152
   },
+  "tailwind": {
+    "stylesheet": "packages/ui/src/styles/theme.css"
+  },
   "formatter": {
     "attributePosition": "auto",
     "bracketSpacing": true,
