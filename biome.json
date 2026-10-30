@@ -65,7 +65,7 @@
       },
       "a11y": {},
       "nursery": {
-        "useSortedClasses": "info"
+        "useTailwindSortedClasses": "info"
       },
       "complexity": {
         "noStaticOnlyClass": "off"
