@@ -48,10 +48,10 @@ export const ValueCard = ({ title, colour, children }: ValueCardProps) => {
     <div
       className={`flex w-full max-w-75 flex-col border-6 md:max-w-132 ${borderColourClasses[colour]}`}
     >
-      <Heading className="!justify-start !text-left border-b-1 border-b-gray-300 p-3" h={4}>
+      <Heading className="!justify-start border-b-1 border-b-gray-300 p-3 !text-left" h={4}>
         {title}
       </Heading>
-      <div className="px-3 py-6 font-light font-switzer text-xl leading-none">{children}</div>
+      <div className="px-3 py-6 font-switzer text-xl leading-none font-light">{children}</div>
     </div>
   )
 }

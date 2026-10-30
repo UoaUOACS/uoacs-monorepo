@@ -10,10 +10,10 @@ export const paginationVariants = tv({
     root: "font-cartograph text-base text-black",
     list: "flex items-center gap-2",
     pages: "flex items-center gap-0.5",
-    item: "flex h-8 min-w-8 items-center justify-center whitespace-nowrap rounded-lg px-2 transition-colors duration-150 hover:bg-gray-200 focus-visible:outline-2 focus-visible:outline-gray-800 focus-visible:outline-offset-2",
-    ellipsis: "flex h-8 min-w-8 select-none items-center justify-center text-2xs",
+    item: "flex h-8 min-w-8 items-center justify-center rounded-lg px-2 whitespace-nowrap transition-colors duration-150 hover:bg-gray-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800",
+    ellipsis: "flex h-8 min-w-8 items-center justify-center text-2xs select-none",
     arrow:
-      "flex size-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-gray-200 focus-visible:outline-2 focus-visible:outline-gray-800 focus-visible:outline-offset-2",
+      "flex size-8 items-center justify-center rounded-lg transition-colors duration-150 hover:bg-gray-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800",
     arrowIcon: "size-6 stroke-2",
   },
   variants: {

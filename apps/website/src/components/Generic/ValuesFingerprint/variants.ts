@@ -4,7 +4,7 @@ export const valuesFingerprintVariants = tv({
   slots: {
     svg: "relative",
     container: "relative",
-    label: "-translate-y-1/2 absolute top-1/2 transform font-semibold",
+    label: "absolute top-1/2 -translate-y-1/2 transform font-semibold",
   },
   variants: {
     colour: {
@@ -24,15 +24,15 @@ export const valuesFingerprintVariants = tv({
     size: {
       sm: {
         svg: "size-32",
-        label: "text-5xl ml-7",
+        label: "ml-7 text-5xl",
       },
       md: {
         svg: "size-38",
-        label: "text-6xl ml-8",
+        label: "ml-8 text-6xl",
       },
       lg: {
         svg: "size-44",
-        label: "text-7xl ml-9",
+        label: "ml-9 text-7xl",
       },
     },
   },

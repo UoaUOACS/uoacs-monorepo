@@ -17,7 +17,7 @@ export const Input = ({
   ref,
   ...props
 }: InputProps) => {
-  const errorMessage = error ? <p className="mt-1 text-red-600 text-sm">{error}</p> : null
+  const errorMessage = error ? <p className="mt-1 text-sm text-red-600">{error}</p> : null
 
   if (!label) {
     return (
@@ -36,7 +36,7 @@ export const Input = ({
 
   return (
     <div className={cn("flex w-full flex-col justify-start gap-2 font-mono", containerClassName)}>
-      <label className="block font-medium text-gray-700 text-sm" htmlFor={label}>
+      <label className="block text-sm font-medium text-gray-700" htmlFor={label}>
         {label}
         {required && <span className="ml-1 text-brand-pink">*</span>}
       </label>

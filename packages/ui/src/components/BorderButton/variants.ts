@@ -7,9 +7,9 @@ import { tv, type VariantProps } from "tailwind-variants"
 export const borderButtonVariants = tv({
   slots: {
     inner:
-      "flex flex-row gap-4 items-center rounded-xl border-4 border-transparent bg-black p-4 font-mono text-white text-left transition-colors duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50",
+      "flex flex-row items-center gap-4 rounded-xl border-4 border-transparent bg-black p-4 text-left font-mono text-white transition-colors duration-300 ease-in-out disabled:cursor-not-allowed disabled:opacity-50",
     border:
-      "rounded-2xl border-4 border-transparent cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 ease-in-out",
+      "cursor-pointer rounded-2xl border-4 border-transparent transition-all duration-200 ease-in-out focus-visible:ring-2 focus-visible:ring-black focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   },
   variants: {
     theme: {
@@ -32,25 +32,25 @@ export const borderButtonVariants = tv({
     },
     size: {
       navbar: {
-        inner: "text-sm px-6 py-3 gap-2",
+        inner: "gap-2 px-6 py-3 text-sm",
       },
       sm: {
-        inner: "text-sm px-4 py-2 gap-2",
+        inner: "gap-2 px-4 py-2 text-sm",
       },
       "sm-wide": {
-        inner: "text-sm px-6 py-2 gap-2",
+        inner: "gap-2 px-6 py-2 text-sm",
       },
       md: {
-        inner: "paragraph p-4 gap-4",
+        inner: "paragraph gap-4 p-4",
       },
       "md-wide": {
-        inner: "paragraph px-6 py-4 gap-4",
+        inner: "paragraph gap-4 px-6 py-4",
       },
       lg: {
-        inner: "text-lg p-6 gap-6",
+        inner: "gap-6 p-6 text-lg",
       },
       "lg-wide": {
-        inner: "text-lg px-10 py-6 gap-6",
+        inner: "gap-6 px-10 py-6 text-lg",
       },
     },
     border: {

@@ -23,7 +23,7 @@ export const ValuesAccordionItem = ({
   onClick,
 }: ValuesAccordionItemProps) => {
   return (
-    <div className="flex flex-col gap-3 border-gray-300 border-b px-1 py-4 font-medium">
+    <div className="flex flex-col gap-3 border-b border-gray-300 px-1 py-4 font-medium">
       <button
         className="flex cursor-pointer flex-row items-center justify-between bg-white"
         onClick={onClick}
@@ -31,7 +31,7 @@ export const ValuesAccordionItem = ({
       >
         <h3
           className={cn(
-            "font-medium font-mono text-xl",
+            "font-mono text-xl font-medium",
             {
               pink: "text-brand-pink",
               orange: "text-brand-orange",
