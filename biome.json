@@ -68,7 +68,8 @@
       },
       "a11y": {},
       "nursery": {
-        "useTailwindSortedClasses": { "level": "info", "fix": "safe" }
+        "useTailwindSortedClasses": { "level": "info", "fix": "safe" },
+        "useTailwindStaticClassStrings": "error"
       },
       "complexity": {
         "noStaticOnlyClass": "off"
