@@ -2,9 +2,9 @@ name: PR Notification
 
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review, closed]
+    types: [ opened, reopened, ready_for_review, closed ]
   release:
-    types: [published]
+    types: [ published ]
 
 jobs:
   notify:
@@ -20,16 +20,16 @@ jobs:
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           color: 6385919
-          title: 'PR Ready for Review: ${{ github.event.pull_request.title }}'
+          title: "PR Ready for Review: ${{ github.event.pull_request.title }}"
           description: ${{ github.event.pull_request.body }}
           description_max_length: 175
           url: ${{ github.event.pull_request.html_url }}
           author_name: ${{ github.event.pull_request.user.login }}
           author_url: ${{ github.event.pull_request.user.html_url }}
           author_icon_url: ${{ github.event.pull_request.user.avatar_url }}
-          image_url: 'https://opengraph.githubassets.com/${{ github.sha }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
-          button_label: 'View Pull Request'
-          branch_info: '`${{ github.event.pull_request.head.ref }}` -> `${{ github.event.pull_request.base.ref }}`'
+          image_url: "https://opengraph.githubassets.com/${{ github.sha }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+          button_label: "View Pull Request"
+          branch_info: "`${{ github.event.pull_request.head.ref }}` -> `${{ github.event.pull_request.base.ref }}`"
 
       - name: Send notification on PR Merged
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
@@ -37,15 +37,15 @@ jobs:
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           color: 3901276
-          title: 'PR Merged: ${{ github.event.pull_request.title }}'
-          description: 'The pull request was merged by **${{ github.event.pull_request.merged_by.login }}**.'
+          title: "PR Merged: ${{ github.event.pull_request.title }}"
+          description: "The pull request was merged by **${{ github.event.pull_request.merged_by.login }}**."
           url: ${{ github.event.pull_request.html_url }}
           author_name: ${{ github.event.pull_request.user.login }}
           author_url: ${{ github.event.pull_request.user.html_url }}
           author_icon_url: ${{ github.event.pull_request.user.avatar_url }}
-          image_url: 'https://opengraph.githubassets.com/${{ github.sha }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
-          button_label: 'View Merged PR'
-          branch_info: '`${{ github.event.pull_request.head.ref }}` -> `${{ github.event.pull_request.base.ref }}`'
+          image_url: "https://opengraph.githubassets.com/${{ github.sha }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+          button_label: "View Merged PR"
+          branch_info: "`${{ github.event.pull_request.head.ref }}` -> `${{ github.event.pull_request.base.ref }}`"
 
       - name: Send notification on PR Closed
         if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == false
@@ -53,14 +53,14 @@ jobs:
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           color: 16076400
-          title: 'PR Closed: ${{ github.event.pull_request.title }}'
-          description: 'The pull request was closed without merging.'
+          title: "PR Closed: ${{ github.event.pull_request.title }}"
+          description: "The pull request was closed without merging."
           url: ${{ github.event.pull_request.html_url }}
           author_name: ${{ github.event.pull_request.user.login }}
           author_url: ${{ github.event.pull_request.user.html_url }}
           author_icon_url: ${{ github.event.pull_request.user.avatar_url }}
-          image_url: 'https://opengraph.githubassets.com/${{ github.sha }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
-          button_label: 'View Closed PR'
+          image_url: "https://opengraph.githubassets.com/${{ github.sha }}/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+          button_label: "View Closed PR"
 
       - name: Send notification on New Release
         if: github.event_name == 'release'
@@ -68,12 +68,12 @@ jobs:
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           color: 3447003
-          title: 'New Release: ${{ github.event.release.tag_name }}'
+          title: "New Release: ${{ github.event.release.tag_name }}"
           description: ${{ github.event.release.body }}
           description_max_length: 175
           url: ${{ github.event.release.html_url }}
           author_name: ${{ github.event.release.author.login }}
           author_url: ${{ github.event.release.author.html_url }}
           author_icon_url: ${{ github.event.release.author.avatar_url }}
-          image_url: 'https://opengraph.githubassets.com/${{ github.sha }}/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }}'
-          button_label: 'View Release'
+          image_url: "https://opengraph.githubassets.com/${{ github.sha }}/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }}"
+          button_label: "View Release"
