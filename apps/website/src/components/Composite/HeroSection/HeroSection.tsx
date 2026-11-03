@@ -34,7 +34,7 @@ export const HeroSection = ({
             network.
           </p>
         </div>
-        <div className="mask-[linear-gradient(to_right,white,transparent)] hidden h-1.5 w-full bg-linear-to-r from-[#FF307C] to-[#2134FF] md:block" />
+        <div className="hidden h-1.5 w-full bg-linear-to-r from-[#FF307C] to-[#2134FF] mask-[linear-gradient(to_right,white,transparent)] md:block" />
         <SocialLinks
           activeDiscord
           discordPresenceCount={discordPresenceCount}

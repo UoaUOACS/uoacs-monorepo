@@ -57,7 +57,7 @@ export const EventCard = ({ event }: EventCardProps) => {
         {canRegister ? (
           <a
             aria-label={`Register for ${event.name} (opens in new tab)`}
-            className="focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+            className="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             href={event.signUpForm ?? undefined}
             rel="noopener noreferrer"
             target="_blank"

@@ -175,7 +175,7 @@ export const FileUpload = ({
   return (
     <div className={cn("flex w-full flex-col justify-start gap-2 font-mono", containerClassName)}>
       {label && (
-        <span className="block font-medium text-gray-700 text-sm">
+        <span className="block text-sm font-medium text-gray-700">
           {label}
           {required && <span className="ml-1 text-brand-pink">*</span>}
         </span>
@@ -189,7 +189,7 @@ export const FileUpload = ({
         <div className="flex flex-col gap-2">
           <label
             className={cn(
-              "flex cursor-pointer flex-col items-center justify-center gap-4 rounded-lg border-2 border-gray-300 border-dashed px-6 py-12 text-center text-gray-700 text-sm focus-within:[outline:-webkit-focus-ring-color_auto_1px]",
+              "flex cursor-pointer flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-gray-300 px-6 py-12 text-center text-sm text-gray-700 focus-within:[outline:-webkit-focus-ring-color_auto_1px]",
               isDragging && "border-brand-pink bg-gray-50",
               error && "border-red-600",
               disabled && "cursor-not-allowed opacity-50",
@@ -230,7 +230,7 @@ export const FileUpload = ({
             />
           </label>
           {(accept || maxSize !== undefined) && (
-            <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 text-gray-400 text-xs">
+            <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 text-xs text-gray-400">
               {accept && <span>Supported formats: {formatAccept(accept)}</span>}
               {maxSize !== undefined && (
                 <span className="ml-auto">Maximum size: {formatFileSize(maxSize)}</span>
@@ -266,7 +266,7 @@ export const FileUpload = ({
         </ul>
       )}
       {error && (
-        <p className="mt-1 text-red-600 text-sm" id={errorId}>
+        <p className="mt-1 text-sm text-red-600" id={errorId}>
           {error}
         </p>
       )}

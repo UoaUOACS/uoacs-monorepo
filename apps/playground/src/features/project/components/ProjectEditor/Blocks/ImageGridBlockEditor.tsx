@@ -187,7 +187,7 @@ export const ImageGridBlockEditor = withForm({
                       className="absolute inset-0 size-full object-cover opacity-50"
                       src={image.previewURL}
                     />
-                    <span className="absolute inset-0 flex items-center justify-center p-2 text-center font-medium text-gray-900 text-sm">
+                    <span className="absolute inset-0 flex items-center justify-center p-2 text-center text-sm font-medium text-gray-900">
                       {image.error ?? "Uploading…"}
                     </span>
                     {image.error && (
@@ -205,7 +205,7 @@ export const ImageGridBlockEditor = withForm({
                 {slots > 0 && (
                   <li className={tile}>
                     <label
-                      className="flex size-full cursor-pointer flex-col items-center justify-center gap-2 font-medium text-gray-500 text-sm hover:bg-gray-200 focus-within:[outline:-webkit-focus-ring-color_auto_1px]"
+                      className="flex size-full cursor-pointer flex-col items-center justify-center gap-2 text-sm font-medium text-gray-500 focus-within:[outline:-webkit-focus-ring-color_auto_1px] hover:bg-gray-200"
                       htmlFor={inputID}
                     >
                       <PhotoIcon aria-hidden className="size-8 stroke-2" />
@@ -227,12 +227,12 @@ export const ImageGridBlockEditor = withForm({
                   </li>
                 )}
               </ul>
-              <p className="text-right text-gray-500 text-sm">
+              <p className="text-right text-sm text-gray-500">
                 {images.length}/{IMAGE_GRID_MAX_IMAGES} images
               </p>
-              {notice && <p className="text-gray-700 text-sm">{notice}</p>}
+              {notice && <p className="text-sm text-gray-700">{notice}</p>}
               {error && (
-                <p className="text-red-600 text-sm" id={`${inputID}-error`}>
+                <p className="text-sm text-red-600" id={`${inputID}-error`}>
                   {error}
                 </p>
               )}

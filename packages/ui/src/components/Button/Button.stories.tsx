@@ -78,14 +78,14 @@ interface VariantTableProps<C extends string> {
 
 const VariantTable = <C extends string>({ title, columns, renderCell }: VariantTableProps<C>) => (
   <section className="flex flex-col gap-1">
-    <h3 className="font-bold text-sm">{title}</h3>
+    <h3 className="text-sm font-bold">{title}</h3>
     <table className="w-fit border-collapse border border-gray-300">
       <thead>
         <tr>
           <th className="border border-gray-300" />
           {columns.map((column) => (
             <th
-              className="border border-gray-300 px-3 py-2 text-left font-mono text-gray-500 text-xs"
+              className="border border-gray-300 px-3 py-2 text-left font-mono text-xs text-gray-500"
               key={column}
             >
               {column}
@@ -96,7 +96,7 @@ const VariantTable = <C extends string>({ title, columns, renderCell }: VariantT
       <tbody>
         {themes.map((theme) => (
           <tr key={theme}>
-            <th className="border border-gray-300 px-3 py-2 text-left font-mono text-gray-500 text-xs">
+            <th className="border border-gray-300 px-3 py-2 text-left font-mono text-xs text-gray-500">
               {theme}
             </th>
             {columns.map((column) => (

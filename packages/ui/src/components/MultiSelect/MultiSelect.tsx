@@ -94,7 +94,7 @@ export const MultiSelect = ({
         tabIndex={0}
       >
         {value.length === 0 ? (
-          <span className="text-gray-400 text-sm">{placeholder}</span>
+          <span className="text-sm text-gray-400">{placeholder}</span>
         ) : (
           value.map((v) => (
             <span
@@ -173,7 +173,7 @@ export const MultiSelect = ({
               )
             })}
             {customTextInput && (
-              <li className="flex flex-row items-center gap-2 border-gray-200 border-t py-2 pr-2">
+              <li className="flex flex-row items-center gap-2 border-t border-gray-200 py-2 pr-2">
                 <input
                   className="w-full border-0 px-3 py-2 text-sm focus:ring-0"
                   onChange={(e) => setCustomValue(e.target.value)}
@@ -209,7 +209,7 @@ export const MultiSelect = ({
     </div>
   )
 
-  const errorMessage = error ? <p className="mt-1 text-red-600 text-sm">{error}</p> : null
+  const errorMessage = error ? <p className="mt-1 text-sm text-red-600">{error}</p> : null
 
   if (!label) {
     return (
@@ -227,7 +227,7 @@ export const MultiSelect = ({
     >
       {/* biome-ignore lint/a11y/useKeyWithClickEvents: only refocuses the already keyboard-operable trigger div, not itself an interactive target */}
       <label
-        className="font-medium text-gray-700 text-sm"
+        className="text-sm font-medium text-gray-700"
         htmlFor={label}
         onClick={() => triggerRef.current?.focus()}
       >

@@ -148,7 +148,7 @@ export const BlockFrame = withForm({
           <div
             className={cn(
               "relative rounded-xl p-2",
-              error && "outline-2 outline-red-600 outline-offset-4",
+              error && "outline-2 outline-offset-4 outline-red-600",
               // Skips layout and paint for idle blocks off screen, for long pages
               !active && "[contain-intrinsic-block-size:auto_24rem] [content-visibility:auto]",
             )}
@@ -172,7 +172,7 @@ export const BlockFrame = withForm({
               ) : (
                 <>
                   {isEmptyBlock(block) ? (
-                    <p className="flex min-h-24 items-center justify-center rounded-xl border border-gray-300 border-dashed text-gray-500 text-sm">
+                    <p className="flex min-h-24 items-center justify-center rounded-xl border border-dashed border-gray-300 text-sm text-gray-500">
                       {isText ? "Click to write" : "Click to add images"}
                     </p>
                   ) : isText ? (
@@ -201,9 +201,9 @@ export const BlockFrame = withForm({
               )}
             </Suspense>
           </div>
-          {error && !active && <p className="text-red-600 text-sm">{error}</p>}
+          {error && !active && <p className="text-sm text-red-600">{error}</p>}
           {failedUploads > 0 && !active && (
-            <p className="text-red-600 text-sm">
+            <p className="text-sm text-red-600">
               {failedUploads === 1 ? "1 image" : `${failedUploads} images`} could not be uploaded.
               Open the section to see why.
             </p>
@@ -222,7 +222,7 @@ export const BlockFrame = withForm({
             trigger={{
               // Shows on hover or focus of the block, and always on touch screens and the open block
               triggerClassName: cn(
-                "size-8 bg-gray-100 text-gray-700 md:size-10 opacity-0 transition-opacity",
+                "size-8 bg-gray-100 text-gray-700 opacity-0 transition-opacity md:size-10",
                 "group-focus-within/block:opacity-100 group-hover/block:opacity-100 aria-expanded:opacity-100 pointer-coarse:opacity-100",
                 active && "opacity-100",
               ),

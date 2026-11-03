@@ -34,7 +34,7 @@ export const Controlled: Story = {
     return (
       <div className="flex flex-col gap-4">
         <SearchBar {...args} onValueChange={setQuery} value={query} />
-        <p className="font-mono text-gray-500 text-sm">query: "{query}"</p>
+        <p className="font-mono text-sm text-gray-500">query: "{query}"</p>
       </div>
     )
   },
