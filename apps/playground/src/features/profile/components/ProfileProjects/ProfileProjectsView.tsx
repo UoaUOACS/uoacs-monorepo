@@ -24,7 +24,7 @@ export interface ProfileProjectsViewProps {
 
 const NewProjectLink = () => (
   <Link
-    className="flex items-center justify-center gap-2 rounded-md border-2 border-gray-300 border-dashed py-8 font-medium text-gray-500 transition-colors hover:border-gray-500 hover:text-gray-900"
+    className="flex items-center justify-center gap-2 rounded-md border-2 border-dashed border-gray-300 py-8 font-medium text-gray-500 transition-colors hover:border-gray-500 hover:text-gray-900"
     href={Routes.PROJECTS.CREATE}
   >
     <PlusIcon aria-hidden="true" className="size-6" />

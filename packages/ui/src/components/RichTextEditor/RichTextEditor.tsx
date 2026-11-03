@@ -198,7 +198,7 @@ export const RichTextEditor = ({
                   id={id}
                   onBlur={onBlur}
                   placeholder={
-                    <div className="pointer-events-none absolute top-2.25 left-3.25 text-gray-400 leading-relaxed">
+                    <div className="pointer-events-none absolute top-2.25 left-3.25 leading-relaxed text-gray-400">
                       {placeholder}
                     </div>
                   }
@@ -220,7 +220,7 @@ export const RichTextEditor = ({
 }
 
 const EditorAlert = ({ children, className }: { children: ReactNode; className?: string }) => (
-  <p className={cn("text-red-600 text-sm", className)} role="alert">
+  <p className={cn("text-sm text-red-600", className)} role="alert">
     {children}
   </p>
 )

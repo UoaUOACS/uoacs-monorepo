@@ -153,11 +153,11 @@ export const ValuesCarousel = () => {
           <div className="absolute -right-3 -bottom-3 z-10 flex gap-0 rounded border border-gray-400 bg-white">
             <button
               aria-label="Previous value"
-              className="flex h-8 w-8 cursor-pointer items-center justify-center border-gray-400 border-r"
+              className="flex h-8 w-8 cursor-pointer items-center justify-center border-r border-gray-400"
               onClick={handlePrevious}
               type="button"
             >
-              <div className="h-0 w-0 border-t-[6px] border-t-transparent border-r-8 border-r-black border-b-[6px] border-b-transparent" />
+              <div className="h-0 w-0 border-t-[6px] border-r-8 border-b-[6px] border-t-transparent border-r-black border-b-transparent" />
             </button>
             <button
               aria-label="Next value"
@@ -165,7 +165,7 @@ export const ValuesCarousel = () => {
               onClick={handleNext}
               type="button"
             >
-              <div className="h-0 w-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-8 border-l-black" />
+              <div className="h-0 w-0 border-t-[6px] border-b-[6px] border-l-8 border-t-transparent border-b-transparent border-l-black" />
             </button>
           </div>
         </div>

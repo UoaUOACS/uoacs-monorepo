@@ -36,7 +36,7 @@ const ExecCard = ({ promise }: { promise: Promise<ToyExec> }) => {
 
   return (
     <div className="flex w-fit flex-col items-start gap-1 p-2 md:gap-2 md:p-3">
-      <p className="flex size-[6.75rem] items-center justify-center rounded-md bg-gray-200 text-gray-700 text-xl md:size-[12.5rem]">
+      <p className="flex size-[6.75rem] items-center justify-center rounded-md bg-gray-200 text-xl text-gray-700 md:size-[12.5rem]">
         {initials}
       </p>
       <div className="flex flex-col items-start gap-1">

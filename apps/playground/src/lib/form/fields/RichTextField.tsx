@@ -38,7 +38,7 @@ class EditorLoadBoundary extends Component<{ children: ReactNode }, { failed: bo
   render() {
     if (this.state.failed) {
       return (
-        <p className="text-red-600 text-sm" role="alert">
+        <p className="text-sm text-red-600" role="alert">
           The editor could not load. Reload the page to try again.
         </p>
       )
@@ -93,7 +93,7 @@ export const RichTextField = ({
   return (
     <div className="flex w-full flex-col gap-2">
       <span
-        className={cn("block font-medium text-gray-700 text-sm", hideLabel && "sr-only")}
+        className={cn("block text-sm font-medium text-gray-700", hideLabel && "sr-only")}
         id={`${id}-label`}
       >
         {label}
@@ -127,7 +127,7 @@ export const RichTextField = ({
         </p>
       )}
       {error && (
-        <p className="text-red-600 text-sm" id={`${id}-error`}>
+        <p className="text-sm text-red-600" id={`${id}-error`}>
           {error}
         </p>
       )}

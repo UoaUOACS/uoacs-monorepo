@@ -60,8 +60,8 @@ export const ProjectHeader = ({ project, actions }: ProjectHeaderProps) => {
             <Heading className="justify-start text-left font-bold" h={4}>
               {name}
             </Heading>
-            <AuthorLink className="truncate text-gray-500 text-sm" href={authorHref}>
-              <span className="truncate text-gray-900 text-sm group-has-[a:hover]/author:underline">
+            <AuthorLink className="truncate text-sm text-gray-500" href={authorHref}>
+              <span className="truncate text-sm text-gray-900 group-has-[a:hover]/author:underline">
                 {authorName}
               </span>
             </AuthorLink>

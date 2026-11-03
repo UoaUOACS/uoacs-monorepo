@@ -99,7 +99,7 @@ export const SearchBar = ({
       />
       <button
         aria-label="Clear search"
-        className="absolute top-1/2 right-2 flex size-10 -translate-y-1/2 items-center justify-center rounded-full text-black transition-colors hover:bg-gray-100 disabled:pointer-events-none disabled:opacity-50 peer-placeholder-shown:hidden md:right-3"
+        className="absolute top-1/2 right-2 flex size-10 -translate-y-1/2 items-center justify-center rounded-full text-black transition-colors peer-placeholder-shown:hidden hover:bg-gray-100 disabled:pointer-events-none disabled:opacity-50 md:right-3"
         disabled={disabled || readOnly}
         onClick={handleClear}
         type="button"

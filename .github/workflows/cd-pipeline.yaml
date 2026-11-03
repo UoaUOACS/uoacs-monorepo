@@ -5,11 +5,11 @@ on:
     branches:
       - main
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Manual deployment environment'
+        description: "Manual deployment environment"
         type: environment
         required: true
 
@@ -197,7 +197,7 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
   deploy-playground-prod:
-    name: Deploy Playground Production 
+    name: Deploy Playground Production
     if: (github.event_name == 'push' && github.ref_type == 'tag') || (github.event_name == 'workflow_dispatch' && inputs.environment == 'playground-prod')
     environment:
       name: playground-prod

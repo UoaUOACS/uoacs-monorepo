@@ -11,11 +11,11 @@ export function NotFoundContent() {
           <span aria-hidden className="heading-1 text-5xl text-primary italic md:text-7xl">
             &#47;&#47;
           </span>
-          <Heading className="font-medium text-5xl md:justify-start md:text-7xl" h={1}>
+          <Heading className="text-5xl font-medium md:justify-start md:text-7xl" h={1}>
             404 Error
           </Heading>
         </div>
-        <p className="paragraph max-w-100 text-pretty font-light md:col-start-2">
+        <p className="paragraph max-w-100 font-light text-pretty md:col-start-2">
           Sorry we couldn&apos;t find the page you were looking for
         </p>
         <Link className="mt-6 md:col-start-2" href={Routes.HOME}>

@@ -1,4 +1,5 @@
 import { Toaster } from "@uoacs/ui/toast"
+import { cn } from "@uoacs/ui/utils"
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 import type React from "react"
@@ -50,7 +51,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      className={`${inter.variable} ${switzer.variable} ${mono.variable} overflow-x-hidden`}
+      className={cn(inter.variable, switzer.variable, mono.variable, "overflow-x-hidden")}
       lang="en"
     >
       <body className="relative flex min-h-screen flex-col overflow-hidden">

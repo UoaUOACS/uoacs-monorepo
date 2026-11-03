@@ -131,7 +131,7 @@ export const PinInput = ({
 
   return (
     <div className={cn("flex w-full flex-col justify-start gap-1 font-mono", containerClassName)}>
-      <label className="block font-medium text-gray-700 text-sm" htmlFor={label}>
+      <label className="block text-sm font-medium text-gray-700" htmlFor={label}>
         {label}
         {required && <span className="ml-1 text-brand-pink">*</span>}
       </label>
@@ -143,7 +143,7 @@ export const PinInput = ({
             aria-label={`Digit ${i + 1} of ${length}`}
             autoComplete="one-time-code"
             className={cn(
-              "h-12 w-12 rounded border text-center font-mono text-lg caret-transparent transition-colors focus:outline-none focus:ring-1",
+              "h-12 w-12 rounded border text-center font-mono text-lg caret-transparent transition-colors focus:ring-1 focus:outline-none",
               error
                 ? "border-red-500 focus:border-red-500 focus:ring-red-500"
                 : digit
@@ -169,7 +169,7 @@ export const PinInput = ({
         ))}
       </div>
 
-      {error && <p className="mt-1 text-red-600 text-sm">{error}</p>}
+      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </div>
   )
 }

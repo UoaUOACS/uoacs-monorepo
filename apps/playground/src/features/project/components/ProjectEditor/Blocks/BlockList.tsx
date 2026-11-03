@@ -86,11 +86,11 @@ export const BlockList = withForm({
                 </Fragment>
               ))}
               {!canInsert && (
-                <p className="text-gray-500 text-sm">
+                <p className="text-sm text-gray-500">
                   A page can have {PROJECT_MAX_BLOCKS} sections. Delete one to add another.
                 </p>
               )}
-              {error && <p className="text-red-600 text-sm">{error}</p>}
+              {error && <p className="text-sm text-red-600">{error}</p>}
             </section>
           )
         }}
