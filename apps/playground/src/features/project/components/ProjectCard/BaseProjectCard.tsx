@@ -1,7 +1,6 @@
 import { UserIcon } from "@heroicons/react/24/outline"
-import { LazyImage } from "@uoacs/ui"
+import { IntentPrefetchLink, LazyImage } from "@uoacs/ui"
 import { cn } from "@uoacs/ui/utils"
-import Link from "next/link"
 import AwardIcon from "@/features/project/components/AwardIcon/AwardIcon"
 import { LikeButton } from "@/features/project/components/LikeButton/LikeButton"
 import { Routes } from "@/lib/routes"
@@ -29,7 +28,7 @@ export const BaseProjectCard = ({ project, className }: ProjectCardVariantProps)
   return (
     // Only the image links, as the like button cannot sit inside a link
     <div className={base({ className })}>
-      <Link className={imageWrapper()} href={Routes.PROJECTS.ID(id)}>
+      <IntentPrefetchLink className={imageWrapper()} href={Routes.PROJECTS.ID(id)}>
         {imageURL ? (
           <LazyImage
             alt={title}
@@ -45,7 +44,7 @@ export const BaseProjectCard = ({ project, className }: ProjectCardVariantProps)
         <div className={overlay()}>
           <span className={titleStyles()}>{title}</span>
         </div>
-      </Link>
+      </IntentPrefetchLink>
 
       <div className={footer()}>
         <div className={authorGroup()}>

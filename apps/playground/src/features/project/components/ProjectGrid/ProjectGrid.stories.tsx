@@ -56,7 +56,7 @@ export const WithLikedProjects: Story = {
   name: "With liked projects",
   args: {
     projects: mockProjects,
-    likedIDs: ["1", "3"],
+    likedIDs: Promise.resolve(["1", "3"]),
   },
 }
 
