@@ -1,6 +1,7 @@
 "use server"
 
 import { ValidationError } from "payload"
+import { isUsernameClash } from "@/features/member/member.mutations"
 import { getCurrentMember } from "@/features/member/member.queries"
 import { editMemberSchema } from "@/features/member/schemas/editMember.schema"
 import { Slugs } from "@/lib/payload"
@@ -8,7 +9,10 @@ import { getPayloadClient } from "@/lib/payload/getPayloadClient"
 
 export type EditMemberResult =
   | { ok: true }
-  | { ok: false; error: "invalid" | "unauthenticated" | "unavailable" | "server" }
+  | {
+      ok: false
+      error: "invalid" | "username-taken" | "unauthenticated" | "unavailable" | "server"
+    }
 
 /**
  * Replaces the signed-in person's own profile fields. The member comes from the
@@ -33,6 +37,8 @@ export async function editMember(input: unknown): Promise<EditMemberResult> {
     })
     return { ok: true }
   } catch (error) {
+    // The schema cannot know which usernames are taken, so this one is expected
+    if (isUsernameClash(error)) return { ok: false, error: "username-taken" }
     // The schema mirrors the collection, so a rejection here means the two have
     // drifted rather than that the caller sent something the schema caught.
     if (error instanceof ValidationError) {

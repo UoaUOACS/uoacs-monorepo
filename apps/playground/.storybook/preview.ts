@@ -8,6 +8,8 @@ sb.mock(import("../src/features/project/actions/setLike.ts"))
 sb.mock(import("../src/features/project/actions/saveProject.ts"))
 sb.mock(import("../src/features/project/actions/uploadProjectMedia.ts"))
 sb.mock(import("../src/features/project/actions/deleteProject.ts"))
+sb.mock(import("../src/features/member/actions/editMember.ts"))
+sb.mock(import("../src/features/member/actions/uploadProfilePicture.ts"))
 
 const preview: Preview = {
   parameters: {
