@@ -26,6 +26,10 @@ export interface PageControlProps {
    */
   getHref?: (page: number) => string
   /**
+   * Fully prefetch the linked page instead of only the route's shell. Link mode only.
+   */
+  prefetch?: boolean
+  /**
    * Called with the target page. Used when `getHref` isn't given, rendering a button.
    */
   onPageChange?: (page: number) => void
@@ -46,6 +50,7 @@ export const PageControl = ({
   disabled,
   current,
   getHref,
+  prefetch,
   onPageChange,
   children,
 }: PageControlProps) => {
@@ -66,6 +71,8 @@ export const PageControl = ({
         aria-label={label}
         className={className}
         href={getHref(target)}
+        // Undefined keeps the default prefetch
+        prefetch={prefetch || undefined}
       >
         {children}
       </Link>

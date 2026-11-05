@@ -1,5 +1,4 @@
-import { LazyImage } from "@uoacs/ui"
-import Link from "next/link"
+import { IntentPrefetchLink, LazyImage } from "@uoacs/ui"
 import AwardIcon from "@/features/project/components/AwardIcon/AwardIcon"
 import { LikeButton } from "@/features/project/components/LikeButton/LikeButton"
 import { Routes } from "@/lib/routes"
@@ -27,7 +26,7 @@ export const ProfileProjectCard = ({ project, className }: ProjectCardVariantPro
 
   return (
     <div className={base({ className })}>
-      <Link className={imageWrapper()} href={Routes.PROJECTS.ID(id)}>
+      <IntentPrefetchLink className={imageWrapper()} href={Routes.PROJECTS.ID(id)}>
         {imageURL ? (
           <LazyImage
             alt={title}
@@ -39,10 +38,10 @@ export const ProfileProjectCard = ({ project, className }: ProjectCardVariantPro
             src={imageURL}
           />
         ) : null}
-      </Link>
+      </IntentPrefetchLink>
 
       <div className={content()}>
-        <Link className="flex flex-1 flex-col gap-4" href={Routes.PROJECTS.ID(id)}>
+        <IntentPrefetchLink className="flex flex-1 flex-col gap-4" href={Routes.PROJECTS.ID(id)}>
           {awardType ? (
             <div className={awardGroup()}>
               <AwardIcon className={awardIcon()} />
@@ -56,7 +55,7 @@ export const ProfileProjectCard = ({ project, className }: ProjectCardVariantPro
             <h3 className={titleStyles()}>{title}</h3>
             {summary ? <p className={description()}>{summary}</p> : null}
           </div>
-        </Link>
+        </IntentPrefetchLink>
         <LikeButton
           className={likesGroup()}
           countClassName={likesCount()}

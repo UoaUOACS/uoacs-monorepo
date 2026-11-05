@@ -43,11 +43,11 @@ export async function createMember(betterAuthUserId: string, names: AuthNames): 
 }
 
 /**
- * Writes the auth service's names onto the stored copy when they have drifted.
- * Does nothing when they already match or when the auth service could not be
- * reached. Belongs in `after()`: the member is already usable without it, so a
- * failure must not reach the page, and the collection's revalidate hook only
- * works outside a render.
+ * Writes the session's names onto the stored copy when they have drifted.
+ * Does nothing when they already match or when the session has none. Belongs
+ * in `after()`: the member is already usable without it, so a failure must not
+ * reach the page, and the collection's revalidate hook only works outside a
+ * render.
  */
 export async function syncNames(member: Member, names: AuthNames | null): Promise<void> {
   if (!names) return

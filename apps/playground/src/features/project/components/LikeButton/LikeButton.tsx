@@ -4,11 +4,11 @@ import { HeartIcon as HeartOutlineIcon } from "@heroicons/react/24/outline"
 import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid"
 import { useDebouncedCallback } from "@tanstack/react-pacer"
 import { AuthPages, authPageUrl } from "@uoacs/shared"
-import { Button } from "@uoacs/ui"
+import { AnimatedSuspense, Button } from "@uoacs/ui"
 import { toast } from "@uoacs/ui/toast"
 import { cn } from "@uoacs/ui/utils"
 import { usePathname } from "next/navigation"
-import { useLayoutEffect, useRef, useState } from "react"
+import { use, useLayoutEffect, useRef, useState } from "react"
 import { setLike } from "@/features/project/actions/setLike"
 import { formatLikes } from "@/features/project/helpers/format"
 import { projectsUrl } from "@/lib/routes"
@@ -24,20 +24,43 @@ const withLiked = (state: LikeState, liked: boolean): LikeState =>
 interface LikeButtonProps {
   projectID: string
   likes: number
-  isLiked?: boolean
+  isLiked?: boolean | Promise<boolean>
   className?: string
   iconClassName?: string
   countClassName?: string
 }
 
-export const LikeButton = ({
+interface LikeButtonContentProps extends LikeButtonProps {
+  isLiked?: boolean
+  /** Liked state is still loading, so a click can't know what to toggle */
+  pending?: boolean
+}
+
+const StreamedLikeButton = ({
+  isLiked,
+  ...props
+}: LikeButtonProps & { isLiked: Promise<boolean> }) => (
+  <LikeButtonContent {...props} isLiked={use(isLiked)} />
+)
+
+export const LikeButton = ({ isLiked, ...props }: LikeButtonProps) =>
+  typeof isLiked === "object" ? (
+    <AnimatedSuspense fallback={<LikeButtonContent {...props} pending />}>
+      <StreamedLikeButton {...props} isLiked={isLiked} />
+    </AnimatedSuspense>
+  ) : (
+    <LikeButtonContent {...props} isLiked={isLiked} />
+  )
+
+const LikeButtonContent = ({
   projectID,
   likes,
   isLiked = false,
   className,
   iconClassName,
   countClassName,
-}: LikeButtonProps) => {
+  pending,
+}: LikeButtonContentProps) => {
   // Saved results update the button without waiting for new props
   const [saved, setSaved] = useState({ isLiked, likes })
   // Set only while a click is not saved yet
@@ -103,9 +126,11 @@ export const LikeButton = ({
 
   return (
     <button
+      aria-busy={pending || undefined}
       aria-label={shown.isLiked ? "Unlike project" : "Like project"}
       aria-pressed={shown.isLiked}
-      className={cn("group/like cursor-pointer", className)}
+      className={cn("group/like cursor-pointer disabled:cursor-default", className)}
+      disabled={pending}
       onClick={handleClick}
       type="button"
     >

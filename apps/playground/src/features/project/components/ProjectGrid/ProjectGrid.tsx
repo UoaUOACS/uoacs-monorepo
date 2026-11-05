@@ -3,8 +3,8 @@ import { type Project, ProjectCard } from "../ProjectCard/ProjectCard"
 
 export interface ProjectGridProps {
   projects: Project[]
-  /** IDs of the projects the signed-in member has liked */
-  likedIDs?: string[]
+  /** IDs of the projects the signed-in member has liked, streamed in after the grid */
+  likedIDs?: Promise<string[]>
 }
 
 /**
@@ -13,8 +13,8 @@ export interface ProjectGridProps {
 export const projectGridClassName =
   "grid grid-cols-1 justify-items-center gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3"
 
-export const ProjectGrid = ({ projects, likedIDs = [] }: ProjectGridProps) => {
-  const liked = new Set(likedIDs)
+export const ProjectGrid = ({ projects, likedIDs }: ProjectGridProps) => {
+  const liked = likedIDs?.then((ids) => new Set(ids))
 
   if (projects.length === 0) {
     return (
@@ -28,7 +28,10 @@ export const ProjectGrid = ({ projects, likedIDs = [] }: ProjectGridProps) => {
   return (
     <div className={projectGridClassName}>
       {projects.map((project) => (
-        <ProjectCard key={project.id} project={{ ...project, liked: liked.has(project.id) }} />
+        <ProjectCard
+          key={project.id}
+          project={{ ...project, liked: liked?.then((ids) => ids.has(project.id)) }}
+        />
       ))}
     </div>
   )
