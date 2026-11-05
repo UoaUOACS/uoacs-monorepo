@@ -106,6 +106,8 @@ export class MemberService {
     const doc = existing.docs[0]
     if (!doc) throw new NoUnlinkedMemberError(email)
 
+    // `db.updateOne` skips the collection's hooks, so the names are synced here.
+    await this.syncAccountName(betterAuthUserId, doc)
     const updated = await payload.db.updateOne({
       collection: AuthCollectionSlugs.MEMBER,
       id: doc.id,
@@ -127,17 +129,16 @@ export class MemberService {
     }
   }
 
-  public async updateAccountName(
-    data: UpdateMemberInput,
-    current: Member,
-    headers: Headers,
+  /** Copies a member's names onto their Better Auth user, which has no session to go through. */
+  public async syncAccountName(
+    userId: string,
+    { firstName, lastName }: Pick<Member, "firstName" | "lastName">,
   ): Promise<void> {
-    const { firstName, lastName } = data
-    if (firstName === undefined && lastName === undefined) return
-
-    await auth.api.updateUser({
-      headers,
-      body: { name: `${firstName ?? current.firstName} ${lastName ?? current.lastName}` },
+    const context = await auth.$context
+    await context.internalAdapter.updateUser(userId, {
+      name: `${firstName} ${lastName}`,
+      firstName,
+      lastName,
     })
   }
 

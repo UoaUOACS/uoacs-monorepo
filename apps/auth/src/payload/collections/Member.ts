@@ -1,11 +1,15 @@
 import { AuthCollectionSlugs } from "@uoacs/shared"
 import { genderSchema } from "@uoacs/shared/payload"
 import type { CollectionConfig } from "payload"
+import { syncAccountName } from "../hooks/syncAccountName"
 
 export const Member: CollectionConfig = {
   slug: AuthCollectionSlugs.MEMBER,
   admin: {
     useAsTitle: "email",
+  },
+  hooks: {
+    afterChange: [syncAccountName],
   },
   fields: [
     {
