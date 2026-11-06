@@ -1,10 +1,10 @@
 "use client"
 
 import { LockClosedIcon } from "@heroicons/react/24/solid"
-import { Button } from "@uoacs/ui"
-import { cn } from "@uoacs/ui/utils"
 import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
+import { cn } from "../../utils"
+import { Button } from "../Button/Button"
 
 export interface ToggleableProps {
   label: string
