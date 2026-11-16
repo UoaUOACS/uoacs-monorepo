@@ -1,10 +1,10 @@
 "use client"
 
 import { LockClosedIcon } from "@heroicons/react/24/solid"
-import { Button } from "@uoacs/ui"
-import { cn } from "@uoacs/ui/utils"
 import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
+import { cn } from "../../utils"
+import { Button } from "../Button/Button"
 
 export interface ToggleableProps {
   label: string
@@ -40,12 +40,12 @@ export const ToggleableInput = ({
     <div
       className={cn(
         "group flex w-full flex-col justify-start gap-2 font-mono",
-        !isEditable && "border-gray-300 border-b-2",
+        !isEditable && "border-b-2 border-gray-300",
         containerClassName,
       )}
     >
       <div className="flex flex-row justify-between">
-        <span className="inline-flex items-center gap-1.5 font-medium text-gray-700 text-sm">
+        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-700">
           {label}
           {required && <span className="text-brand-pink">*</span>}
           {locked && (
@@ -118,14 +118,14 @@ export const ToggleableInput = ({
       </div>
       {locked || !isEditable ? (
         typeof displayNode === "string" ? (
-          <p className="min-h-9 py-2 text-left text-gray-600 text-paragraph">{displayNode}</p>
+          <p className="text-paragraph min-h-9 py-2 text-left text-gray-600">{displayNode}</p>
         ) : (
           <div className="min-h-9">{displayNode}</div>
         )
       ) : (
         children
       )}
-      {error && <p className="mt-1 text-red-600 text-sm">{error}</p>}
+      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </div>
   )
 }

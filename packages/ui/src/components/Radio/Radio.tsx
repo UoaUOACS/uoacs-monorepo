@@ -33,7 +33,7 @@ export const Radio = ({
   }
 
   const generatedId = useId()
-  const errorMessage = error ? <p className="mt-1 text-red-600 text-sm">{error}</p> : null
+  const errorMessage = error ? <p className="mt-1 text-sm text-red-600">{error}</p> : null
 
   const radioGroup = (
     <div
@@ -66,7 +66,7 @@ export const Radio = ({
 
   return (
     <div className={cn("flex w-full flex-col justify-start gap-1 font-mono", containerClassName)}>
-      <span className="block font-medium text-gray-700 text-sm" id={`${label}-label`}>
+      <span className="block text-sm font-medium text-gray-700" id={`${label}-label`}>
         {label}
         {required && <span className="ml-1 text-brand-pink">*</span>}
       </span>

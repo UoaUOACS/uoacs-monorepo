@@ -96,12 +96,12 @@ export const ImageUpload = ({
         ) : null}
         <span
           className={cn(
-            "relative flex flex-col items-center gap-2 font-medium text-sm",
+            "relative flex flex-col items-center gap-2 text-sm font-medium",
             previewUrl &&
               "absolute inset-0 justify-center bg-black/50 text-white opacity-0 transition-opacity duration-200",
             previewUrl &&
               !disabled &&
-              "pointer-coarse:opacity-100 group-focus-within/image-upload:opacity-100 group-hover/image-upload:opacity-100",
+              "group-focus-within/image-upload:opacity-100 group-hover/image-upload:opacity-100 pointer-coarse:opacity-100",
             previewUrl && busy && "opacity-100",
             !previewUrl && "text-gray-500",
           )}
@@ -130,7 +130,7 @@ export const ImageUpload = ({
         />
       </label>
       {error && (
-        <p className="text-red-600 text-sm" id={errorId}>
+        <p className="text-sm text-red-600" id={errorId}>
           {error}
         </p>
       )}

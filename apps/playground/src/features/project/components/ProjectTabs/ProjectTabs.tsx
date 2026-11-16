@@ -30,6 +30,8 @@ export const ProjectTabs = ({ activeTab, sort, className }: ProjectTabsProps) =>
                 aria-current={value === activeTab ? "page" : undefined}
                 className={tab({ active: value === activeTab })}
                 href={getDiscoverHref({ tab: value, sort })}
+                // Tab data is cached, so a full prefetch is cheap and skips the grid skeleton
+                prefetch={value !== activeTab || undefined}
               >
                 {label}
               </Link>

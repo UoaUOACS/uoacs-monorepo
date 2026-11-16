@@ -11,8 +11,8 @@ export const fileUploadPreviewVariants = tv({
     thumbnail: "shrink-0 rounded object-cover",
     icon: "shrink-0 text-gray-400",
     info: "flex min-w-0 flex-col",
-    name: "truncate text-gray-700 text-sm",
-    size: "text-gray-400 text-xs",
+    name: "truncate text-sm text-gray-700",
+    size: "text-xs text-gray-400",
     remove: "rounded p-1 text-gray-500 hover:text-gray-700 disabled:cursor-not-allowed",
   },
   variants: {

@@ -5,7 +5,7 @@ import { tv, type VariantProps } from "tailwind-variants"
  * Consists of themes, sizes, shapes, and font options.
  */
 export const buttonVariants = tv({
-  base: "button flex w-fit cursor-pointer flex-row items-center justify-center gap-2 transition-colors duration-300 ease-in-out disabled:cursor-not-allowed disabled:brightness-70 disabled:pointer-events-none",
+  base: "button flex w-fit cursor-pointer flex-row items-center justify-center gap-2 transition-colors duration-300 ease-in-out disabled:pointer-events-none disabled:cursor-not-allowed disabled:brightness-70",
   variants: {
     theme: {
       primary: "bg-primary text-white hover:bg-pink-400",

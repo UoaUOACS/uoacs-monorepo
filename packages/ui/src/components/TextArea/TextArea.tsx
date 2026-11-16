@@ -25,7 +25,7 @@ export const TextArea = ({
 }: TextAreaProps) => {
   const generatedId = useId()
   const textAreaId = id ?? generatedId
-  const errorMessage = error ? <p className="mt-1 text-red-600 text-sm">{error}</p> : null
+  const errorMessage = error ? <p className="mt-1 text-sm text-red-600">{error}</p> : null
   const textAreaClassName = cn(textAreaVariants({ resize }), className)
 
   if (!label) {
@@ -47,7 +47,7 @@ export const TextArea = ({
 
   return (
     <div className={cn("flex w-full flex-col justify-start gap-2 font-mono", containerClassName)}>
-      <label className="block font-medium text-gray-700 text-sm" htmlFor={textAreaId}>
+      <label className="block text-sm font-medium text-gray-700" htmlFor={textAreaId}>
         {label}
         {required && <span className="ml-1 text-brand-pink">*</span>}
       </label>

@@ -74,7 +74,7 @@ export function PlaygroundNavbar({
     <nav className="relative z-50 flex w-full flex-row items-center justify-between">
       <Link className="flex flex-row items-center gap-3" href={logoHref}>
         <Image alt="UOACS Logo" height={40} src="/uoacs-logo-pink.svg" width={167} />
-        <span className="hidden font-bold font-cartograph text-2xl text-gray-400 italic leading-7 md:inline">
+        <span className="hidden font-cartograph text-2xl leading-7 font-bold text-gray-400 italic md:inline">
           {/* usePathname needs Suspense on dynamic routes */}
           <Suspense fallback={NAVBAR_TITLE}>
             <NavbarTitle />

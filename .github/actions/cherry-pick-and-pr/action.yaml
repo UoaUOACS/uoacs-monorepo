@@ -29,7 +29,7 @@ inputs:
     description: Base label applied to the created PR
   pr-title-prefix:
     required: false
-    default: '[PR Forward]'
+    default: "[PR Forward]"
     description: Prefix for the created PR title
   github-token:
     required: true
@@ -43,7 +43,7 @@ outputs:
     description: Name of the created branch
     value: ${{ steps.cherry-pick.outputs.branch_name }}
   conflict:
-    description: 'true if cherry-pick had conflicts'
+    description: "true if cherry-pick had conflicts"
     value: ${{ steps.cherry-pick.outputs.conflict }}
 
 runs:

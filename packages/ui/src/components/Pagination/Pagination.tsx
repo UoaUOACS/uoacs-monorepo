@@ -29,6 +29,11 @@ interface PaginationLinkProps extends PaginationBaseProps {
    * Builds the URL for a page, rendering each control as a link.
    */
   getHref: (page: number) => string
+  /**
+   * Fully prefetch the previous and next pages, not just the route's shell. Each prefetch costs a
+   * server request, so only enable it when the page data is cached.
+   */
+  prefetchNeighbours?: boolean
   onPageChange?: never
 }
 
@@ -38,6 +43,7 @@ interface PaginationButtonProps extends PaginationBaseProps {
    */
   onPageChange: (page: number) => void
   getHref?: never
+  prefetchNeighbours?: never
 }
 
 /**
@@ -55,6 +61,7 @@ export type PaginationProps = PaginationLinkProps | PaginationButtonProps
  * @param getHref Builds the URL for a page. Mutually exclusive with `onPageChange`.
  * @param onPageChange Called with the requested page. Mutually exclusive with `getHref`.
  * @param siblingCount How many pages to show either side of the current page. Defaults to 1.
+ * @param prefetchNeighbours Fully prefetch the previous and next pages. Link mode only.
  * @returns A navigation landmark containing the pagination controls.
  */
 export const Pagination = ({
@@ -63,6 +70,7 @@ export const Pagination = ({
   siblingCount = 1,
   getHref,
   onPageChange,
+  prefetchNeighbours,
   "aria-label": ariaLabel = "Pagination",
   className,
 }: PaginationProps) => {
@@ -82,6 +90,7 @@ export const Pagination = ({
             className={arrow({ disabled: current === 1 })}
             disabled={current === 1}
             label="Previous page"
+            prefetch={prefetchNeighbours}
             target={current - 1}
           >
             <ChevronLeftIcon aria-hidden="true" className={arrowIcon()} />
@@ -116,6 +125,7 @@ export const Pagination = ({
             className={arrow({ disabled: current === totalPages })}
             disabled={current === totalPages}
             label="Next page"
+            prefetch={prefetchNeighbours}
             target={current + 1}
           >
             <ChevronRightIcon aria-hidden="true" className={arrowIcon()} />

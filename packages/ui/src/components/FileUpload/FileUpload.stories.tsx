@@ -88,7 +88,7 @@ export const WithRejections: Story = {
     return (
       <div className="flex flex-col gap-2">
         <FileUpload {...args} onChange={setFiles} onReject={setRejections} value={files} />
-        <p className="font-mono text-gray-500 text-sm">
+        <p className="font-mono text-sm text-gray-500">
           onReject:{" "}
           {rejections.length > 0
             ? rejections

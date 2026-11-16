@@ -15,7 +15,7 @@
     "postinstall": "sh -c 'command -v git >/dev/null 2>&1 || exit 0; lefthook install'"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.5",
+    "@biomejs/biome": "2.6.4",
     "lefthook": "^2.1.6",
     "turbo": "^2.10.11",
     "typescript": "catalog:"

@@ -7,7 +7,7 @@ export interface Project {
   imageFocalPoint?: FocalPoint
   authorName: string
   likes: number
-  liked?: boolean
+  liked?: boolean | Promise<boolean>
   awardType?: string
   summary?: string
   awardEvent?: string

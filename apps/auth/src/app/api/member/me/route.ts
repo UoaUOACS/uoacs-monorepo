@@ -38,16 +38,6 @@ export async function PATCH(request: Request) {
     }
 
     const updated = await members.update(member.id, data)
-
-    // Already committed above, so a failed name sync must not turn a saved
-    // edit into an error the form shows as a rejection.
-    await members.updateAccountName(data, member, request.headers).catch((error) =>
-      console.error("[PATCH /api/member/me] Account name sync failed", {
-        memberId: member.id,
-        error,
-      }),
-    )
-
     return Response.json(updated)
   } catch (err) {
     if (err instanceof SyntaxError) {

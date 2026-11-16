@@ -1,11 +1,8 @@
-import { AuthApiRoutes } from "@uoacs/shared"
-import { getSession, sessionFetch } from "@uoacs/shared/auth/server"
+import type { AuthUser } from "@uoacs/shared"
+import { getSession } from "@uoacs/shared/auth/server"
 import { cacheLife, cacheTag } from "next/cache"
-import { headers } from "next/headers"
-import { unstable_rethrow } from "next/navigation"
 import { after } from "next/server"
 import { cache } from "react"
-import { z } from "zod"
 import { createMember, syncNames } from "@/features/member/member.mutations"
 import type { CurrentMemberResult } from "@/features/member/member.types"
 import { CacheTags } from "@/lib/cache"
@@ -13,51 +10,14 @@ import { Slugs } from "@/lib/payload"
 import { getPayloadClient } from "@/lib/payload/getPayloadClient"
 import type { Member } from "@/payload/payload-types"
 
-const authNamesSchema = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-})
-
-export type AuthNames = z.infer<typeof authNamesSchema>
+export type AuthNames = { firstName: string; lastName: string }
 
 /**
- * The session carries only the email, so names come from the auth service.
- * `null` means "could not find out", never "has no name", so callers fall back
- * to the stored copy rather than locking everyone out.
+ * `null` means the auth user has no names yet, so callers fall back to the
+ * stored copy rather than locking everyone out.
  */
-async function fetchCurrentMemberNames(): Promise<AuthNames | null> {
-  let body: unknown
-  try {
-    const response = await sessionFetch(AuthApiRoutes.MEMBER_ME, await headers(), {
-      signal: AbortSignal.timeout(5000),
-    })
-    // Signed in with no member behind the account: a stuck account rather than
-    // an outage, so it is not logged as one.
-    if (response.status === 404) {
-      console.warn("[getCurrentMember] Signed in but the auth service has no member")
-      return null
-    }
-    if (!response.ok) {
-      console.error("[getCurrentMember] Auth service answered with an error", {
-        status: response.status,
-      })
-      return null
-    }
-    body = await response.json()
-  } catch (err) {
-    unstable_rethrow(err)
-    console.error("[getCurrentMember] Failed to reach the auth service", { error: err })
-    return null
-  }
-
-  const parsed = authNamesSchema.safeParse(body)
-  if (!parsed.success) {
-    console.error("[getCurrentMember] Auth service returned something without a name", {
-      issues: parsed.error.issues.map((issue) => issue.path.join(".")),
-    })
-    return null
-  }
-  return parsed.data
+function namesFromSession({ firstName, lastName }: AuthUser): AuthNames | null {
+  return firstName && lastName ? { firstName, lastName } : null
 }
 
 async function findMemberByBetterAuthUserId(betterAuthUserId: string): Promise<Member | null> {
@@ -79,13 +39,12 @@ export const getCurrentMember = cache(async (): Promise<CurrentMemberResult> => 
   const session = await getSession()
   if (session.status !== "authenticated") return session
 
-  const betterAuthUserId = session.session.user.id
-  // The names are only a refresh, so a failing auth service must not keep
-  // someone out of a member we already have.
-  const [existing, names] = await Promise.all([
-    findMemberByBetterAuthUserId(betterAuthUserId),
-    fetchCurrentMemberNames(),
-  ])
+  const { user } = session.session
+  const betterAuthUserId = user.id
+  // The names are only a refresh, so missing ones must not keep someone out of
+  // a member we already have.
+  const names = namesFromSession(user)
+  const existing = await findMemberByBetterAuthUserId(betterAuthUserId)
 
   if (existing) {
     after(async () => {
@@ -99,7 +58,12 @@ export const getCurrentMember = cache(async (): Promise<CurrentMemberResult> => 
   }
 
   // Creating one is the only step that cannot proceed without a name.
-  if (!names) return { status: "unavailable" }
+  if (!names) {
+    // Names are synced from the member, so none means a stuck account rather
+    // than an outage, and it is not logged as one.
+    console.warn("[getCurrentMember] Signed in but the auth user has no names")
+    return { status: "unavailable" }
+  }
 
   try {
     return { status: "authenticated", member: await createMember(betterAuthUserId, names) }

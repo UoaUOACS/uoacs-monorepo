@@ -3,7 +3,7 @@ description: Deploys an application to Fly.io based on the provided configuratio
 
 inputs:
   CONFIG_FILE:
-    description: 'Path to the Fly.io configuration file (e.g., apps/website/fly.toml)'
+    description: "Path to the Fly.io configuration file (e.g., apps/website/fly.toml)"
     required: true
   DOCKERFILE:
     description: >
@@ -11,10 +11,10 @@ inputs:
       is always the repository root so the pnpm workspace is available.
     required: true
   FLY_API_TOKEN:
-    description: 'Fly.io API token for authentication'
+    description: "Fly.io API token for authentication"
     required: true
   APP_NAME:
-    description: 'Name of the Fly.io application'
+    description: "Name of the Fly.io application"
     required: true
   SECRETS:
     description: >
@@ -24,7 +24,7 @@ inputs:
       through expression expansion in the script. The deploy fails if a listed
       name has no value.
     required: false
-    default: ''
+    default: ""
 
 runs:
   using: composite

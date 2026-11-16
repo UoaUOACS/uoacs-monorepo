@@ -1,4 +1,5 @@
 import { Skeleton } from "@uoacs/ui"
+import { cn } from "@uoacs/ui/utils"
 import { projectCardVariants } from "@/features/project/components/ProjectCard/ProjectCard.variants"
 
 const { base, content } = projectCardVariants({ variant: "profile" })
@@ -21,9 +22,9 @@ const FieldSkeleton = ({
   inputClassName: string
 }) => (
   <div className="flex flex-col gap-2">
-    <Skeleton className={`h-5 ${labelClassName}`} />
+    <Skeleton className={cn("h-5", labelClassName)} />
     <Skeleton className="-mt-1 h-3 w-10 md:h-4.25" />
-    <Skeleton className={`w-full ${inputClassName}`} />
+    <Skeleton className={cn("w-full", inputClassName)} />
   </div>
 )
 

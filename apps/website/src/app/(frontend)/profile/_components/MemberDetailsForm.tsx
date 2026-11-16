@@ -1,10 +1,9 @@
 "use client"
 
 import { genderSchema, type Member } from "@uoacs/shared/payload"
-import { Input, MultiSelect, Radio, Select } from "@uoacs/ui"
+import { Input, MultiSelect, Radio, Select, ToggleableInput } from "@uoacs/ui"
 import { toast } from "@uoacs/ui/toast"
 import { useState } from "react"
-import { ToggleableInput } from "@/components/Generic"
 import { ApiError } from "@/lib/api/api-client"
 import { useUpdateMember } from "@/queries/useUpdateMember"
 import type { UpdateMemberInput } from "@/types/schemas/member"
