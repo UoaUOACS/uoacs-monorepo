@@ -28,7 +28,7 @@ export const ChipSelect = <T extends string>({
 
   return (
     <fieldset>
-      <legend className="mb-2 font-medium font-mono text-gray-700 text-sm">{label}</legend>
+      <legend className="mb-2 font-mono text-sm font-medium text-gray-700">{label}</legend>
       <div className="flex flex-wrap items-center gap-2">
         {value.map((item) => (
           <span
@@ -51,7 +51,7 @@ export const ChipSelect = <T extends string>({
           <Dropdown
             fast
             label={
-              <span className="flex items-center gap-1.5 font-normal text-gray-500 text-xs">
+              <span className="flex items-center gap-1.5 py-1 font-normal text-gray-500">
                 <PlusIcon className="size-4 text-black" />
                 {addLabel}
               </span>
@@ -68,7 +68,7 @@ export const ChipSelect = <T extends string>({
           />
         )}
       </div>
-      {error && <p className="mt-1 text-red-600 text-sm">{error}</p>}
+      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </fieldset>
   )
 }

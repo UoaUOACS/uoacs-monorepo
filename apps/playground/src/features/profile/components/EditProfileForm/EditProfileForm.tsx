@@ -4,7 +4,7 @@ import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import { revalidateLogic } from "@tanstack/react-form"
 import { Button, Select } from "@uoacs/ui"
 import { toast } from "@uoacs/ui/toast"
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { useRef, useState } from "react"
 import { type EditMemberResult, editMember } from "@/features/member/actions/editMember"
 import { uploadProfilePicture } from "@/features/member/actions/uploadProfilePicture"
@@ -46,7 +46,6 @@ export interface EditProfileFormProps {
  * The "Edit Profile" form for the member's playground profile
  */
 export const EditProfileForm = ({ member }: EditProfileFormProps) => {
-  const router = useRouter()
   const pictureInput = useRef<HTMLInputElement>(null)
   // Remounts the upload field on Remove, as it keeps showing the picture it uploaded
   const [pictureKey, setPictureKey] = useState(0)
@@ -172,7 +171,7 @@ export const EditProfileForm = ({ member }: EditProfileFormProps) => {
           )
           return (
             <fieldset className="flex flex-col gap-2">
-              <legend className="mb-2 font-medium font-mono text-gray-700 text-sm">Links</legend>
+              <legend className="mb-2 font-mono text-sm font-medium text-gray-700">Links</legend>
               {linksField.state.value.map((row, index) => {
                 const link = links[row.name]
                 return (
@@ -217,12 +216,14 @@ export const EditProfileForm = ({ member }: EditProfileFormProps) => {
               {/* Each link type can be added once, so the button goes once every type is used */}
               {unusedLinkName && (
                 <Button
-                  className="font-normal text-gray-500 text-xs"
-                  left={<PlusIcon className="size-4 text-black" />}
                   onClick={() => linksField.pushValue({ name: unusedLinkName, url: "" })}
                   theme="ghost"
                 >
-                  Add a link
+                  {/* The same label as the add dropdown of `ChipSelect` */}
+                  <span className="flex items-center gap-1.5 py-1 font-normal text-gray-500">
+                    <PlusIcon className="size-4 text-black" />
+                    Add a link
+                  </span>
                 </Button>
               )}
             </fieldset>
@@ -235,9 +236,11 @@ export const EditProfileForm = ({ member }: EditProfileFormProps) => {
           <form.SubmitButton theme="dark">Update</form.SubmitButton>
         </form.AppForm>
         {/* The profile route, as a saved username change moves the profile's URL */}
-        <Button onClick={() => router.push(Routes.PROFILE.ROOT)} theme="ghost">
-          Back
-        </Button>
+        <Link href={Routes.PROFILE.ROOT}>
+          <Button tabIndex={-1} theme="ghost">
+            Back
+          </Button>
+        </Link>
       </div>
     </form>
   )
