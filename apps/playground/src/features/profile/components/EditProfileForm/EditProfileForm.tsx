@@ -16,7 +16,7 @@ import {
   MEDIA_TYPES,
   MEDIA_UPLOAD_MAX_DIMENSION,
 } from "@/features/project/project.constants"
-import { submitForm } from "@/lib/form/flush"
+import { submitForm, useIsUploading } from "@/lib/form/flush"
 import { getFieldError } from "@/lib/form/formContext"
 import { useAppForm } from "@/lib/form/useAppForm"
 import { getRelationID } from "@/lib/payload/getRelationID"
@@ -80,6 +80,8 @@ export const EditProfileForm = ({ member }: EditProfileFormProps) => {
       }
     },
   })
+  // A Remove during an upload would be undone when the upload finishes
+  const isUploading = useIsUploading(form)
 
   return (
     <form
@@ -122,7 +124,7 @@ export const EditProfileForm = ({ member }: EditProfileFormProps) => {
               </Button>
               <Button
                 className="text-base"
-                disabled={!field.state.value}
+                disabled={!field.state.value || isUploading}
                 onClick={() => {
                   field.handleChange(null)
                   setPictureKey((key) => key + 1)

@@ -10,6 +10,7 @@ export const CacheTags = {
   },
   MEMBERS: {
     ID: (id: string) => `member:${id}` as const,
+    USERNAME: (username: string) => `member-username:${username}` as const,
     LIKES: (id: string) => `member-likes:${id}` as const,
   },
 } as const
