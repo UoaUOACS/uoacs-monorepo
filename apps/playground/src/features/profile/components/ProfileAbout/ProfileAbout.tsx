@@ -26,19 +26,12 @@ type AboutSection = {
  * skills as `// LABEL` sections. All sections render no matter what — empty
  * ones show a muted N/A. Presentational only.
  */
-export const ProfileAbout = ({
-  major,
-  biography,
-  languages,
-  skills,
-  className,
-}: ProfileAboutProps) => {
+export const ProfileAbout = ({ major, biography, skills, className }: ProfileAboutProps) => {
   const { root, section, paragraph, placeholder, list } = profileAboutVariants()
 
   const sections: AboutSection[] = [
     { label: "MAJOR", content: major ?? [] },
     { label: "BIOGRAPHY", content: biography?.trim() ? [biography] : [], multiline: true },
-    { label: "LANGUAGES", content: languages ?? [] },
     { label: "SKILLS", content: skills ?? [] },
   ]
 
