@@ -19,10 +19,10 @@ interface ProfileHeaderButtonProps {
  * page.
  */
 export const ProfileHeaderButton = ({ username }: ProfileHeaderButtonProps) => {
-  const isEditing = usePathname() === Routes.PROFILE.EDIT
+  const isEditing = usePathname() === Routes.PROFILE.EDIT(username)
 
   return (
-    <Link href={isEditing ? Routes.PROFILE.USERNAME(username) : Routes.PROFILE.EDIT}>
+    <Link href={isEditing ? Routes.PROFILE.USERNAME(username) : Routes.PROFILE.EDIT(username)}>
       <Button
         left={isEditing ? <ArrowLeftIcon className="size-4" /> : <PencilIcon className="size-4" />}
         shape="rounded"

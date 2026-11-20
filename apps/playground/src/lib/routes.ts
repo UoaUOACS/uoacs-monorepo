@@ -6,7 +6,7 @@ export const Routes = {
   PROFILE: {
     ROOT: "/profile",
     USERNAME: (username: Member["username"]) => `/profile/${username}`,
-    EDIT: "/profile/edit",
+    EDIT: (username: Member["username"]) => `/profile/${username}/edit`,
   },
   SEARCH: "/search",
   PROJECTS: {
