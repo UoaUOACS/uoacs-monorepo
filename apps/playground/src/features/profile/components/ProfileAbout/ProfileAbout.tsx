@@ -38,8 +38,8 @@ export const ProfileAbout = ({
   const sections: AboutSection[] = [
     { label: "MAJOR", content: major ?? [] },
     { label: "BIOGRAPHY", content: biography?.trim() ? [biography] : [], multiline: true },
-    { label: "LANGUAGE", content: languages ?? [] },
-    { label: "SKILL", content: skills ?? [] },
+    { label: "LANGUAGES", content: languages ?? [] },
+    { label: "SKILLS", content: skills ?? [] },
   ]
 
   return (
