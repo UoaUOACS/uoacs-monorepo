@@ -1,8 +1,10 @@
+import { getSession } from "@uoacs/shared/auth/server"
 import { AnimatedSuspense } from "@uoacs/ui"
 import { notFound } from "next/navigation"
-// import { MemberDetailsForm } from "@/features/member/components/MemberDetailsForm/MemberDetailsForm"
+import { MemberDetailsForm } from "@/features/member/components/MemberDetailsForm/MemberDetailsForm"
 import { getMemberByUsernameCached } from "@/features/member/member.queries"
 import { EditProfileForm } from "@/features/profile/components/EditProfileForm/EditProfileForm"
+import { EditProfileTabs } from "@/features/profile/components/EditProfileTabs/EditProfileTabs"
 import { ProfileHeader } from "@/features/profile/components/ProfileHeader/ProfileHeader"
 import { ProfileHeaderSkeleton } from "@/features/profile/components/ProfileHeader/ProfileHeaderView"
 
@@ -14,19 +16,33 @@ const EditProfileContent = async ({
   const member = await getMemberByUsernameCached(username)
   if (!member) notFound()
 
+  const session = await getSession()
+  if (session.status !== "authenticated") notFound()
+
+  const { user } = session.session
+  if (user.id !== member.betterAuthUserId) notFound()
+
   return (
     <>
       <AnimatedSuspense fallback={<ProfileHeaderSkeleton />}>
         <ProfileHeader member={member} />
       </AnimatedSuspense>
 
-      <EditProfileForm member={member} />
-      {/* <MemberDetailsForm member={member} /> */}
+      <EditProfileTabs
+        tabs={[
+          { id: "general", label: "General", content: <MemberDetailsForm member={user} /> },
+          {
+            id: "edit-profile",
+            label: "Edit Profile",
+            content: <EditProfileForm member={member} />,
+          },
+        ]}
+      />
     </>
   )
 }
 
-export default function EditProfilePage(props: PageProps<"/profile/[username]">) {
+export default function EditProfilePage(props: PageProps<"/profile/[username]/edit">) {
   return (
     <div className="mx-auto flex w-full flex-col gap-10 px-4 py-10">
       <AnimatedSuspense fallback={<ProfileHeaderSkeleton />}>
