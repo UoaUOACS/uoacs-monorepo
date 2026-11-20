@@ -1,7 +1,7 @@
 import { tv, type VariantProps } from "tailwind-variants"
 
 export const editProfileTab = tv({
-  base: "text-left text-sm transition-colors",
+  base: "text-md text-left transition-colors",
   variants: {
     active: {
       true: "cursor-pointer font-bold text-black",
