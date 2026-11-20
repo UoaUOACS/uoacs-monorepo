@@ -79,7 +79,8 @@ export const getCurrentMember = cache(async (): Promise<CurrentMemberResult> => 
 
 export const getMemberByUsernameCached = async (username: string): Promise<Member | null> => {
   "use cache"
-  cacheTag(CacheTags.MEDIA)
+  // Tagged even when no one has it, so taking the username shows its new profile
+  cacheTag(CacheTags.MEDIA, CacheTags.MEMBERS.USERNAME(username))
   cacheLife("max")
   const payload = await getPayloadClient()
   const { docs } = await payload.find({

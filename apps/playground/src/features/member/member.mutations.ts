@@ -8,7 +8,7 @@ import type { Member } from "@/payload/payload-types"
 const USERNAME_ATTEMPTS = 5
 
 /** Matched on the field rather than the message, which Payload translates. */
-const isUsernameClash = (err: unknown): boolean =>
+export const isUsernameClash = (err: unknown): boolean =>
   err instanceof ValidationError && err.data?.errors?.some((e) => e.path === "username") === true
 
 /**
