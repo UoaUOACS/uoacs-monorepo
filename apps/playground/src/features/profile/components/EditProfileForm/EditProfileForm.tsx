@@ -92,11 +92,6 @@ export const EditProfileForm = ({ member }: EditProfileFormProps) => {
         void submitForm(form)
       }}
     >
-      <p className="font-mono">
-        {/** biome-ignore lint/suspicious/noCommentText: the // is not for a comment */}
-        <span className="text-primary">// </span>EDIT PROFILE
-      </p>
-
       <form.AppField name="profilePicture">
         {(field) => (
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
