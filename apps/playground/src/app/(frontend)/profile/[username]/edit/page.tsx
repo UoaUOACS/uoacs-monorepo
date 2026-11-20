@@ -1,26 +1,34 @@
-import { getSession } from "@uoacs/shared/auth/server"
 import { AnimatedSuspense } from "@uoacs/ui"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
+import { redirectToLogin } from "@/features/auth/auth.helpers"
+import { editAuthMemberDetails } from "@/features/member/actions/editAuthMemberDetails"
 import { MemberDetailsForm } from "@/features/member/components/MemberDetailsForm/MemberDetailsForm"
-import { getMemberByUsernameCached } from "@/features/member/member.queries"
+import {
+  getAuthMember,
+  getCurrentMember,
+  getMemberByUsernameCached,
+} from "@/features/member/member.queries"
 import { EditProfileForm } from "@/features/profile/components/EditProfileForm/EditProfileForm"
 import { EditProfileTabs } from "@/features/profile/components/EditProfileTabs/EditProfileTabs"
 import { ProfileHeader } from "@/features/profile/components/ProfileHeader/ProfileHeader"
 import { ProfileHeaderSkeleton } from "@/features/profile/components/ProfileHeader/ProfileHeaderView"
+import { Routes } from "@/lib/routes"
 
 const EditProfileContent = async ({
   params,
 }: Pick<PageProps<"/profile/[username]/edit">, "params">) => {
   const { username } = await params
 
+  const current = await getCurrentMember()
+  if (current.status === "unauthenticated") redirectToLogin(Routes.PROFILE.USERNAME(username))
+  if (current.status === "unavailable") redirect(Routes.HOME)
+
   const member = await getMemberByUsernameCached(username)
   if (!member) notFound()
+  if (current.member.id !== member.id) notFound()
 
-  const session = await getSession()
-  if (session.status !== "authenticated") notFound()
-
-  const { user } = session.session
-  if (user.id !== member.betterAuthUserId) notFound()
+  const authMember = await getAuthMember()
+  if (!authMember) notFound()
 
   return (
     <>
@@ -30,7 +38,11 @@ const EditProfileContent = async ({
 
       <EditProfileTabs
         tabs={[
-          { id: "general", label: "General", content: <MemberDetailsForm member={user} /> },
+          {
+            id: "general",
+            label: "General",
+            content: <MemberDetailsForm member={authMember} onSave={editAuthMemberDetails} />,
+          },
           {
             id: "edit-profile",
             label: "Edit Profile",

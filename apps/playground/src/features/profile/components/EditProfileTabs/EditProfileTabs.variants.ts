@@ -4,8 +4,8 @@ export const editProfileTab = tv({
   base: "text-left text-sm transition-colors",
   variants: {
     active: {
-      true: "font-bold text-black",
-      false: "text-neutral-700 hover:text-black",
+      true: "cursor-pointer font-bold text-black",
+      false: "cursor-pointer text-neutral-700 hover:text-black",
     },
   },
   defaultVariants: {
