@@ -1,6 +1,7 @@
 "use server"
 
 import { updateTag } from "next/cache"
+import { redirect } from "next/navigation"
 import { ValidationError } from "payload"
 import { isUsernameClash } from "@/features/member/member.mutations"
 import { getCurrentMember } from "@/features/member/member.queries"
@@ -8,6 +9,7 @@ import { editMemberSchema } from "@/features/member/schemas/editMember.schema"
 import { CacheTags } from "@/lib/cache"
 import { Slugs } from "@/lib/payload"
 import { getPayloadClient } from "@/lib/payload/getPayloadClient"
+import { Routes } from "@/lib/routes"
 
 export type EditMemberResult =
   | { ok: true }
@@ -26,6 +28,8 @@ export async function editMember(input: unknown): Promise<EditMemberResult> {
   const parsed = editMemberSchema.safeParse(input)
   if (!parsed.success) return { ok: false, error: "invalid" }
 
+  let newUsername: string | null = null
+
   try {
     const current = await getCurrentMember()
     if (current.status !== "authenticated") return { ok: false, error: current.status }
@@ -42,7 +46,8 @@ export async function editMember(input: unknown): Promise<EditMemberResult> {
     updateTag(CacheTags.MEMBERS.ID(current.member.id))
     updateTag(CacheTags.MEMBERS.USERNAME(current.member.username))
     updateTag(CacheTags.MEMBERS.USERNAME(parsed.data.username))
-    return { ok: true }
+
+    if (parsed.data.username !== current.member.username) newUsername = parsed.data.username
   } catch (error) {
     // The schema cannot know which usernames are taken, so this one is expected
     if (isUsernameClash(error)) return { ok: false, error: "username-taken" }
@@ -55,4 +60,8 @@ export async function editMember(input: unknown): Promise<EditMemberResult> {
     console.error("[editMember] Failed to edit the member", { error })
     return { ok: false, error: "server" }
   }
+
+  if (newUsername) redirect(`${Routes.PROFILE.USERNAME(newUsername)}/edit`)
+
+  return { ok: true }
 }

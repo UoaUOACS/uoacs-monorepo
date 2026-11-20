@@ -46,7 +46,7 @@ const EditProfileContent = async ({
           {
             id: "edit-profile",
             label: "Edit Profile",
-            content: <EditProfileForm member={member} />,
+            content: <EditProfileForm key={member.username} member={member} />,
           },
         ]}
       />

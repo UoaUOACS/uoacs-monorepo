@@ -75,6 +75,10 @@ export const EditProfileForm = ({ member }: EditProfileFormProps) => {
         }
         toast.success({ description: "Profile updated" })
       } catch (error) {
+        if (error instanceof Error && error.message === "NEXT_REDIRECT") {
+          toast.success({ description: "Profile updated" })
+          return
+        }
         console.error("[EditProfileForm] Failed to save the profile", { error })
         toast.error({ description: SAVE_ERROR_MESSAGES.server })
       }
