@@ -1,6 +1,8 @@
-import type { AuthUser } from "@uoacs/shared"
-import { getSession } from "@uoacs/shared/auth/server"
+import { AuthApiRoutes, type AuthUser, memberResponseSchema } from "@uoacs/shared"
+import { getSession, sessionFetch } from "@uoacs/shared/auth/server"
+import type { Member as AuthMember } from "@uoacs/shared/payload"
 import { cacheLife, cacheTag } from "next/cache"
+import { headers } from "next/headers"
 import { after } from "next/server"
 import { cache } from "react"
 import { createMember, syncNames } from "@/features/member/member.mutations"
@@ -92,3 +94,18 @@ export const getMemberByUsernameCached = async (username: string): Promise<Membe
   if (member) cacheTag(CacheTags.MEMBERS.ID(member.id))
   return member
 }
+
+/**
+ * The signed-in person's own auth app member.
+ * `null` means not signed in or no member; any other failure throws.
+ */
+export const getAuthMember = cache(async (): Promise<AuthMember | null> => {
+  const response = await sessionFetch(AuthApiRoutes.MEMBER_ME, await headers(), {
+    signal: AbortSignal.timeout(5000),
+  })
+  if (response.status === 401 || response.status === 404) return null
+  if (!response.ok) {
+    throw new Error(`[getAuthMember] Auth service answered with ${response.status}`)
+  }
+  return memberResponseSchema.parse(await response.json())
+})
