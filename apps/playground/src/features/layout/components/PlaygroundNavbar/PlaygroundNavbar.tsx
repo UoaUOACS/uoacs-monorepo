@@ -71,7 +71,7 @@ export function PlaygroundNavbar({
 
   return (
     // Above sticky page bars, like the editor toolbar, so the profile menu opens over them
-    <nav className="relative z-50 flex w-full flex-row items-center justify-between">
+    <nav className="sticky top-0 z-50 flex w-full flex-row items-center justify-between bg-white py-6">
       <Link className="flex flex-row items-center gap-3" href={logoHref}>
         <Image alt="UOACS Logo" height={40} src="/uoacs-logo-black.svg" width={167} />
       </Link>
