@@ -24,11 +24,9 @@ const EditProfileContent = async ({
   if (current.status === "unavailable") redirect(Routes.HOME)
 
   const member = await getMemberByUsernameCached(username)
-  if (!member) notFound()
-  if (current.member.id !== member.id) notFound()
-
   const authMember = await getAuthMember()
-  if (!authMember) notFound()
+
+  if (!member || !authMember || current.member.id !== member.id) notFound()
 
   return (
     <>
