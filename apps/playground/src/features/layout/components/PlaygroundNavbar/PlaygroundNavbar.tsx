@@ -7,8 +7,7 @@ import type { DropdownProps } from "@uoacs/ui"
 import { Button, Dropdown } from "@uoacs/ui"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { Suspense } from "react"
+import { useRouter } from "next/navigation"
 import { Routes } from "@/lib/routes"
 import { AuthPageLink } from "../AuthPageLink/AuthPageLink"
 
@@ -73,13 +72,7 @@ export function PlaygroundNavbar({
     // Above sticky page bars, like the editor toolbar, so the profile menu opens over them
     <nav className="relative z-50 flex w-full flex-row items-center justify-between">
       <Link className="flex flex-row items-center gap-3" href={logoHref}>
-        <Image alt="UOACS Logo" height={40} src="/uoacs-logo-pink.svg" width={167} />
-        <span className="hidden font-cartograph text-2xl leading-7 font-bold text-gray-400 italic md:inline">
-          {/* usePathname needs Suspense on dynamic routes */}
-          <Suspense fallback={NAVBAR_TITLE}>
-            <NavbarTitle />
-          </Suspense>
-        </span>
+        <Image alt="UOACS Logo" height={40} src="/uoacs-logo-black.svg" width={167} />
       </Link>
 
       {/* While the session resolves, nothing renders in the auth slot so a signed-in user never flashes the signed-out view. */}
@@ -112,7 +105,3 @@ export function PlaygroundNavbar({
     </nav>
   )
 }
-
-const NAVBAR_TITLE = "Project Playground"
-
-const NavbarTitle = () => (usePathname() === Routes.HOME ? "Presents" : NAVBAR_TITLE)
