@@ -7,9 +7,6 @@ const meta: Meta<typeof PlaygroundNavbar> = {
   parameters: {
     nextjs: {
       appDirectory: true,
-      navigation: {
-        pathname: "/",
-      },
     },
   },
   argTypes: {
@@ -28,14 +25,14 @@ const meta: Meta<typeof PlaygroundNavbar> = {
 export default meta
 type Story = StoryObj<typeof PlaygroundNavbar>
 
-export const Home: Story = {}
+export const SignedOut: Story = {
+  args: {
+    signedIn: false,
+  },
+}
 
-export const Regular: Story = {
-  parameters: {
-    nextjs: {
-      navigation: {
-        pathname: "/events",
-      },
-    },
+export const SignedIn: Story = {
+  args: {
+    signedIn: true,
   },
 }

@@ -79,27 +79,27 @@ export function PlaygroundNavbar({
       {/* While the session resolves, nothing renders in the auth slot so a signed-in user never flashes the signed-out view. */}
       {/* An explicit signedIn override (storybook/tests) renders immediately, since the sandbox has no session to wait on. */}
       {isPending && signedInOverride === undefined ? null : signedIn ? (
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-row items-center gap-3">
           <Link href={Routes.PROJECTS.CREATE}>
             <Button
-              className="h-12.5 gap-5 rounded-[5px] px-4.5"
+              className="h-10 gap-4 rounded-[4px] px-3.5"
               font="cartograph"
-              left={<PlusIcon className="size-5" />}
+              left={<PlusIcon className="size-4" />}
               size="md"
               tabIndex={-1}
               theme="ghost"
             >
-              <span className="text-xl">Create</span>
+              <span className="text-base">Create</span>
             </Button>
           </Link>
           <Dropdown
-            label={<UserIcon className="size-8" />}
+            label={<UserIcon className="size-6.5" />}
             options={profileOptions}
             size="icon"
             theme="dark"
             // triggerIcon false hides the chevron while keeping the trigger class
             trigger={{
-              triggerClassName: "size-12 rounded-[5px] p-0",
+              triggerClassName: "size-9.5 rounded-[4px] p-0",
               triggerIcon: false,
             }}
           />
