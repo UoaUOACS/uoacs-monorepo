@@ -1,5 +1,6 @@
 "use client"
 
+import { PlusIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftEndOnRectangleIcon, ArrowUpRightIcon, UserIcon } from "@heroicons/react/24/solid"
 import { AuthPages } from "@uoacs/shared"
 import { authClient } from "@uoacs/shared/auth"
@@ -78,12 +79,31 @@ export function PlaygroundNavbar({
       {/* While the session resolves, nothing renders in the auth slot so a signed-in user never flashes the signed-out view. */}
       {/* An explicit signedIn override (storybook/tests) renders immediately, since the sandbox has no session to wait on. */}
       {isPending && signedInOverride === undefined ? null : signedIn ? (
-        <Dropdown
-          label={<UserIcon className="h-4 w-4" />}
-          options={profileOptions}
-          theme="dark"
-          trigger={false}
-        />
+        <div className="flex flex-row items-center gap-4">
+          <Link href={Routes.PROJECTS.CREATE}>
+            <Button
+              className="h-12.5 gap-5 rounded-[5px] px-4.5"
+              font="cartograph"
+              left={<PlusIcon className="size-5" />}
+              size="md"
+              tabIndex={-1}
+              theme="ghost"
+            >
+              <span className="text-xl">Create</span>
+            </Button>
+          </Link>
+          <Dropdown
+            label={<UserIcon className="size-8" />}
+            options={profileOptions}
+            size="icon"
+            theme="dark"
+            // triggerIcon false hides the chevron while keeping the trigger class
+            trigger={{
+              triggerClassName: "size-12 rounded-[5px] p-0",
+              triggerIcon: false,
+            }}
+          />
+        </div>
       ) : (
         <div className="flex flex-row items-center gap-3">
           <AuthPageLink className="inline-flex" page={AuthPages.LOGIN}>
