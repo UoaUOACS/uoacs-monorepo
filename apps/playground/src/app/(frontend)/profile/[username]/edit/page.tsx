@@ -4,7 +4,7 @@ import { redirectToLogin } from "@/features/auth/auth.helpers"
 import { editAuthMemberDetails } from "@/features/member/actions/editAuthMemberDetails"
 import { MemberDetailsForm } from "@/features/member/components/MemberDetailsForm/MemberDetailsForm"
 import {
-  getAuthMember,
+  getCurrentAuthMember,
   getCurrentMember,
   getMemberByUsernameCached,
 } from "@/features/member/member.queries"
@@ -26,7 +26,7 @@ const EditProfileContent = async ({
   const member = await getMemberByUsernameCached(username)
   if (!member || current.member.id !== member.id) notFound()
 
-  const authMember = await getAuthMember()
+  const authMember = await getCurrentAuthMember()
   if (!authMember) notFound()
 
   return (
