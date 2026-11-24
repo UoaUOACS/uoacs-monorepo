@@ -18,6 +18,9 @@ catalogs:
     '@tanstack/react-pacer':
       specifier: 0.24.1
       version: 0.24.1
+    '@types/dom-navigation':
+      specifier: ^1.0.7
+      version: 1.0.7
     '@types/node':
       specifier: ^24
       version: 24.13.3
@@ -304,6 +307,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: 'catalog:'
         version: 4.3.3
+      '@types/dom-navigation':
+        specifier: 'catalog:'
+        version: 1.0.7
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.3
@@ -2882,6 +2888,9 @@ packages:
 
   '@types/doctrine@0.0.9':
     resolution: {integrity: sha512-eOIHzCUSH7SMfonMG1LsC2f8vxBFtho6NGBznK41R84YzPuvSBzrhEps33IsQiOW9+VL6NQ9DbjQJznk/S4uRA==}
+
+  '@types/dom-navigation@1.0.7':
+    resolution: {integrity: sha512-Di4W+i2faYquHUnyWUg3bBQp5pTNvjDDA7mIYfD/1WlLgan6sKkeVjGbdL78K0CuNEk5Pfc/c0rfelwkz10mnQ==}
 
   '@types/estree-jsx@1.0.5':
     resolution: {integrity: sha512-52CcUVNFyfb1A2ALocQw/Dd1BQFNmSdkuC3BkZ6iqhdMfQz7JWOFRuJFloOzjk+6WijU56m9oKXFAXc7o3Towg==}
@@ -8534,6 +8543,8 @@ snapshots:
   '@types/deep-eql@4.0.2': {}
 
   '@types/doctrine@0.0.9': {}
+
+  '@types/dom-navigation@1.0.7': {}
 
   '@types/estree-jsx@1.0.5':
     dependencies:

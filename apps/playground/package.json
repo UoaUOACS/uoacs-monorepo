@@ -38,6 +38,7 @@
     "@storybook/addon-docs": "catalog:storybook",
     "@storybook/nextjs-vite": "catalog:storybook",
     "@tailwindcss/postcss": "catalog:",
+    "@types/dom-navigation": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
