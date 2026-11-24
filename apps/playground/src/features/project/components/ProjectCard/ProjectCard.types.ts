@@ -16,4 +16,9 @@ export interface Project {
 export interface ProjectCardVariantProps {
   project: Project
   className?: string
+  /**
+   * Whether the signed-in member owns the project, which shows the actions menu on the
+   * profile card. Ownership is still checked by the server actions.
+   */
+  isOwner?: boolean
 }
