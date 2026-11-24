@@ -47,14 +47,13 @@ export const UnsavedChangesGuard = ({ isDirty }: UnsavedChangesGuardProps) => {
 
     // Only traversals within this document can be cancelled; the rest leave through `beforeunload`
     const interceptTraversal = (event: NavigateEvent) => {
-      const historyKey = event.destination.key
-      if (event.navigationType !== "traverse" || !event.cancelable || historyKey === null) return
+      if (event.navigationType !== "traverse" || !event.cancelable) return
       if (isLeavingConfirmedRef.current) {
         isLeavingConfirmedRef.current = false
         return
       }
       event.preventDefault()
-      setPendingNavigation({ historyKey })
+      setPendingNavigation({ historyKey: event.destination.key })
     }
     window.addEventListener("beforeunload", warn)
     window.addEventListener("click", interceptLink, true)
