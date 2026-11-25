@@ -1,4 +1,5 @@
 import { AnimatedSuspense, SocialIcon, type SocialIconName } from "@uoacs/ui"
+import Image from "next/image"
 import Link from "next/link"
 import { getSocialLinksCached } from "../../queries/social-links"
 import { DiscordSection, DiscordSectionSkeleton } from "../DiscordSection"
@@ -62,42 +63,58 @@ const FooterDiscordSection = async () => {
  */
 export const Footer = ({ links }: FooterProps) => {
   return (
-    <footer className="grid w-full grid-cols-1 gap-4 bg-gray-800 p-5 text-white md:grid-cols-4 md:p-6">
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-row flex-wrap items-start justify-between gap-2">
-          <div className="flex flex-col gap-1">
-            <p className="paragraph-sm text-gray-400">
-              UOACS &copy; <CopyrightYear />
-            </p>
-            <Link
-              className="paragraph-xs w-fit text-gray-400 transition-colors hover:text-white"
-              href={PRIVACY_HREF}
-            >
-              Privacy Policy
-            </Link>
-          </div>
-          <InterestedButton className="md:hidden" />
-        </div>
-        <AnimatedSuspense>
-          <FooterSocialLinks />
-        </AnimatedSuspense>
+    <footer className="w-full">
+      <div className="relative z-0 flex w-full justify-end">
+        <Image
+          alt=""
+          className="-mb-16 size-48 md:-mb-20 md:size-64"
+          height={356}
+          priority
+          src="/footer-mascot.png"
+          width={356}
+        />
       </div>
+      <div className="relative z-10 grid w-full grid-cols-1 gap-4 bg-gray-800 p-5 text-white md:grid-cols-4 md:p-6">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-row flex-wrap items-start justify-between gap-2">
+            <div className="flex flex-col gap-1">
+              <p className="paragraph-sm text-gray-400">
+                UOACS &copy; <CopyrightYear />
+              </p>
+              <Link
+                className="paragraph-xs w-fit text-gray-400 transition-colors hover:text-white"
+                href={PRIVACY_HREF}
+              >
+                Privacy Policy
+              </Link>
+            </div>
+            <InterestedButton className="md:hidden" />
+          </div>
+          <AnimatedSuspense>
+            <FooterSocialLinks />
+          </AnimatedSuspense>
+        </div>
 
-      <AnimatedSuspense fallback={<DiscordSectionSkeleton />}>
-        <FooterDiscordSection />
-      </AnimatedSuspense>
+        <AnimatedSuspense fallback={<DiscordSectionSkeleton />}>
+          <FooterDiscordSection />
+        </AnimatedSuspense>
 
-      <nav aria-label="Footer navigation" className="hidden flex-col items-start gap-4 md:flex">
-        <p className="paragraph-sm text-gray-400">Pages</p>
-        {links.map(({ label, href }) => (
-          <Link className="paragraph-sm w-fit font-medium hover:underline" href={href} key={label}>
-            {label}
-          </Link>
-        ))}
-      </nav>
+        <nav aria-label="Footer navigation" className="hidden flex-col items-start gap-4 md:flex">
+          <p className="paragraph-sm text-gray-400">Pages</p>
+          {links.map(({ label, href }) => (
+            <Link
+              className="paragraph-sm w-fit font-medium hover:underline"
+              href={href}
+              key={label}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
 
-      <div className="relative hidden md:block">
-        <InterestedButton className="absolute top-0 right-0" />
+        <div className="relative hidden md:block">
+          <InterestedButton className="absolute top-0 right-0" />
+        </div>
       </div>
     </footer>
   )
