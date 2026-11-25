@@ -110,7 +110,13 @@ export function PlaygroundNavbar({
       {isPending && signedInOverride === undefined ? null : signedIn ? (
         <div className="flex flex-row items-center gap-3">
           <Link href={Routes.PROJECTS.CREATE}>
-            <Button left={<PlusIcon className="size-4" />} size="md" tabIndex={-1} theme="ghost">
+            <Button
+              font="cartograph"
+              left={<PlusIcon className="size-4" />}
+              size="md"
+              tabIndex={-1}
+              theme="ghost"
+            >
               <span className="text-base">Create</span>
             </Button>
           </Link>
