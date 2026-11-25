@@ -10,7 +10,7 @@ import { cn } from "@uoacs/ui/utils"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Routes } from "@/lib/routes"
 import { AuthPageLink } from "../AuthPageLink/AuthPageLink"
 
@@ -44,26 +44,15 @@ export function PlaygroundNavbar({
   const { data: session, isPending } = authClient.useSession()
   const router = useRouter()
   const signedIn = signedInOverride ?? Boolean(session)
-  const navRef = useRef<HTMLElement>(null)
-  const [contentBelow, setContentBelow] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
-  // Shows the shadow only once page content scrolls under the navbar, not over the white space above it
+  // Shows the shadow once the page scrolls under the sticky navbar
   useEffect(() => {
-    const update = () => {
-      const nav = navRef.current
-      const contentTop = firstContentTop(document.querySelector("main"))
-      setContentBelow(
-        nav !== null && contentTop !== null && contentTop < nav.getBoundingClientRect().bottom,
-      )
-    }
+    const update = () => setScrolled(window.scrollY > 0)
 
     update()
     window.addEventListener("scroll", update, { passive: true })
-    window.addEventListener("resize", update)
-    return () => {
-      window.removeEventListener("scroll", update)
-      window.removeEventListener("resize", update)
-    }
+    return () => window.removeEventListener("scroll", update)
   }, [])
 
   const profileOptions: DropdownProps["options"] = [
@@ -96,10 +85,9 @@ export function PlaygroundNavbar({
     // Above sticky page bars, like the editor toolbar, so the profile menu opens over them
     <nav
       className={cn(
-        "sticky top-0 z-50 flex w-full flex-row items-center justify-between bg-white px-6 py-6 transition-shadow md:px-16",
-        contentBelow && "shadow-md",
+        "sticky top-0 z-50 flex w-full flex-row items-center justify-between bg-white p-6 transition-shadow md:px-16",
+        scrolled && "shadow-md",
       )}
-      ref={navRef}
     >
       <Link className="flex flex-row items-center gap-3" href={logoHref}>
         <Image alt="UOACS Logo" height={40} src="/uoacs-logo-black.svg" width={167} />
@@ -148,38 +136,4 @@ export function PlaygroundNavbar({
       )}
     </nav>
   )
-}
-
-/** Elements that show content even with no text inside them. */
-const MEDIA_ELEMENTS = new Set(["IMG", "SVG", "VIDEO", "CANVAS", "INPUT"])
-
-/**
- * Finds the top edge of the first visible text or media in an element, skipping the
- * empty padding and margins above it.
- *
- * @param root The element to search, usually the page's `<main>`.
- * @returns The viewport top of the first visible content, or null if there is none.
- */
-function firstContentTop(root: Element | null) {
-  if (!root) return null
-
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT)
-  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
-    let rect: DOMRect
-    if (node instanceof Text) {
-      if (node.data.trim() === "") continue
-      // Text nodes have no box of their own, so measure the text with a range
-      const range = document.createRange()
-      range.selectNodeContents(node)
-      rect = range.getBoundingClientRect()
-    } else if (node instanceof Element && MEDIA_ELEMENTS.has(node.nodeName.toUpperCase())) {
-      rect = node.getBoundingClientRect()
-    } else {
-      continue
-    }
-
-    // Hidden content (e.g. `hidden md:block`) has no size, so keep looking
-    if (rect.height > 0) return rect.top
-  }
-  return null
 }
