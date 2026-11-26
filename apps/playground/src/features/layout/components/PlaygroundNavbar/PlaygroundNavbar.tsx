@@ -1,14 +1,16 @@
 "use client"
 
+import { PlusIcon } from "@heroicons/react/24/outline"
 import { ArrowLeftEndOnRectangleIcon, ArrowUpRightIcon, UserIcon } from "@heroicons/react/24/solid"
 import { AuthPages } from "@uoacs/shared"
 import { authClient } from "@uoacs/shared/auth"
 import type { DropdownProps } from "@uoacs/ui"
 import { Button, Dropdown } from "@uoacs/ui"
+import { cn } from "@uoacs/ui/utils"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { Suspense } from "react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 import { Routes } from "@/lib/routes"
 import { AuthPageLink } from "../AuthPageLink/AuthPageLink"
 
@@ -42,6 +44,16 @@ export function PlaygroundNavbar({
   const { data: session, isPending } = authClient.useSession()
   const router = useRouter()
   const signedIn = signedInOverride ?? Boolean(session)
+  const [scrolled, setScrolled] = useState(false)
+
+  // Shows the shadow once the page scrolls under the sticky navbar
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 0)
+
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    return () => window.removeEventListener("scroll", update)
+  }, [])
 
   const profileOptions: DropdownProps["options"] = [
     {
@@ -71,26 +83,39 @@ export function PlaygroundNavbar({
 
   return (
     // Above sticky page bars, like the editor toolbar, so the profile menu opens over them
-    <nav className="relative z-50 flex w-full flex-row items-center justify-between">
+    <nav
+      className={cn(
+        "sticky top-0 z-50 flex w-full flex-row items-center justify-between bg-white p-6 transition-shadow md:px-16",
+        scrolled && "shadow-md",
+      )}
+    >
       <Link className="flex flex-row items-center gap-3" href={logoHref}>
-        <Image alt="UOACS Logo" height={40} src="/uoacs-logo-pink.svg" width={167} />
-        <span className="hidden font-cartograph text-2xl leading-7 font-bold text-gray-400 italic md:inline">
-          {/* usePathname needs Suspense on dynamic routes */}
-          <Suspense fallback={NAVBAR_TITLE}>
-            <NavbarTitle />
-          </Suspense>
-        </span>
+        <Image alt="UOACS Logo" height={40} src="/uoacs-logo-black.svg" width={167} />
       </Link>
 
       {/* While the session resolves, nothing renders in the auth slot so a signed-in user never flashes the signed-out view. */}
       {/* An explicit signedIn override (storybook/tests) renders immediately, since the sandbox has no session to wait on. */}
       {isPending && signedInOverride === undefined ? null : signedIn ? (
-        <Dropdown
-          label={<UserIcon className="h-4 w-4" />}
-          options={profileOptions}
-          theme="dark"
-          trigger={false}
-        />
+        <div className="flex flex-row items-center gap-3">
+          <Link href={Routes.PROJECTS.CREATE}>
+            <Button
+              font="cartograph"
+              left={<PlusIcon className="size-4" />}
+              size="md"
+              tabIndex={-1}
+              theme="ghost"
+            >
+              <span className="text-base">Create</span>
+            </Button>
+          </Link>
+          <Dropdown
+            label={<UserIcon className="size-6" />}
+            options={profileOptions}
+            size="icon"
+            theme="dark"
+            trigger={false}
+          />
+        </div>
       ) : (
         <div className="flex flex-row items-center gap-3">
           <AuthPageLink className="inline-flex" page={AuthPages.LOGIN}>
@@ -98,7 +123,7 @@ export function PlaygroundNavbar({
               Log In
             </Button>
           </AuthPageLink>
-          <AuthPageLink className="hidden md:inline-flex" page={AuthPages.SIGN_UP}>
+          <AuthPageLink className="md:inline-flex" page={AuthPages.SIGN_UP}>
             <Button
               right={<ArrowUpRightIcon className="h-4 w-4 md:h-6 md:w-6" />}
               tabIndex={-1}
@@ -112,7 +137,3 @@ export function PlaygroundNavbar({
     </nav>
   )
 }
-
-const NAVBAR_TITLE = "Project Playground"
-
-const NavbarTitle = () => (usePathname() === Routes.HOME ? "Presents" : NAVBAR_TITLE)
