@@ -68,7 +68,7 @@ export const ProfileProjectCard = ({ project, isOwner, className }: ProjectCardV
         />
       </div>
 
-      {isOwner ? <ProfileProjectCardMenu className={menu()} projectID={id} title={title} /> : null}
+      {isOwner ? <ProfileProjectCardMenu className={menu()} projectID={id} /> : null}
     </div>
   )
 }
