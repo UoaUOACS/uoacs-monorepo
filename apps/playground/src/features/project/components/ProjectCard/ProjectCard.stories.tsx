@@ -21,6 +21,8 @@ const meta = {
   component: ProjectCard,
   parameters: {
     layout: "centered",
+    // The owner stories' actions menu reads the session pathname and router
+    nextjs: { appDirectory: true },
   },
   decorators: [
     (Story) => (
@@ -133,6 +135,17 @@ export const ProfileNoImage: Story = {
   args: { variant: "profile", project: { ...mockProfileProject, imageURL: undefined } },
 }
 
+export const ProfileNoImageOwner: Story = {
+  name: "Profile no image with Owner",
+  parameters: { layout: "padded" },
+  decorators: profileDecorators,
+  args: {
+    variant: "profile",
+    project: { ...mockProfileProject, imageURL: undefined },
+    isOwner: true,
+  },
+}
+
 export const ProfileLongSummary: Story = {
   name: "Profile long summary",
   parameters: { layout: "padded" },
@@ -154,6 +167,13 @@ export const ProfileLongTitle: Story = {
       title: "A Very Long Project Title That Might Wrap Onto Several Lines Beside The Image",
     },
   },
+}
+
+export const ProfileOwner: Story = {
+  name: "Profile owner (with actions menu)",
+  parameters: { layout: "padded" },
+  decorators: profileDecorators,
+  args: { variant: "profile", project: mockProfileProject, isOwner: true },
 }
 
 export const ProfileTablet: Story = {
