@@ -5,7 +5,7 @@ const meta = {
   title: "Profile/ProfileAbout",
   component: ProfileAbout,
   args: {
-    major: ["Computer Science and Finance"],
+    // major: ["Computer Science and Finance"],
     biography:
       "Hi, I'm Louise Wang! I'm a student who enjoys learning new things, spending time with friends and family, and exploring my interests. I'm always looking for new experiences and opportunities to grow, improve my skills, and have fun along the way.",
     languages: ["English", "Chinese"],
@@ -20,7 +20,7 @@ export const Default: Story = {}
 
 export const Partial: Story = {
   args: {
-    major: undefined,
+    // major: undefined,
     languages: undefined,
     skills: undefined,
   },
@@ -28,7 +28,7 @@ export const Partial: Story = {
 
 export const Empty: Story = {
   args: {
-    major: undefined,
+    // major: undefined,
     biography: undefined,
     languages: undefined,
     skills: undefined,

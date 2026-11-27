@@ -1,6 +1,8 @@
-import type { AuthUser } from "@uoacs/shared"
-import { getSession } from "@uoacs/shared/auth/server"
+import { AuthApiRoutes, type AuthUser, memberResponseSchema } from "@uoacs/shared"
+import { getSession, sessionFetch } from "@uoacs/shared/auth/server"
+import type { Member as AuthMember } from "@uoacs/shared/payload"
 import { cacheLife, cacheTag } from "next/cache"
+import { headers } from "next/headers"
 import { after } from "next/server"
 import { cache } from "react"
 import { createMember, syncNames } from "@/features/member/member.mutations"
@@ -77,6 +79,27 @@ export const getCurrentMember = cache(async (): Promise<CurrentMemberResult> => 
   }
 })
 
+/**
+ * The auth member for whoever is signed in.
+ * `null` means not signed in or no member; any other failure throws.
+ */
+export const getCurrentAuthMember = cache(async (): Promise<AuthMember | null> => {
+  const response = await sessionFetch(AuthApiRoutes.MEMBER_ME, await headers(), {
+    signal: AbortSignal.timeout(5000),
+  })
+  if (response.status === 401 || response.status === 404) return null
+  if (!response.ok) {
+    throw new Error(`[getAuthMember] Auth service answered with ${response.status}`)
+  }
+  return memberResponseSchema.parse(await response.json())
+})
+
+/**
+ * Fetches the playground member with the given username.
+ *
+ * @param username The profile's username, as it appears in the URL.
+ * @returns The member, or `null` if no one has that username.
+ */
 export const getMemberByUsernameCached = async (username: string): Promise<Member | null> => {
   "use cache"
   // Tagged even when no one has it, so taking the username shows its new profile
