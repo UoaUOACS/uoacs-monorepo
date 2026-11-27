@@ -2,8 +2,8 @@ import { tv, type VariantProps } from "tailwind-variants"
 
 /**
  * Tabs variant configurations.
- * Consists of an active variant highlighting the current tab, and a disabled variant for tabs
- * that can't be selected yet. The indicator is the bar under the active tab.
+ * Consists of an active variant that highlights the current tab, and a disabled variant for tabs
+ * that cannot be selected. The indicator is the bar under the active tab's label.
  */
 export const tabsVariants = tv({
   slots: {

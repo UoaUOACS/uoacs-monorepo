@@ -8,11 +8,14 @@ import { tabsVariants } from "./Tabs.variants"
  * A single tab in the {@link Tabs} component.
  */
 export interface TabOption<TValue extends string> {
+  /**
+   * Must not contain spaces, because it is used in element IDs.
+   */
   value: TValue
   label: string
   /**
-   * Why the tab can't be selected, e.g. "Coming soon". When given, the tab is shown but disabled,
-   * and the reason is shown on hover and read by screen readers.
+   * Why the tab cannot be selected, e.g. "Coming soon". When set, the tab shows as disabled, the
+   * reason shows on hover, and screen readers read it.
    */
   disabledReason?: string
 }
@@ -32,7 +35,7 @@ interface TabsBaseProps<TValue extends string> {
 
 interface TabsLinkProps<TValue extends string> extends TabsBaseProps<TValue> {
   /**
-   * Builds the URL for a tab, rendering each tab as a link in a navigation landmark.
+   * Builds the URL for a tab. Each enabled tab renders as a link in a navigation landmark.
    */
   getHref: (tab: TValue) => string
   /**
@@ -51,7 +54,7 @@ interface TabsButtonProps<TValue extends string> extends TabsBaseProps<TValue> {
   onTabChange: (tab: TValue) => void
   /**
    * The prefix for the tab and panel IDs. Spread {@link getTabPanelProps} onto the active panel
-   * so each tab is linked to its panel.
+   * to link it to its tab.
    */
   id: string
   getHref?: never
@@ -77,7 +80,7 @@ const getTabPanelId = (id: string, tab: string) => `${id}-panel-${tab}`
  */
 export const getTabPanelProps = (id: string, tab: string) => ({
   id: getTabPanelId(id, tab),
-  role: "tabpanel",
+  role: "tabpanel" as const,
   "aria-labelledby": getTabId(id, tab),
 })
 
@@ -131,7 +134,7 @@ export const Tabs = <TValue extends string>({
                     aria-current={active ? "page" : undefined}
                     className={tabClass({ active })}
                     href={getHref(value)}
-                    // Undefined keeps the default prefetch
+                    // false turns prefetch off, so use undefined to keep the default
                     prefetch={(prefetchTabs && !active) || undefined}
                   >
                     {label}
@@ -153,7 +156,8 @@ export const Tabs = <TValue extends string>({
 
         return (
           <button
-            aria-controls={getTabPanelId(id, value)}
+            // Only the active panel renders, so only the active tab controls a panel
+            aria-controls={active ? getTabPanelId(id, value) : undefined}
             aria-selected={active}
             className={tabClass({ active, disabled: Boolean(disabledReason) })}
             disabled={Boolean(disabledReason)}
@@ -165,6 +169,7 @@ export const Tabs = <TValue extends string>({
             type="button"
           >
             {label}
+            {disabledReason && <span className="sr-only"> ({disabledReason.toLowerCase()})</span>}
             {active && activeIndicator}
           </button>
         )
