@@ -7,7 +7,7 @@ import { useState } from "react"
 import { DeleteProjectDialog } from "@/features/project/components/DeleteProjectDialog/DeleteProjectDialog"
 import { Routes } from "@/lib/routes"
 
-interface ProfileProjectCardMenuProps {
+interface ProjectCardMenuProps {
   projectID: string
   className?: string
 }
@@ -18,7 +18,7 @@ interface ProfileProjectCardMenuProps {
  * Editing links to the project editor; deleting opens the shared confirm dialog, whose
  * action redirects to the profile on success.
  */
-export const ProfileProjectCardMenu = ({ projectID, className }: ProfileProjectCardMenuProps) => {
+export const ProjectCardMenu = ({ projectID, className }: ProjectCardMenuProps) => {
   const [isConfirming, setIsConfirming] = useState(false)
 
   const menuOptions: DropdownProps["options"] = [
