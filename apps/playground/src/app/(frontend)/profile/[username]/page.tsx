@@ -8,7 +8,9 @@ import {
 import { ProfileProjects } from "@/features/profile/components/ProfileProjects/ProfileProjects"
 import { ProfileTabs } from "@/features/profile/components/ProfileTabs/ProfileTabs"
 
-export default async function ProfilePage({ params }: PageProps<"/profile/[username]">) {
+export default async function ProfilePage({
+  params,
+}: Pick<PageProps<"/profile/[username]">, "params">) {
   const { username } = await params
 
   const member = await getMemberByUsernameCached(username)

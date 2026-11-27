@@ -7,7 +7,7 @@ import { ProfileHeaderSkeleton } from "@/features/profile/components/ProfileHead
 export default async function ProfileLayout({
   params,
   children,
-}: LayoutProps<"/profile/[username]">) {
+}: Pick<LayoutProps<"/profile/[username]">, "params" | "children">) {
   const { username } = await params
 
   const member = await getMemberByUsernameCached(username)

@@ -11,7 +11,9 @@ import { EditProfileForm } from "@/features/profile/components/EditProfileForm/E
 import { EditProfileTabs } from "@/features/profile/components/EditProfileTabs/EditProfileTabs"
 import { Routes } from "@/lib/routes"
 
-export default async function EditProfilePage({ params }: PageProps<"/profile/[username]/edit">) {
+export default async function EditProfilePage({
+  params,
+}: Pick<PageProps<"/profile/[username]/edit">, "params">) {
   const { username } = await params
 
   const current = await getCurrentMember()
