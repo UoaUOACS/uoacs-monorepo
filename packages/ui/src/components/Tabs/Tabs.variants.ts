@@ -3,12 +3,13 @@ import { tv, type VariantProps } from "tailwind-variants"
 /**
  * Tabs variant configurations.
  * Consists of an active variant highlighting the current tab, and a disabled variant for tabs
- * that can't be selected yet.
+ * that can't be selected yet. The indicator is the bar under the active tab.
  */
 export const tabsVariants = tv({
   slots: {
     list: "flex flex-wrap items-center justify-center gap-4",
-    tab: "inline-block p-2 font-bold transition-colors duration-150",
+    tab: "relative inline-block p-2 font-bold transition-colors duration-150",
+    indicator: "absolute -inset-x-1 bottom-1 h-0.5 bg-primary",
   },
   variants: {
     active: {

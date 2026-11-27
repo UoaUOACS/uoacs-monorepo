@@ -1,5 +1,7 @@
 import Link from "next/link"
+import { useId } from "react"
 import { cn } from "../../utils"
+import { TabIndicator } from "./TabIndicator"
 import { tabsVariants } from "./Tabs.variants"
 
 /**
@@ -101,7 +103,10 @@ export const Tabs = <TValue extends string>({
   "aria-label": ariaLabel,
   className,
 }: TabsProps<TValue>) => {
-  const { list, tab: tabClass } = tabsVariants()
+  const { list, tab: tabClass, indicator } = tabsVariants()
+
+  const indicatorLayoutId = `${useId()}-active-tab-indicator`
+  const activeIndicator = <TabIndicator className={indicator()} layoutId={indicatorLayoutId} />
 
   if (getHref) {
     return (
@@ -130,6 +135,7 @@ export const Tabs = <TValue extends string>({
                     prefetch={(prefetchTabs && !active) || undefined}
                   >
                     {label}
+                    {active && activeIndicator}
                   </Link>
                 )}
               </li>
@@ -159,6 +165,7 @@ export const Tabs = <TValue extends string>({
             type="button"
           >
             {label}
+            {active && activeIndicator}
           </button>
         )
       })}
