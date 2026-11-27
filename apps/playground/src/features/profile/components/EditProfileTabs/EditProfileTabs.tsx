@@ -18,7 +18,7 @@ export function EditProfileTabs({ tabs, defaultTabId }: EditProfileTabsProps) {
   const [activeId, setActiveId] = useState(defaultTabId ?? tabs[0]?.id)
 
   return (
-    <div className="flex flex-col gap-6 md:flex-row md:gap-12">
+    <div className="mt-12 flex flex-col gap-6 md:flex-row md:gap-12">
       <div
         aria-orientation="vertical"
         className="flex shrink-0 gap-4 md:w-40 md:flex-col md:gap-3"
