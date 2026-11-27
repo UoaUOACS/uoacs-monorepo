@@ -15,7 +15,8 @@ export const ProjectTabsSkeleton = ({ className }: { className?: string }) => {
         {PROJECT_TABS.map(({ value, label }) => (
           <li key={value}>
             <Skeleton
-              className={cn(tab(), "inline-block align-middle")}
+              // Margin instead of padding, so the bar covers only the label
+              className={cn(tab(), "m-2 p-0 align-middle")}
               shape="text"
               style={{ width: `${label.length}ch` }}
             />

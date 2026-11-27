@@ -19,13 +19,7 @@ export const ProfileTabs = ({ panels }: ProfileTabsProps) => {
 
   return (
     <div className="flex w-full flex-col gap-8">
-      <Tabs
-        activeTab={selected}
-        className="gap-x-6 sm:gap-x-28"
-        id={tabsId}
-        onTabChange={setSelected}
-        tabs={TAB_OPTIONS}
-      />
+      <Tabs activeTab={selected} id={tabsId} onTabChange={setSelected} tabs={TAB_OPTIONS} />
       <div aria-hidden="true" className="h-px bg-linear-to-r from-pink-300 to-blue-400" />
       <section {...getTabPanelProps(tabsId, selected)}>{panels[selected]}</section>
     </div>
