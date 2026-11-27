@@ -5,7 +5,7 @@ import { SectionLabel } from "./SectionLabel/SectionLabel"
 
 export interface ProfileAboutProps extends ProfileAboutVariants {
   /** The member's major(s), e.g. ["Computer Science", "Finance"]. */
-  major?: readonly string[]
+  // major?: readonly string[]
   /** The member's biography (`Member.bio`), rendered as written. */
   biography?: string | null
   /** The member's languages. No data source exists yet; shows N/A until provided. */
@@ -26,11 +26,11 @@ type AboutSection = {
  * skills as `// LABEL` sections. All sections render no matter what — empty
  * ones show a muted N/A. Presentational only.
  */
-export const ProfileAbout = ({ major, biography, skills, className }: ProfileAboutProps) => {
+export const ProfileAbout = ({ /* major, */ biography, skills, className }: ProfileAboutProps) => {
   const { root, section, paragraph, placeholder, list } = profileAboutVariants()
 
   const sections: AboutSection[] = [
-    { label: "MAJOR", content: major ?? [] },
+    // { label: "MAJOR", content: major ?? [] },
     { label: "BIOGRAPHY", content: biography?.trim() ? [biography] : [], multiline: true },
     { label: "SKILLS", content: skills ?? [] },
   ]
