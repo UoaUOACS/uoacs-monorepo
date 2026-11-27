@@ -1,11 +1,12 @@
 import { Button, Heading } from "@uoacs/ui"
+import Image from "next/image"
 import Link from "next/link"
 import { Routes } from "@/lib/routes"
 
 export const HeroSection = () => {
   return (
-    <div className="flex w-full max-w-full flex-col items-start justify-center gap-10 px-2 pt-16 text-left md:w-fit md:gap-20 md:px-0 md:pt-32">
-      <div className="flex w-min max-w-full flex-col items-start gap-3 md:gap-6">
+    <div className="mx-auto flex w-full max-w-full flex-col items-center justify-center gap-0 px-2 pt-4 text-left md:gap-0 md:px-0 md:pt-8 lg:flex-row">
+      <div className="z-10 flex w-min max-w-full flex-col items-start gap-3 md:gap-6">
         <div className="flex w-max max-w-full flex-col items-start justify-start font-cartograph whitespace-nowrap sm:flex-row sm:gap-2">
           <Heading className="pr-6 font-cartograph font-bold tracking-[-10%]" h={2}>
             Project
@@ -67,6 +68,10 @@ export const HeroSection = () => {
             website
           </a>
         </div>
+      </div>
+
+      <div className="pointer-events-none relative hidden h-120 w-70 shrink-0 lg:flex">
+        <Image alt="" className="object-contain" fill src="/assets.svg" />
       </div>
     </div>
   )
