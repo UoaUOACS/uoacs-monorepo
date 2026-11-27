@@ -4,10 +4,10 @@ import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline"
 import { Button, Dropdown } from "@uoacs/ui"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { DeleteProjectDialog } from "@/features/project/components/DeleteProjectDialog/DeleteProjectDialog"
 import { projectFormOptions } from "@/features/project/editor/projectForm.options"
 import { withForm } from "@/lib/form/useAppForm"
 import { Routes } from "@/lib/routes"
-import { DeleteProjectDialog } from "./DeleteProjectDialog"
 
 /**
  * Sticky actions above the editor: preview, discard, save, the save error, and a menu with delete
