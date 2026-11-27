@@ -81,13 +81,12 @@ const ProjectCardMenuContent = ({
         <Dropdown
           label={
             <>
-              <Bars3Icon className="size-5" />
+              <Bars3Icon className="size-6" />
               <span className="sr-only">Project actions</span>
             </>
           }
           options={menuOptions}
           popoverClassName="right-auto left-0 min-w-24 items-stretch"
-          shape="rounded"
           size="icon"
           theme="primary"
           trigger={{ triggerIcon: false }}
