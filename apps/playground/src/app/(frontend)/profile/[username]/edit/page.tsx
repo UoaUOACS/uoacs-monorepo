@@ -1,3 +1,4 @@
+import { AnimatedSuspense } from "@uoacs/ui"
 import { notFound, redirect } from "next/navigation"
 import { redirectToLogin } from "@/features/auth/auth.helpers"
 import { editAuthMemberDetails } from "@/features/member/actions/editAuthMemberDetails"
@@ -11,9 +12,9 @@ import { EditProfileForm } from "@/features/profile/components/EditProfileForm/E
 import { EditProfileTabs } from "@/features/profile/components/EditProfileTabs/EditProfileTabs"
 import { Routes } from "@/lib/routes"
 
-export default async function EditProfilePage({
+const EditProfileContent = async ({
   params,
-}: Pick<PageProps<"/profile/[username]/edit">, "params">) {
+}: Pick<PageProps<"/profile/[username]/edit">, "params">) => {
   const { username } = await params
 
   const current = await getCurrentMember()
@@ -41,5 +42,13 @@ export default async function EditProfilePage({
         },
       ]}
     />
+  )
+}
+
+export default function EditProfilePage(props: PageProps<"/profile/[username]/edit">) {
+  return (
+    <AnimatedSuspense fallback={null}>
+      <EditProfileContent params={props.params} />
+    </AnimatedSuspense>
   )
 }
