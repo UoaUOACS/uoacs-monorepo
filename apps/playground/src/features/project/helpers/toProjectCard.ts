@@ -20,6 +20,7 @@ export const toProjectCard = (
     typeof project.coverImage === "object"
       ? { focalX: project.coverImage.focalX, focalY: project.coverImage.focalY }
       : undefined,
+  authorID: typeof project.author === "object" ? project.author.id : project.author,
   // An unpopulated author is just an ID, e.g. when the member has since been deleted
   authorName: typeof project.author === "object" ? project.author.username : UNKNOWN_AUTHOR_NAME,
   likes: project.likeCount ?? 0,

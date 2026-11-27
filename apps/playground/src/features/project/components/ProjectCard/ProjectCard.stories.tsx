@@ -1,10 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
+import { mocked } from "storybook/test"
+import { getCurrentMember } from "@/features/member/member.queries"
+import type { Member } from "@/payload/payload-types"
 import { type Project, ProjectCard } from "./ProjectCard"
+
+const AUTHOR_ID = "author-1"
+
+// Signs the project's author in, which shows the owner's actions menu
+const signInAsAuthor = () => {
+  mocked(getCurrentMember).mockResolvedValue({
+    status: "authenticated",
+    member: { id: AUTHOR_ID } as Member,
+  })
+}
 
 const mockProjectWithImage: Project = {
   id: "1",
   title: "Project Playground",
   imageURL: "https://placehold.co/400x300",
+  authorID: AUTHOR_ID,
   authorName: "Name Of Author",
   likes: 1000,
 }
@@ -53,6 +67,12 @@ export const WithAward: Story = {
   args: {
     project: { ...mockProjectWithImage, awardType: "Best Design" },
   },
+}
+
+export const Owner: Story = {
+  name: "Owner (actions menu on hover)",
+  beforeEach: signInAsAuthor,
+  args: { project: mockProjectWithImage },
 }
 
 export const NoImage: Story = {
@@ -139,11 +159,8 @@ export const ProfileNoImageOwner: Story = {
   name: "Profile no image with Owner",
   parameters: { layout: "padded" },
   decorators: profileDecorators,
-  args: {
-    variant: "profile",
-    project: { ...mockProfileProject, imageURL: undefined },
-    isOwner: true,
-  },
+  beforeEach: signInAsAuthor,
+  args: { variant: "profile", project: { ...mockProfileProject, imageURL: undefined } },
 }
 
 export const ProfileLongSummary: Story = {
@@ -173,7 +190,8 @@ export const ProfileOwner: Story = {
   name: "Profile owner (with actions menu)",
   parameters: { layout: "padded" },
   decorators: profileDecorators,
-  args: { variant: "profile", project: mockProfileProject, isOwner: true },
+  beforeEach: signInAsAuthor,
+  args: { variant: "profile", project: mockProfileProject },
 }
 
 export const ProfileTablet: Story = {

@@ -59,7 +59,6 @@ export const ProfileProjectsView = ({
           {projects.map((project) => (
             <li key={project.id}>
               <ProjectCard
-                isOwner={isOwner}
                 project={{ ...project, liked: liked.has(project.id) }}
                 variant="profile"
               />

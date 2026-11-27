@@ -11,6 +11,8 @@ sb.mock(import("../src/features/project/actions/uploadProjectMedia.ts"))
 sb.mock(import("../src/features/project/actions/deleteProject.ts"))
 sb.mock(import("../src/features/member/actions/editMember.ts"))
 sb.mock(import("../src/features/member/actions/uploadProfilePicture.ts"))
+// The real queries read the session and Payload
+sb.mock(import("../src/features/member/member.queries.ts"))
 
 const preview: Preview = {
   decorators: [

@@ -22,7 +22,8 @@ export const projectCardVariants = tv({
     awardGroup: "",
     awardTitle: "",
     awardSubtitle: "",
-    menu: "",
+    // Hover reveals it; focus keeps it open, and touch screens have no hover so always show it
+    menu: "absolute top-3 left-3 z-10 opacity-0 transition-opacity duration-200 group-hover:opacity-100 focus-within:opacity-100 pointer-coarse:opacity-100",
   },
   variants: {
     variant: {
