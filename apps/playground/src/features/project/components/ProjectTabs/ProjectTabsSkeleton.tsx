@@ -1,14 +1,13 @@
-import { Skeleton } from "@uoacs/ui"
+import { Skeleton, tabsVariants } from "@uoacs/ui"
 import { cn } from "@uoacs/ui/utils"
 import { PROJECT_TABS } from "@/features/project/project.constants"
-import { projectTabsVariants } from "./ProjectTabs.variants"
 
 /**
  * A loading placeholder with the same layout as {@link ProjectTabs}. Each bar is an inline box
  * as wide as its tab's label, so the row has the same height and wraps the same way.
  */
 export const ProjectTabsSkeleton = ({ className }: { className?: string }) => {
-  const { list, tab } = projectTabsVariants()
+  const { list, tab } = tabsVariants()
 
   return (
     <div aria-hidden="true" className={className}>
