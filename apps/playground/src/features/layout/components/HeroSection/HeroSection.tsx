@@ -31,7 +31,7 @@ export const HeroSection = () => {
             <Button
               className="whitespace-nowrap"
               font="cartograph"
-              shape="rounded"
+              shape="pill"
               size="md"
               tabIndex={-1}
               theme="primary-dark"
@@ -44,7 +44,7 @@ export const HeroSection = () => {
             <Button
               className="whitespace-nowrap"
               font="cartograph"
-              shape="rounded"
+              shape="pill"
               size="md"
               tabIndex={-1}
               theme="primary-dark"
@@ -71,7 +71,7 @@ export const HeroSection = () => {
       </div>
 
       <div className="pointer-events-none relative hidden h-120 w-70 shrink-0 lg:flex">
-        <Image alt="" className="object-contain" fill src="/assets.png" />
+        <Image alt="" className="object-contain" fill src="/hero-gradient-assets.png" />
       </div>
     </div>
   )
