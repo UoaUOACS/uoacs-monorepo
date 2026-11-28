@@ -74,7 +74,7 @@ export const Footer = ({ links }: FooterProps) => {
           width={356}
         />
       </div>
-      <div className="relative z-10 grid w-full grid-cols-1 gap-4 bg-gray-800 p-5 text-white md:grid-cols-4 md:p-6">
+      <div className="relative z-10 grid w-full grid-cols-1 gap-4 bg-gray-800 p-5 pb-13 text-white md:grid-cols-4 md:p-6 md:pb-13">
         <div className="flex flex-col gap-4">
           <div className="flex flex-row flex-wrap items-start justify-between gap-2">
             <div className="flex flex-col gap-1">
