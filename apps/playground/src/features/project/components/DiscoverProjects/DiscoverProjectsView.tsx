@@ -1,11 +1,12 @@
 import { cn } from "@uoacs/ui/utils"
+import Form from "next/form"
 import { useId } from "react"
 import { type DiscoverState, getDiscoverHref } from "@/features/project/helpers/discover"
-import { PROJECT_TABS } from "@/features/project/project.constants"
+import { SearchBar } from "@/features/search/components/SearchBar/SearchBar"
+import { Routes } from "@/lib/routes"
 import { PaginatedProjectGrid } from "../PaginatedProjectGrid/PaginatedProjectGrid"
 import type { Project } from "../ProjectCard/ProjectCard"
 import { ProjectSortDropdown } from "../ProjectSortDropdown/ProjectSortDropdown"
-import { ProjectTabs } from "../ProjectTabs/ProjectTabs"
 import { discoverProjectsVariants } from "./DiscoverProjects.variants"
 
 interface DiscoverProjectsViewProps extends DiscoverState {
@@ -29,25 +30,23 @@ export const DiscoverProjectsView = ({
   totalPages,
   className,
 }: DiscoverProjectsViewProps) => {
-  const { root, header, sort: sortClass, heading } = discoverProjectsVariants()
-  const tabLabel = PROJECT_TABS.find((option) => option.value === tab)?.label
+  const { root, header } = discoverProjectsVariants()
+  //const tabLabel = PROJECT_TABS.find((option) => option.value === tab)?.label
   const headingId = useId()
 
   return (
     <section aria-labelledby={headingId} className={cn(root(), className)}>
       <div className={header()}>
-        <ProjectTabs activeTab={tab} sort={sort} />
-        <div className={sortClass()}>
+        <div className="hidden w-[70%] items-center justify-center gap-10 md:flex">
+          <Form action={Routes.SEARCH} className="w-full">
+            <SearchBar name="q" />
+          </Form>
           <ProjectSortDropdown
             getSortHref={(value) => getDiscoverHref({ tab, sort: value })}
             sort={sort}
           />
         </div>
       </div>
-
-      <h2 className={heading()} id={headingId}>
-        {tabLabel}
-      </h2>
 
       <PaginatedProjectGrid
         getPageHref={(target) => getDiscoverHref({ tab, sort, page: target })}

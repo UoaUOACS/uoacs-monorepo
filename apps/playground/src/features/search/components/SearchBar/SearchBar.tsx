@@ -42,7 +42,7 @@ export const SearchBar = ({
   className,
   onChange,
   onValueChange,
-  placeholder = "Search",
+  placeholder = "Search keywords, users...",
   disabled,
   readOnly,
   "aria-label": ariaLabel = "Search",

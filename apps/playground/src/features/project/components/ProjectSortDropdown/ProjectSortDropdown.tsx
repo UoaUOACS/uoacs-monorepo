@@ -16,10 +16,10 @@ interface ProjectSortDropdownProps {
 export const ProjectSortDropdown = ({ sort, getSortHref }: ProjectSortDropdownProps) => (
   <Dropdown
     label={
-      <>
+      <span className="whitespace-nowrap">
         <span className="sr-only">Sort by </span>
         {PROJECT_SORT_OPTIONS[sort].label}
-      </>
+      </span>
     }
     options={Object.values(ProjectSort).map((value) => ({
       label: PROJECT_SORT_OPTIONS[value].label,
