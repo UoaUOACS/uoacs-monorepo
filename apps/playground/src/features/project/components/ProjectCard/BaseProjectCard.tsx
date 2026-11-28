@@ -6,8 +6,9 @@ import { LikeButton } from "@/features/project/components/LikeButton/LikeButton"
 import { Routes } from "@/lib/routes"
 import type { ProjectCardVariantProps } from "./ProjectCard.types"
 import { projectCardVariants } from "./ProjectCard.variants"
+import { ProjectCardMenu } from "./ProjectCardMenu"
 
-export const BaseProjectCard = ({ project, className }: ProjectCardVariantProps) => {
+export const BaseProjectCard = ({ project, isOwner, className }: ProjectCardVariantProps) => {
   const { id, title, imageURL, imageFocalPoint, authorName, likes, liked, awardType } = project
   const {
     base,
@@ -23,6 +24,7 @@ export const BaseProjectCard = ({ project, className }: ProjectCardVariantProps)
     likesGroup,
     heartIcon,
     likesCount,
+    menu,
   } = projectCardVariants()
 
   return (
@@ -45,6 +47,8 @@ export const BaseProjectCard = ({ project, className }: ProjectCardVariantProps)
           <span className={titleStyles()}>{title}</span>
         </div>
       </IntentPrefetchLink>
+
+      <ProjectCardMenu className={menu()} isOwner={isOwner} projectID={id} />
 
       <div className={footer()}>
         <div className={authorGroup()}>

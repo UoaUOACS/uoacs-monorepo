@@ -2,9 +2,9 @@ import { IntentPrefetchLink, LazyImage } from "@uoacs/ui"
 import AwardIcon from "@/features/project/components/AwardIcon/AwardIcon"
 import { LikeButton } from "@/features/project/components/LikeButton/LikeButton"
 import { Routes } from "@/lib/routes"
-import { ProfileProjectCardMenu } from "./ProfileProjectCardMenu"
 import type { ProjectCardVariantProps } from "./ProjectCard.types"
 import { projectCardVariants } from "./ProjectCard.variants"
+import { ProjectCardMenu } from "./ProjectCardMenu"
 
 export const ProfileProjectCard = ({ project, isOwner, className }: ProjectCardVariantProps) => {
   const { id, title, imageURL, imageFocalPoint, likes, liked, awardType, summary, awardEvent } =
@@ -68,7 +68,7 @@ export const ProfileProjectCard = ({ project, isOwner, className }: ProjectCardV
         />
       </div>
 
-      {isOwner ? <ProfileProjectCardMenu className={menu()} projectID={id} /> : null}
+      <ProjectCardMenu className={menu()} isOwner={isOwner} projectID={id} />
     </div>
   )
 }
